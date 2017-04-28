@@ -1,0 +1,28 @@
+API Call:
+http://services.bluekai.com/Services/WS/Taxonomy?bkuid=2a485752a542f032f7442c5a62ce97d070d72676&bksig=8XNT4ToLRxC9Yw33JO%2FYsis0e3pDaUkVeCkPlJC96d0%3D
+Response Code:
+200
+
+Response Headers:
+{
+    "date": "Wed, 06 Apr 2016 21:18:32 GMT",
+    "set-cookie": [
+        "JSESSIONID=5A86B5F1FBB1A789C3C3505E0DBBE665; Path=/Services; HttpOnly"
+    ],
+    "content-type": "text/plain",
+    "vary": "Accept-Encoding",
+    "nncoection": "close",
+    "transfer-encoding": "chunked"
+}
+
+Response Body:
+{
+    "date": "Wed, 06 Apr 2016 21:18:32 GMT",
+    "set-cookie": [
+        "JSESSIONID=5A86B5F1FBB1A789C3C3505E0DBBE665; Path=/Services; HttpOnly"
+    ],
+    "content-type": "text/plain",
+    "vary": "Accept-Encoding",
+    "nncoection": "close",
+    "transfer-encoding": "chunked"
+}

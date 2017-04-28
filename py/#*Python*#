@@ -1,0 +1,2089 @@
+Python 2.7.12 (default, Nov 19 2016, 06:48:10) 
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> >>> >>> >>> (0, 0)
+(0, 1)
+(0, 2)
+(0, 3)
+(0, 4)
+(0, 5)
+(0, 6)
+(0, 7)
+(0, 8)
+(0, 9)
+(0, 10)
+(0, 11)
+(0, 12)
+(0, 13)
+(0, 14)
+(0, 15)
+(0, 16)
+(0, 17)
+(0, 18)
+(0, 19)
+(0, 20)
+(0, 21)
+(0, 22)
+(0, 23)
+(0, 24)
+(0, 25)
+(0, 26)
+(0, 27)
+(0, 28)
+(0, 29)
+(0, 30)
+(1, 0)
+(1, 1)
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(1, 6)
+(1, 7)
+(1, 8)
+(1, 9)
+(1, 10)
+(1, 11)
+(1, 12)
+(1, 13)
+(1, 14)
+(1, 15)
+(1, 16)
+(1, 17)
+(1, 18)
+(1, 19)
+(1, 20)
+(1, 21)
+(1, 22)
+(1, 23)
+(1, 24)
+(1, 25)
+(1, 26)
+(1, 27)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(2, 6)
+(2, 7)
+(2, 8)
+(2, 9)
+(2, 10)
+(2, 11)
+(2, 12)
+(2, 13)
+(2, 14)
+(2, 15)
+(2, 16)
+(2, 17)
+(2, 18)
+(2, 19)
+(2, 20)
+(2, 21)
+(2, 22)
+(2, 23)
+(2, 24)
+(2, 25)
+(2, 26)
+(2, 27)
+(2, 28)
+(2, 29)
+(2, 30)
+(3, 0)
+(3, 1)
+(3, 2)
+(3, 3)
+(3, 4)
+(3, 5)
+(3, 6)
+(3, 7)
+(3, 8)
+(3, 9)
+(3, 10)
+(4, 0)
+(5, 0)
+(6, 0)
+(7, 0)
+(8, 0)
+(9, 0)
+(10, 0)
+(11, 0)
+>>> titleD.t.unique()
+array([u'PRIMA PAGINA TG5', u'TRAFFICO', u'METEO.IT A', u'TG5',
+       u'LE FRONTIERE DELLO SPIRITO', u'UN AMORE DI STREGA', u'MELAVERDE',
+       u'METEO.IT B', u"L'ARCA DI NOE'",
+       u'IL CONTE DI MONTECRISTO (DI J. DAYAN)', u'DOMENICA REWIND',
+       u'CADUTA LIBERA', u'TG5 PRIMA PAGINA', u'METEO.IT C',
+       u'PAPERISSIMA SPRINT', u'PADDINGTON - PRIMA TV',
+       u'GGG - GRANDE GIGANTE GENTILE - CIAK SPECIALE',
+       u'UNA FAMIGLIA PERFETTA (DI P. GENOVESE)', u'METEO.IT D',
+       u"IL TE' NEL DESERTO", u'MEDIA SHOPPING',
+       u'IL BELLO DELLE DONNE - SPECIALE', u'FINALMENTE NATALE',
+       u'TG5 - ORE 10', u'FORUM', u'RIASSUNTO - UNA VITA',
+       u'UNA VITA - PRIMA TV', u'TRAFFICI OSCURI - II PARTE - VICTOR ROS',
+       u'IL SEGRETO XIX , 1225 - PRIMA TV', u'TOM - UN ANGELO IN MISSIONE',
+       u"LA VOCE DELL'IMPUDENZA - STRISCIA LA NOTIZIA",
+       u'LO STAGISTA INASPETTATO - PRIMA TV', u'SUPERCINEMA',
+       u'55 - CENTOVETRINE', u'56 - CENTOVETRINE', u'57 - CENTOVETRINE',
+       u'AGATA &amp; ULISSE',
+       u'LE IMPRONTE DEL CRIMINE - I PARTE - VICTOR ROS',
+       u'IL SEGRETO XIX , 1226 - PRIMA TV',
+       u'UN AVVOCATO PER BABBO NATALE',
+       u'QUELLO CHE NASCONDONO I TUOI OCCHI - PRIMA TV',
+       u'THE NOBEL PEACE PRIZE CONCERT', u'58 - CENTOVETRINE',
+       u'59 - CENTOVETRINE', u'60 - CENTOVETRINE', u'UN CANE PER DUE',
+       u'LE IMPRONTE DEL CRIMINE - II PARTE - VICTOR ROS',
+       u'IL SEGRETO XIX , 1227 - PRIMA TV', u"TRE BAMBINI SOTTO L'ALBERO",
+       u'LA MIA VENDETTA - PRIMA TV',
+       u'LA DONNA DELLA MIA VITA (DI L. LUCINI)', u'61 - CENTOVETRINE',
+       u'62 - CENTOVETRINE', u'IL BELLO DELLE DONNE - DIETRO LE QUINTE',
+       u'TI AMO TROPPO PER DIRTELO', u'IL SEGRETO XIX , 1228 - PRIMA TV',
+       u'QUELLO CHE NASCONDONO I TUOI OCCHI', u"C'E' CHI DICE NO",
+       u'63 - CENTOVETRINE', u'64 - CENTOVETRINE',
+       u'DIETRO LE QUINTE DI "AMORE PENSACI TU"',
+       u'IL MIO AMICO BABBO NATALE 2', u'IL QUARTO RE',
+       u'LEZIONI DI CIOCCOLATO 2', u'E SE... FOSSE ANDATA DIVERSAMENTE?',
+       u'CHIAMATEMI BABBO NATALE', u'65 - CENTOVETRINE',
+       u'66 - CENTOVETRINE', u'67 - CENTOVETRINE',
+       u'BOLOGNA E I SUOI COLLI - LUOGHI DI MAGNIFICA ITALIA',
+       u'EMILIA ROMAGNA: NELLE TERRE DEI ROMANI - LUOGHI DI MAGNIFICA ITALIA',
+       u'LEONI DI MONTAGNA - UNA SFIDA CONTINUA',
+       u'DIETRO LE QUINTE DI "IL BELLO DELLE DONNE - ALCUNI ANNI DOPO"',
+       u'IL SEGRETO XIX , 1229 - PRIMA TV', u'VERISSIMO',
+       u"C'E' POSTA PER TE", u'BACIAMI PICCINA', u'68 - CENTOVETRINE',
+       u'69 - CENTOVETRINE', u'70 - CENTOVETRINE',
+       u'COLPO DI FULMINE (DI R. MALENOTTI)', u'RIASSUNTO - IL SEGRETO',
+       u'1230 - 1231 - IL SEGRETO - PRIMA TV', u'VOCE DEL VERBO AMORE',
+       u'71 - CENTOVETRINE', u'72 - CENTOVETRINE', u'MATTINO CINQUE',
+       u'BEAUTIFUL XXVI - PRIMA TV', u'UOMINI E DONNE',
+       u'IL SEGRETO XIX , 1232 - PRIMA TV', u'POMERIGGIO CINQUE',
+       u'ANDIAMO A QUEL PAESE - PRIMA TV', u"L'ORA LEGALE - CIAK SPECIALE",
+       u'A RUOTA LIBERA', u'IL SEGRETO XIX , 1233 - PRIMA TV',
+       u"BUONGIORNO PAPA'", u'MATRIX', u'IL SEGRETO XIX , 1234 - PRIMA TV',
+       u'MUSIC', u'73 - CENTOVETRINE', u'IL SEGRETO XIX , 1235 - PRIMA TV',
+       u'CHE BELLA GIORNATA', u'IL SEGRETO XX , 1236 - PRIMA TV',
+       u'IL BELLO DELLE DONNE - ALCUNI ANNI DOPO - PRIMA TV', u'THE WORDS',
+       u'74 - CENTOVETRINE',
+       u'LA TERRA VISTA DAL CIELO - MAGINIFICO MONDO',
+       u'CORRENTE DI VITA - WILD ATLANTIC', u'AMICI',
+       u'1237 - IL SEGRETO - PRIMA TV', u'SPECIALE TG5',
+       u'IO SO CHE TU SAI CHE IO SO',
+       u"CALABRIA: L'ASPROMONTE - LUOGHI DI MAGNIFICA ITALIA",
+       u'CAMPANIA: IL CILENTO - LUOGHI DI MAGNIFICA ITALIA',
+       u'DOMENICA LIVE', u'AVANTI UN ALTRO!',
+       u'1238 -1239 - IL SEGRETO - PRIMA TV', u'I PICCOLI MAESTRI',
+       u'75 - CENTOVETRINE', u'7370, 7371 BEAUTIFUL XXVI - PRIMA TV',
+       u'1240 - IL SEGRETO - PRIMA TV',
+       u'IL PICCOLO PRINCIPE (DI M. OSBORNE) - PRIMA TV',
+       u'MIDNIGHT IN PARIS', u'76 - CENTOVETRINE',
+       u'1241 - IL SEGRETO - PRIMA TV', u'NOI E LA GIULIA - PRIMA TV',
+       u'9/11 - ANGELI', u'1242 1A PARTE - IL SEGRETO - PRIMA TV',
+       u'ROBBIE WILLIAMS: ONE NIGHT AT THE PALLADIUM',
+       u'1a parte - UNA VITA - PRIMA TV',
+       u'1242 2A PARTE - IL SEGRETO - PRIMA TV', u'77 - CENTOVETRINE',
+       u'2a parte - UNA VITA - PRIMA TV',
+       u'1243 1A PARTE - IL SEGRETO - PRIMA TV', u'SOLE A CATINELLE',
+       u'SUPERPARTES', u"SPRING L'ORCA SMARRITA - MIRACOLI DEGLI ANIMALI",
+       u'AMICI A QUATTRO ZAMPE - MIRACOLI DEGLI ANIMALI',
+       u'KALASHA IL CAVALLO GIUSTO - MIRACOLI DEGLI ANIMALI',
+       u'1243 2A PARTE - IL SEGRETO - PRIMA TV',
+       u'SPECIALE SHOAH - SPECIALE TG5',
+       u'PIOVUTO DAL CIELO (DI J. BALSMEYER)', u'78 - CENTOVETRINE',
+       u'LE MONTAGNE DEGLI ABISSI - DOCUMENTARI',
+       u'LE STORIE DI MELAVERDE',
+       u'IL SEGRETO XX , 1245, 1246, 1247 - PRIMA TV',
+       u'AUTUMN IN NEW YORK', u'CANONE INVERSO-MAKING LOVE',
+       u'79 - CENTOVETRINE', u'3a parte - UNA VITA - PRIMA TV',
+       u'IL SEGRETO XX , 1248 - PRIMA TV',
+       u"PAN - VIAGGIO SULL'ISOLA CHE NON C'E' - PRIMA TV",
+       u'MAGIC IN THE MOONLIGHT - PRIMA TV',
+       u'IL SEGRETO XX , 1249 - PRIMA TV',
+       u'LA BELLA E LA BESTIA (DI C. GANS)',
+       u'IL SEGRETO XX , 1250 - PRIMA TV', u'STORIA DI UNA LADRA DI LIBRI',
+       u'80 - CENTOVETRINE', u'IL SEGRETO XX , 1251 - PRIMA TV',
+       u'CADO DALLE NUBI', u"L' INTERVISTA", u'81 - CENTOVETRINE',
+       u'82 - CENTOVETRINE', u'IL SEGRETO XX , 1252 - PRIMA TV',
+       u"UNA PROPOSTA PER DIRE SI'",
+       u'I CASTELLI ROMANI - LUOGHI DI MAGNIFICA ITALIA',
+       u'LE ISOLE LAZIALI - LUOGHI DI MAGNIFICA ITALIA',
+       u'IL MONDO PERDUTO - DOCUMENTARI',
+       u'IL SEGRETO XX , 1253 - PRIMA TV', u'QUALCUNO CON CUI CORRERE',
+       u'A CRASH, A TORNADO AND A DREAM - ANGELI', u'83 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1253, 1254, 1255 - PRIMA TV', u'X-STYLE',
+       u'IN FONDO AL CUORE (DI U. GROSBARD)', u'MEDICAL MIRACLES - ANGELI',
+       u'A TRACTOR, A ROADTRIP AND A BANQUET - ANGELI',
+       u'84 - CENTOVETRINE', u'IL SEGRETO XX , 1255, 1256 - PRIMA TV',
+       u"LA VOCE DELL' IMPUDENZA - STRISCIA LA NOTIZIA",
+       u"L' ISOLA DEI FAMOSI", u'85 - CENTOVETRINE',
+       u'SPECIALE DI "AMORE PENSACI TU"',
+       u'IL SEGRETO XX , 1256, 1257 - PRIMA TV',
+       u'IL SEGRETO XX , 1257, 1258 - PRIMA TV',
+       u'IL SEGRETO XX , 1258 - PRIMA TV',
+       u"LA SCUOLA PIU' BELLA DEL MONDO - PRIMA TV", u'86 - CENTOVETRINE',
+       u'87 - CENTOVETRINE', u'IL SEGRETO XX , 1259 - PRIMA TV',
+       u'IL SEGRETO XX , 1259, 1260 - PRIMA TV', u'88 - CENTOVETRINE',
+       u'89 - CENTOVETRINE',
+       u"L' AVVENTURA IMPOSSIBILE - SUL FILO DEL DARWIN - DOCUMENTARI",
+       u'AMORE PENSACI TU - DIETRO LE QUINTE',
+       u'IL SEGRETO XX , 1260 - PRIMA TV', u'FRATELLI COLTELLI',
+       u'90 - CENTOVETRINE',
+       u'CARAIBI, PARADISO E DISTRUZIONE - WILD ATLANTICO',
+       u'IL SEGRETO XX , 1260, 1261, 1262 - PRIMA TV',
+       u'SI FA PRESTO A DIRE AMORE', u'91 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1263 - PRIMA TV',
+       u'IL SEGRETO XX , 1263, 1264 - PRIMA TV', u'IL DISCORSO DEL RE',
+       u'92 - CENTOVETRINE', u'93 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1264, 1265 - PRIMA TV', u'THE BLIND SIDE',
+       u'IL SEGRETO XX , 1265, 1266 - PRIMA TV',
+       u'INTERSTELLAR - PRIMA TV', u'94 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1266 - PRIMA TV', u'GRAVITY',
+       u'RAY (DI T. HACKFORD)', u'SHARK, 1 - SHARK - IL GRANDE PREDATORE',
+       u'LAZIO: IL CIRCEO - LUOGHI DI MAGNIFICA ITALIA',
+       u'1267 - IL SEGRETO - PRIMA TV', u'IL GRANDE GATSBY',
+       u'VICKY CRISTINA BARCELONA', u'VALENTIN', u'95 - CENTOVETRINE',
+       u'SHARK, 2 - SHARK - IL GRANDE PREDATORE',
+       u'IL SEGRETO XX , 1267, 1268, 1269 - PRIMA TV',
+       u'IL TEMPO DELLE MELE 3', u'96 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1270 - PRIMA TV', u'97 - CENTOVETRINE',
+       u'98 - CENTOVETRINE', u'IL SEGRETO XX , 1270, 1271 - PRIMA TV',
+       u"LA VOCINA DELL' IMPUDENZINA - STRISCINA LA NOTIZINA",
+       u'PSG / BARCELLONA - CHAMPIONS LEAGUE', u'CHAMPIONS LEAGUE',
+       u"LA VOCINA DELL'IMPUDENZINA - STRISCINA LA NOTIZINA",
+       u'99 - CENTOVETRINE', u'IL SEGRETO XX , 1271, 1272 - PRIMA TV',
+       u'SINTESI REAL MADRID - NAPOLI', u'100 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1272, 1273 - PRIMA TV',
+       u"ANCHE SE E' AMORE NON SI VEDE", u'101 - CENTOVETRINE',
+       u'UNA VITA 1 parte - PRIMA TV', u'IL SEGRETO XX , 1273 - PRIMA TV',
+       u'BAMBINI STANNNO BENE/EQUILIBRISMI - AMORE PENSACI TU - PRIMA TV',
+       u'MARI DEL SUD',
+       u'TREVISO E LA LAGUNA VENETA - LUOGHI DI MAGNIFICA ITALIA',
+       u'VERONA E VICENZA - LUOGHI DI MAGNIFICA ITALIA',
+       u'IL LAGO MAGGIORE E LE SUE ISOLE - LUOGHI DI MAGNIFICA ITALIA',
+       u"SHARK - OLTRE L'APPARENZA - DOCUMENTARI",
+       u'IL SEGRETO XX , 1274 - PRIMA TV', u'ANYTHING ELSE',
+       u'102 - CENTOVETRINE', u'103 - CENTOVETRINE',
+       u"SHARK - UN CACCIATORE IN VIA D'ESTINZIONE - DOCUMENTARI",
+       u'IL SEGRETO XX , 1274, 1275, 1276 - PRIMA TV',
+       u"INCONTRERAI L'UOMO DEI TUOI SOGNI", u'104 - CENTOVETRINE',
+       u'105 - CENTOVETRINE', u'106 - CENTOVETRINE',
+       u'UNA VITA 2 parte - PRIMA TV',
+       u'IL SEGRETO XX , 1276, 1277 - PRIMA TV', u'107 - CENTOVETRINE',
+       u'108 - CENTOVETRINE', u'UNA VITA 3 parte - PRIMA TV',
+       u'IL SEGRETO XX , 1277, 1278 - PRIMA TV',
+       u'MANCHESTER CITY / MONACO - CHAMPIONS LEAGUE',
+       u'109 - CENTOVETRINE', u'IL SEGRETO XX , 1278, 1279 - PRIMA TV',
+       u'110 - CENTOVETRINE', u'IL SEGRETO XX , 1279 - PRIMA TV',
+       u'SAPORE DI TE - PRIMA TV',
+       u'BAMBINI STANNNO BENE/EQUILIBRISMI - AMORE PENSACI TU',
+       u'IL SEGRETO XX , 1280 - PRIMA TV',
+       u'TUFFATI!/GRANDI SPERANZE - AMORE PENSACI TU - PRIMA TV',
+       u'MATRIX CHIAMBRETTI', u'111 - CENTOVETRINE',
+       u"SARDEGNA: LA CIVILTA' NURAGICA - LUOGHI DI MAGNIFICA ITALIA",
+       u'LA BASILICATA: IL POLLINO - LUOGHI DI MAGNIFICA ITALIA',
+       u'IL SEGRETO XX , 1280, 1281 - PRIMA TV', u'LA SCUOLA',
+       u'112 - CENTOVETRINE', u'113 - CENTOVETRINE',
+       u'LA VALLE DEL GIURA - WILD FRANCE - PRIMA TV',
+       u'IL SEGRETO XX , 1281, 1282, 1283 - PRIMA TV', u'MAGNAMOSE TUTTO',
+       u'VELLUTO BLU', u'BEAUTIFUL - PRIMA TV',
+       u'IL SEGRETO XX , 1283, 1284 - PRIMA TV',
+       u'12 ANNI SCHIAVO - PRIMA TV', u'114 - CENTOVETRINE',
+       u'115 - CENTOVETRINE', u'7397, 7398 BEAUTIFUL XXVI - PRIMA TV',
+       u'IL SEGRETO XX , 1284 - PRIMA TV', u'116 - CENTOVETRINE',
+       u'7398, 7399 BEAUTIFUL XXVI - PRIMA TV',
+       u'IL SEGRETO XX , 1285 - PRIMA TV', u'117 - CENTOVETRINE',
+       u'7399, 7400 BEAUTIFUL XXVI - PRIMA TV',
+       u'IL SEGRETO XX , 1285, 1286 - PRIMA TV', u'118 - CENTOVETRINE',
+       u'119 - CENTOVETRINE', u'7400 BEAUTIFUL XXVI - PRIMA TV',
+       u'IL SEGRETO XX , 1286, 1287 - PRIMA TV',
+       u'SHOW &amp; TELL/QUANDO I BAMBINI CI TENGONO - AMORE PENSACI TU - PRIMA TV',
+       u'PROVENZA E ACQUITANIA - WILD FRANCE - PRIMA TV',
+       u"LA MAGIA DELL'UMBRIA - LUOGHI DI MAGNIFICA ITALIA",
+       u"UMBRIA CULLA D'ARTE - LUOGHI DI MAGNIFICA ITALIA",
+       u'LA SCOPERTA DELLE MARCHE - LUOGHI DI MAGNIFICA ITALIA',
+       u'TOSCANA: PISA, SIENA E MONTEPULCIANO - LUOGHI DI MAGNIFICA ITALIA',
+       u'7400, 7401 BEAUTIFUL XXVI - PRIMA TV',
+       u'IL SEGRETO XX , 1287 - PRIMA TV', u'VOGLIO STARE SOTTO AL LETTO',
+       u'120 - CENTOVETRINE', u'121 - CENTOVETRINE',
+       u'MISTERI E MERAVIGLIE - WILD NUOVA ZELANDA - PRIMA TV',
+       u'IL SEGRETO XX , 1288, 1289, 1290 - PRIMA TV',
+       u'TUTTA COLPA DEL PARADISO', u'122 - CENTOVETRINE',
+       u'123 - CENTOVETRINE', u'IL SEGRETO XX , 1290, 1291 - PRIMA TV',
+       u'LA PREDA PERFETTA - A WALK AMONG THE TOMBSTONES - PRIMA TV',
+       u'124 - CENTOVETRINE', u'125 - CENTOVETRINE', u'126 - CENTOVETRINE',
+       u'7401, 7402 BEAUTIFUL XXVI - PRIMA TV',
+       u'IL SEGRETO XX , 1291 - PRIMA TV',
+       u'IL SEGRETO XX , 1292 - PRIMA TV', u'LITTLE BIG SHOW',
+       u'127 - CENTOVETRINE', u'IL SEGRETO XX , 1292, 1293 - PRIMA TV',
+       u'PHILOMENA', u'128 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1293, 1294 - PRIMA TV',
+       u'IL SEGRETO XX , 1294, 1295, 1296 - PRIMA TV',
+       u'129 - CENTOVETRINE', u'130 - CENTOVETRINE',
+       u'TERRE SELVAGGE - WILD NUOVA ZELANDA - PRIMA TV',
+       u"L' ARGENTARIO E LA MAREMMA - LUOGHI DI MAGNIFICA ITALIA",
+       u"L' ARCIPELAGO TOSCANO - LUOGHI DI MAGNIFICA ITALIA",
+       u'IL SEGRETO XX , 1296 - PRIMA TV', u'MAMMA ROMA',
+       u'131 - CENTOVETRINE', u'132 - CENTOVETRINE', u'133 - CENTOVETRINE',
+       u'NUOVI ARRIVATI - WILD NUOVA ZELANDA - PRIMA TV',
+       u'ABBRACCIAMI/PROPOSTE - AMORE PENSACI TU - PRIMA TV',
+       u'14&deg; MONTECARLO FILM FESTIVAL DE LA COMEDIE - SPECIALE',
+       u"L' ULTIMO INQUISITORE", u'IL SEGRETO XX , 1297 - PRIMA TV',
+       u'AMERICAN SNIPER', u'134 - CENTOVETRINE',
+       u'ANTEPRIMA DI "L\'ONORE E IL RISPETTO - L\'ULTIMO CAPITOLO" - DIETRO LE QUINTE',
+       u'135 - CENTOVETRINE', u'IL SEGRETO XX , 1298 - PRIMA TV',
+       u'136 - CENTOVETRINE',
+       u'IL RAGAZZO DELLA PORTA ACCANTO (DI R. COHEN) - PRIMA TV',
+       u'137 - CENTOVETRINE', u'138 - CENTOVETRINE', u'139 - CENTOVETRINE',
+       u'IL SEGRETO XX , 1299 - PRIMA TV',
+       u'IL SEGRETO XX - XXI , 1299, 1300, 1301 - PRIMA TV',
+       u'140 - CENTOVETRINE',
+       u'TERRA DI MUTAMENTI - INDIA SCONOSCIUTA - PRIMA TV',
+       u'IL SUDTIROL E LE SUE STORIE - LUOGHI DI MAGNIFICA ITALIA',
+       u'IL FASCINO DEL SUDTIROL - LUOGHI DI MAGNIFICA ITALIA',
+       u'LE DOLOMITI DEL TRENTINO - LUOGHI DI MAGNIFICA ITALIA',
+       u'IL SEGRETO XXI , 1301 - PRIMA TV',
+       u'SPECIALE UOMINI&amp;DONNE LE OLIMPIADI DELLA TV',
+       u'LA MALEDIZIONE DELLO SCORPIONE DI GIADA', u'141 - CENTOVETRINE',
+       u'142 - CENTOVETRINE',
+       u'TERRA DI MONTAGNE - INDIA SCONOSCIUTA - PRIMA TV',
+       u"IL MEGLIO - C'E' POSTA PER TE", u'GOSFORD PARK',
+       u'IL SEGRETO XXI , 1302 - PRIMA TV',
+       u'RUN ALL NIGHT - UNA NOTTE PER SOPRAVVIVERE - PRIMA TV',
+       u'ALTI E BASSI - AMORE PENSACI TU - PRIMA TV',
+       u'143 - CENTOVETRINE', u'144 - CENTOVETRINE', u'145 - CENTOVETRINE',
+       u'146 - CENTOVETRINE', u'TG5 EDIZIONE STRAORDINARIA',
+       u'IL SEGRETO XXI , 1303 - PRIMA TV',
+       u'IL SEGRETO XXI , 1303, 1304, 1305 - PRIMA TV',
+       u'147 - CENTOVETRINE', u'148 - CENTOVETRINE',
+       u'IL SEGRETO XXI , 1305 - PRIMA TV', u'KNOCK KNOCK',
+       u'149 - CENTOVETRINE', u'IL SEGRETO XXI , 1306 - PRIMA TV',
+       u'IL SEGRETO XXI , 1306, 1307, 1308 - PRIMA TV',
+       u'SPECIALE DI "L\'ONORE E IL RISPETTO I - II - III - IV - V" - SPECIALE DI "L\'ONORE E IL RISPETTO I - II - III - IV"',
+       u'150 - CENTOVETRINE', u'151 - CENTOVETRINE',
+       u'ANTEPRIMA DI "L\'ONORE E IL RISPETTO - ULTIMO CAPITOLO"',
+       u'TERRA DI FIUMI - INDIA SCONOSCIUTA - PRIMA TV',
+       u'IN VIAGGIO SULLA VIA EMILIA - LUOGHI DI MAGNIFICA ITALIA',
+       u'ASPETTANDO STASERA - AMICI',
+       u'IL SEGRETO XXI , 1308, 1309 - PRIMA TV',
+       u"UNA PURA FORMALITA' (DI G. TORNATORE)",
+       u'IL PONENTE LIGURE - LUOGHI DI MAGNIFICA ITALIA',
+       u'GENOVA E IL SUO PORTO ANTICO - LUOGHI DI MAGNIFICA ITALIA',
+       u'AMICHE IN ARENA', u'AGENTS SECRETS - PRIMA TV',
+       u'152 - CENTOVETRINE', u'153 - CENTOVETRINE',
+       u'IL SEGRETO XXI , 1309 - PRIMA TV',
+       u'IL GRANDE MATCH (DI P. SEGAL) - PRIMA TV',
+       u'MI ASPETTI? - AMORE PENSACI TU - PRIMA TV', u'154 - CENTOVETRINE',
+       u'155 - CENTOVETRINE', u'IL SEGRETO XXI , 1310 - PRIMA TV',
+       u'156 - CENTOVETRINE', u'IL SEGRETO XXI , 1311, 1312 - PRIMA TV',
+       u'157 - CENTOVETRINE', u'IL SEGRETO XXI , 1313 - PRIMA TV',
+       u'SAN ANDREAS - PRIMA TV',
+       u'SPECIALE DI "L\'ONORE E IL RISPETTO I - II - III - IV - V"',
+       u'POSEIDON', u"L'ONORE E IL RISPETTO - ULTIMO CAPITOLO - PRIMA TV",
+       u"ANTICIPAZIONE - L' ONORE E IL RISPETTO - ULTIMO CAPITOLO",
+       u'158 - CENTOVETRINE', u'159 - CENTOVETRINE', u'WILD ALASKA',
+       u'IL BASSOPIEMONTE - LUOGHI DI MAGNIFICA ITALIA',
+       u'IL SEGRETO XXI , 1314 - PRIMA TV', u'SHOPGIRL',
+       u'160 - CENTOVETRINE', u'161 - CENTOVETRINE',
+       u'SE FINISSE IL PETROLIO - DOCUMENTARI',
+       u'IL SEGRETO XXI , 1314, 1315, 1316 - PRIMA TV',
+       u'LA TERRA (DI S. RUBINI)', u'162 - CENTOVETRINE',
+       u'IL SEGRETO XXI , 1317 - PRIMA TV',
+       u'THE WATER DIVINER - PRIMA TV',
+       u'IO (NON) TI CONOSCO - AMORE PENSACI TU - PRIMA TV',
+       u'163 - CENTOVETRINE', u'164 - CENTOVETRINE',
+       u'IL SEGRETO XXI , 1318 - PRIMA TV',
+       u'IL SEGRETO XXI , 1318, 1319, 1320 - PRIMA TV',
+       u'165 - CENTOVETRINE', u'166 - CENTOVETRINE',
+       u'IL SEGRETO XXI , 1320 - PRIMA TV',
+       u'THE BUTLER - UN MAGGIORDOMO ALLA CASA BIANCA',
+       u"L'ONORE E IL RISPETTO - ULTIMO CAPITOLO",
+       u'IL SEGRETO XXI , 1321 - PRIMA TV',
+       u"L' ONORE E IL RISPETTO - L'ULTIMO CAPITOLO , 2 - L'ONORE E IL RISPETTO - PRIMA TV",
+       u'CHIAMBRETTI - MATRIX',
+       u'MONDO SOTTO ZERO - DOCUMENTARI - PRIMA TV',
+       u'UNDER THE POLE, 2 - DOCUMENTARI - PRIMA TV',
+       u'IL SEGRETO XXI , 1321, 1322 - PRIMA TV', u'LADRI DI BICICLETTE',
+       u'IL PRANZO DELLA DOMENICA',
+       u'IL SEGRETO XXI , 1323, 1324 - PRIMA TV', u'SETA',
+       u'IL SEGRETO XXI , 1324 - PRIMA TV',
+       u'HEART OF THE SEA - LE ORIGINI DI MOBY DICK - PRIMA TV',
+       u'TUTTI TRANNE ME - AMORE PENSACI TU - PRIMA TV'], dtype=object)
+>>> (0, 0)
+(0, 1)
+(0, 2)
+(0, 3)
+(0, 4)
+(0, 5)
+(0, 6)
+(0, 7)
+(0, 8)
+(0, 9)
+(0, 10)
+(0, 11)
+(0, 12)
+(0, 13)
+(0, 14)
+(0, 15)
+(0, 16)
+(0, 17)
+(0, 18)
+(0, 19)
+(0, 20)
+(0, 21)
+(0, 22)
+(0, 23)
+(0, 24)
+(0, 25)
+(0, 26)
+(0, 27)
+(0, 28)
+(0, 29)
+(0, 30)
+(1, 0)
+(1, 1)
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(1, 6)
+(1, 7)
+(1, 8)
+(1, 9)
+(1, 10)
+(1, 11)
+(1, 12)
+(1, 13)
+(1, 14)
+(1, 15)
+(1, 16)
+(1, 17)
+(1, 18)
+(1, 19)
+(1, 20)
+(1, 21)
+(1, 22)
+(1, 23)
+(1, 24)
+(1, 25)
+(1, 26)
+(1, 27)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(2, 6)
+(2, 7)
+(2, 8)
+(2, 9)
+(2, 10)
+(2, 11)
+(2, 12)
+(2, 13)
+(2, 14)
+(2, 15)
+(2, 16)
+(2, 17)
+(2, 18)
+(2, 19)
+(2, 20)
+(2, 21)
+(2, 22)
+(2, 23)
+(2, 24)
+(2, 25)
+(2, 26)
+(2, 27)
+(2, 28)
+(2, 29)
+(2, 30)
+(3, 0)
+(3, 1)
+(3, 2)
+(3, 3)
+(3, 4)
+(3, 5)
+(3, 6)
+(3, 7)
+(3, 8)
+(3, 9)
+(3, 10)
+(4, 0)
+(5, 0)
+(6, 0)
+(7, 0)
+(8, 0)
+(9, 0)
+(10, 0)
+(11, 0)
+>>> titleL
+Empty DataFrame
+Columns: []
+Index: []
+>>> adSect
+            NaN  amici  brand  fascino  fiction  il_segreto  intrattenimento  \
+2017-04-10  NaN      1    NaN      NaN      NaN           1              NaN   
+
+            nan  news/info  reality/talent  soap  sport  uominiedonne  
+2017-04-10    1         17             NaN     1    NaN             1  
+>>> (0, 0)
+(0, 1)
+(0, 2)
+(0, 3)
+(0, 4)
+(0, 5)
+(0, 6)
+(0, 7)
+(0, 8)
+(0, 9)
+(0, 10)
+(0, 11)
+(0, 12)
+(0, 13)
+(0, 14)
+(0, 15)
+(0, 16)
+(0, 17)
+(0, 18)
+(0, 19)
+(0, 20)
+(0, 21)
+(0, 22)
+(0, 23)
+(0, 24)
+(0, 25)
+(0, 26)
+(0, 27)
+(0, 28)
+(0, 29)
+(0, 30)
+(1, 0)
+(1, 1)
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(1, 6)
+(1, 7)
+(1, 8)
+(1, 9)
+(1, 10)
+(1, 11)
+(1, 12)
+(1, 13)
+(1, 14)
+(1, 15)
+(1, 16)
+(1, 17)
+(1, 18)
+(1, 19)
+(1, 20)
+(1, 21)
+(1, 22)
+(1, 23)
+(1, 24)
+(1, 25)
+(1, 26)
+(1, 27)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(2, 6)
+(2, 7)
+(2, 8)
+(2, 9)
+(2, 10)
+(2, 11)
+(2, 12)
+(2, 13)
+(2, 14)
+(2, 15)
+(2, 16)
+(2, 17)
+(2, 18)
+(2, 19)
+(2, 20)
+(2, 21)
+(2, 22)
+(2, 23)
+(2, 24)
+(2, 25)
+(2, 26)
+(2, 27)
+(2, 28)
+(2, 29)
+(2, 30)
+(3, 0)
+(3, 1)
+(3, 2)
+(3, 3)
+(3, 4)
+(3, 5)
+(3, 6)
+(3, 7)
+(3, 8)
+(3, 9)
+(3, 10)
+(4, 0)
+(5, 0)
+(6, 0)
+(7, 0)
+(8, 0)
+(9, 0)
+(10, 0)
+(11, 0)
+>>> titleL
+     time                                              title         group
+0   06:00                                   prima pagina tg5     news/info
+1   06:15                                   prima pagina tg5     news/info
+2   06:31                                   prima pagina tg5     news/info
+3   06:46                                   prima pagina tg5     news/info
+4   07:00                                   prima pagina tg5     news/info
+5   07:15                                   prima pagina tg5     news/info
+6   07:30                                   prima pagina tg5     news/info
+7   07:45                                   prima pagina tg5     news/info
+8   07:55                                           traffico          rest
+9   07:58                                         meteo.it a     news/info
+10  07:59                                                tg5     news/info
+11  09:10                         le frontiere dello spirito          rest
+12  10:01                                 un amore di strega          rest
+13  12:00                                          melaverde          rest
+14  13:00                                                tg5     news/info
+15  13:39                                         meteo.it b     news/info
+16  13:40                                     l'arca di noe'          rest
+17  14:00              il conte di montecristo (di j. dayan)          rest
+18  16:45                                    domenica rewind          rest
+19  18:45                                      caduta libera          rest
+20  19:57                                   tg5 prima pagina     news/info
+21  20:00                                                tg5     news/info
+22  20:39                                         meteo.it c     news/info
+23  20:40                                 paperissima sprint     news/info
+24  21:10                              paddington - prima tv          rest
+25  23:20       ggg - grande gigante gentile - ciak speciale          rest
+26  23:26             una famiglia perfetta (di p. genovese)          rest
+27  01:35                                                tg5     news/info
+28  02:18                                         meteo.it d     news/info
+29  02:19                                 paperissima sprint     news/info
+..    ...                                                ...           ...
+37  05:45                                     media shopping          rest
+0   06:00                                   prima pagina tg5     news/info
+1   06:15                                   prima pagina tg5     news/info
+2   06:31                                   prima pagina tg5     news/info
+3   06:46                                   prima pagina tg5     news/info
+4   07:00                                   prima pagina tg5     news/info
+5   07:15                                   prima pagina tg5     news/info
+6   07:30                                   prima pagina tg5     news/info
+7   07:45                                   prima pagina tg5     news/info
+8   07:55                                           traffico          rest
+9   07:58                                         meteo.it a     news/info
+10  07:59                                                tg5     news/info
+11  08:45                                     mattino cinque          rest
+12  11:00                                              forum     news/info
+13  13:00                                                tg5     news/info
+14  13:39                                         meteo.it b     news/info
+15  13:41                          beautiful xxvi - prima tv          soap
+16  14:10                                una vita - prima tv          rest
+17  14:45                                     uomini e donne  uominiedonne
+18  16:10                                l' isola dei famosi          rest
+19  16:20                                              amici         amici
+20  16:30                   il segreto xxi , 1324 - prima tv    il_segreto
+21  17:10                                  pomeriggio cinque          rest
+22  18:45                                   avanti un altro!           nan
+23  19:57                                   tg5 prima pagina     news/info
+24  20:00                                                tg5     news/info
+25  20:39                                         meteo.it c     news/info
+26  20:40      la voce dell' impudenza - striscia la notizia     news/info
+27  21:11  heart of the sea - le origini di moby dick - p...          rest
+28  23:30      tutti tranne me - amore pensaci tu - prima tv          rest
+
+[3838 rows x 3 columns]
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 64, in <module>
+    titleD = titleD.groupby(['t']).t.size()
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 3436, in groupby
+    sort=sort, group_keys=group_keys, squeeze=squeeze)
+  File "/usr/lib/python2.7/dist-packages/pandas/core/groupby.py", line 1311, in groupby
+    return klass(obj, by, **kwds)
+  File "/usr/lib/python2.7/dist-packages/pandas/core/groupby.py", line 418, in __init__
+    level=level, sort=sort)
+  File "/usr/lib/python2.7/dist-packages/pandas/core/groupby.py", line 2264, in _get_grouper
+    in_axis, name, gpr = True, gpr, obj[gpr]
+  File "/usr/lib/python2.7/dist-packages/pandas/core/series.py", line 557, in __getitem__
+    result = self.index.get_value(self, key)
+  File "/usr/lib/python2.7/dist-packages/pandas/core/index.py", line 1804, in get_value
+    raise e1
+KeyError: 'title'
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 64, in <module>
+    titleD = titleD.groupby(['t']).t.size()
+NameError: name 'titleT' is not defined
+>>> title
+100 - centovetrine                                                     1
+101 - centovetrine                                                     2
+102 - centovetrine                                                     1
+103 - centovetrine                                                     1
+104 - centovetrine                                                     1
+105 - centovetrine                                                     1
+106 - centovetrine                                                     1
+107 - centovetrine                                                     1
+108 - centovetrine                                                     2
+109 - centovetrine                                                     1
+110 - centovetrine                                                     2
+111 - centovetrine                                                     1
+112 - centovetrine                                                     1
+113 - centovetrine                                                     1
+114 - centovetrine                                                     1
+115 - centovetrine                                                     1
+116 - centovetrine                                                     1
+117 - centovetrine                                                     1
+118 - centovetrine                                                     1
+119 - centovetrine                                                     2
+12 anni schiavo - prima tv                                             1
+120 - centovetrine                                                     1
+121 - centovetrine                                                     1
+122 - centovetrine                                                     1
+123 - centovetrine                                                     1
+1230 - 1231 - il segreto - prima tv                                    1
+1237 - il segreto - prima tv                                           1
+1238 -1239 - il segreto - prima tv                                     1
+124 - centovetrine                                                     1
+1240 - il segreto - prima tv                                           1
+                                                                    ... 
+toscana: pisa, siena e montepulciano - luoghi di magnifica italia      1
+traffici oscuri - ii parte - victor ros                                1
+traffico                                                             100
+tre bambini sotto l'albero                                             1
+treviso e la laguna veneta - luoghi di magnifica italia                1
+tuffati!/grandi speranze - amore pensaci tu - prima tv                 1
+tutta colpa del paradiso                                               1
+tutti tranne me - amore pensaci tu - prima tv                          1
+umbria culla d'arte - luoghi di magnifica italia                       1
+un amore di strega                                                     1
+un avvocato per babbo natale                                           1
+un cane per due                                                        1
+una famiglia perfetta (di p. genovese)                                 1
+una proposta per dire si'                                              1
+una pura formalita' (di g. tornatore)                                  1
+una vita - prima tv                                                   68
+una vita 1 parte - prima tv                                            1
+una vita 2 parte - prima tv                                            1
+una vita 3 parte - prima tv                                            1
+under the pole, 2 - documentari - prima tv                             1
+uomini e donne                                                       129
+valentin                                                               1
+velluto blu                                                            1
+verissimo                                                             14
+verona e vicenza - luoghi di magnifica italia                          1
+vicky cristina barcelona                                               1
+voce del verbo amore                                                   1
+voglio stare sotto al letto                                            1
+wild alaska                                                            1
+x-style                                                               23
+dtype: int64
+>>> title
+100 - centovetrine                                                     1
+101 - centovetrine                                                     2
+102 - centovetrine                                                     1
+103 - centovetrine                                                     1
+104 - centovetrine                                                     1
+105 - centovetrine                                                     1
+106 - centovetrine                                                     1
+107 - centovetrine                                                     1
+108 - centovetrine                                                     2
+109 - centovetrine                                                     1
+110 - centovetrine                                                     2
+111 - centovetrine                                                     1
+112 - centovetrine                                                     1
+113 - centovetrine                                                     1
+114 - centovetrine                                                     1
+115 - centovetrine                                                     1
+116 - centovetrine                                                     1
+117 - centovetrine                                                     1
+118 - centovetrine                                                     1
+119 - centovetrine                                                     2
+12 anni schiavo - prima tv                                             1
+120 - centovetrine                                                     1
+121 - centovetrine                                                     1
+122 - centovetrine                                                     1
+123 - centovetrine                                                     1
+1230 - 1231 - il segreto - prima tv                                    1
+1237 - il segreto - prima tv                                           1
+1238 -1239 - il segreto - prima tv                                     1
+124 - centovetrine                                                     1
+1240 - il segreto - prima tv                                           1
+                                                                    ... 
+toscana: pisa, siena e montepulciano - luoghi di magnifica italia      1
+traffici oscuri - ii parte - victor ros                                1
+traffico                                                             100
+tre bambini sotto l'albero                                             1
+treviso e la laguna veneta - luoghi di magnifica italia                1
+tuffati!/grandi speranze - amore pensaci tu - prima tv                 1
+tutta colpa del paradiso                                               1
+tutti tranne me - amore pensaci tu - prima tv                          1
+umbria culla d'arte - luoghi di magnifica italia                       1
+un amore di strega                                                     1
+un avvocato per babbo natale                                           1
+un cane per due                                                        1
+una famiglia perfetta (di p. genovese)                                 1
+una proposta per dire si'                                              1
+una pura formalita' (di g. tornatore)                                  1
+una vita - prima tv                                                   68
+una vita 1 parte - prima tv                                            1
+una vita 2 parte - prima tv                                            1
+una vita 3 parte - prima tv                                            1
+under the pole, 2 - documentari - prima tv                             1
+uomini e donne                                                       129
+valentin                                                               1
+velluto blu                                                            1
+verissimo                                                             14
+verona e vicenza - luoghi di magnifica italia                          1
+vicky cristina barcelona                                               1
+voce del verbo amore                                                   1
+voglio stare sotto al letto                                            1
+wild alaska                                                            1
+x-style                                                               23
+dtype: int64
+>>> title                                                              group       
+100 - centovetrine                                                 fiction           1
+101 - centovetrine                                                 fiction           2
+102 - centovetrine                                                 fiction           1
+103 - centovetrine                                                 fiction           1
+104 - centovetrine                                                 fiction           1
+105 - centovetrine                                                 fiction           1
+106 - centovetrine                                                 fiction           1
+107 - centovetrine                                                 fiction           1
+108 - centovetrine                                                 fiction           2
+109 - centovetrine                                                 fiction           1
+110 - centovetrine                                                 fiction           2
+111 - centovetrine                                                 fiction           1
+112 - centovetrine                                                 fiction           1
+113 - centovetrine                                                 fiction           1
+114 - centovetrine                                                 fiction           1
+115 - centovetrine                                                 fiction           1
+116 - centovetrine                                                 fiction           1
+117 - centovetrine                                                 fiction           1
+118 - centovetrine                                                 fiction           1
+119 - centovetrine                                                 fiction           2
+12 anni schiavo - prima tv                                         rest              1
+120 - centovetrine                                                 fiction           1
+121 - centovetrine                                                 fiction           1
+122 - centovetrine                                                 fiction           1
+123 - centovetrine                                                 fiction           1
+1230 - 1231 - il segreto - prima tv                                il_segreto        1
+1237 - il segreto - prima tv                                       il_segreto        1
+1238 -1239 - il segreto - prima tv                                 il_segreto        1
+124 - centovetrine                                                 fiction           1
+1240 - il segreto - prima tv                                       il_segreto        1
+                                                                                  ... 
+toscana: pisa, siena e montepulciano - luoghi di magnifica italia  rest              1
+traffici oscuri - ii parte - victor ros                            rest              1
+traffico                                                           rest            100
+tre bambini sotto l'albero                                         rest              1
+treviso e la laguna veneta - luoghi di magnifica italia            rest              1
+tuffati!/grandi speranze - amore pensaci tu - prima tv             rest              1
+tutta colpa del paradiso                                           rest              1
+tutti tranne me - amore pensaci tu - prima tv                      rest              1
+umbria culla d'arte - luoghi di magnifica italia                   rest              1
+un amore di strega                                                 rest              1
+un avvocato per babbo natale                                       rest              1
+un cane per due                                                    rest              1
+una famiglia perfetta (di p. genovese)                             rest              1
+una proposta per dire si'                                          fascino           1
+una pura formalita' (di g. tornatore)                              rest              1
+una vita - prima tv                                                rest             68
+una vita 1 parte - prima tv                                        rest              1
+una vita 2 parte - prima tv                                        rest              1
+una vita 3 parte - prima tv                                        rest              1
+under the pole, 2 - documentari - prima tv                         rest              1
+uomini e donne                                                     uominiedonne    129
+valentin                                                           rest              1
+velluto blu                                                        rest              1
+verissimo                                                          news/info        14
+verona e vicenza - luoghi di magnifica italia                      rest              1
+vicky cristina barcelona                                           rest              1
+voce del verbo amore                                               rest              1
+voglio stare sotto al letto                                        rest              1
+wild alaska                                                        rest              1
+x-style                                                            rest             23
+dtype: int64
+>>> (0, 0)
+(0, 1)
+(0, 2)
+(0, 3)
+(0, 4)
+(0, 5)
+(0, 6)
+(0, 7)
+(0, 8)
+(0, 9)
+(0, 10)
+(0, 11)
+(0, 12)
+(0, 13)
+(0, 14)
+(0, 15)
+(0, 16)
+(0, 17)
+(0, 18)
+(0, 19)
+(0, 20)
+(0, 21)
+(0, 22)
+(0, 23)
+(0, 24)
+(0, 25)
+(0, 26)
+(0, 27)
+(0, 28)
+(0, 29)
+(0, 30)
+(1, 0)
+(1, 1)
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(1, 6)
+(1, 7)
+(1, 8)
+(1, 9)
+(1, 10)
+(1, 11)
+(1, 12)
+(1, 13)
+(1, 14)
+(1, 15)
+(1, 16)
+(1, 17)
+(1, 18)
+(1, 19)
+(1, 20)
+(1, 21)
+(1, 22)
+(1, 23)
+(1, 24)
+(1, 25)
+(1, 26)
+(1, 27)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(2, 6)
+(2, 7)
+(2, 8)
+(2, 9)
+(2, 10)
+(2, 11)
+(2, 12)
+(2, 13)
+(2, 14)
+(2, 15)
+(2, 16)
+(2, 17)
+(2, 18)
+(2, 19)
+(2, 20)
+(2, 21)
+(2, 22)
+(2, 23)
+(2, 24)
+(2, 25)
+(2, 26)
+(2, 27)
+(2, 28)
+(2, 29)
+(2, 30)
+(3, 0)
+(3, 1)
+(3, 2)
+(3, 3)
+(3, 4)
+(3, 5)
+(3, 6)
+(3, 7)
+(3, 8)
+(3, 9)
+(3, 10)
+(4, 0)
+(5, 0)
+(6, 0)
+(7, 0)
+(8, 0)
+(9, 0)
+(10, 0)
+(11, 0)
+>>> 
+>>> 
+>>> paliPrg
+            amici  brand  fascino   fiction  il_segreto  intrattenimento  \
+2017-01-01    0.0      0        0  0.000000    0.000000                0   
+2017-01-02    0.0      0        0  1.000000    0.333333                0   
+2017-01-03    0.0      0        0  0.666667    0.333333                0   
+2017-01-04    0.0      0        0  0.666667    0.333333                0   
+2017-01-05    0.0      0        0  0.833333    0.333333                0   
+2017-01-06    0.0      0        0  0.666667    0.000000                0   
+2017-01-07    0.0      0        1  0.833333    0.333333                0   
+2017-01-08    0.0      0        0  0.500000    0.666667                0   
+2017-01-09    0.0      0        0  0.166667    0.333333                0   
+2017-01-10    0.0      0        0  0.166667    0.333333                0   
+2017-01-11    0.0      0        0  0.500000    0.333333                0   
+2017-01-12    0.0      0        0  0.166667    0.333333                0   
+2017-01-13    0.0      0        0  0.666667    0.333333                0   
+2017-01-14    0.5      0        1  0.000000    0.333333                0   
+2017-01-15    0.0      1        0  0.166667    0.666667                0   
+2017-01-16    0.0      1        0  0.333333    0.666667                0   
+2017-01-17    0.0      1        0  0.166667    0.333333                0   
+2017-01-18    0.0      1        0  0.166667    0.333333                0   
+2017-01-19    0.0      1        0  0.500000    0.333333                0   
+2017-01-20    0.0      1        0  0.166667    0.333333                0   
+2017-01-21    1.0      1        1  0.166667    0.333333                0   
+2017-01-22    0.0      1        0  0.166667    0.666667                0   
+2017-01-23    0.0      1        0  0.166667    0.666667                0   
+2017-01-24    0.0      1        0  0.166667    0.333333                0   
+2017-01-25    0.0      1        0  0.333333    0.333333                0   
+2017-01-26    0.0      1        0  0.500000    0.333333                0   
+2017-01-27    0.0      1        1  0.333333    0.333333                0   
+2017-01-28    0.5      1        1  0.166667    0.333333                0   
+2017-01-29    0.0      1        0  0.166667    0.666667                0   
+2017-01-30    0.0      1        0  0.333333    0.333333                0   
+...           ...    ...      ...       ...         ...              ...   
+2017-03-12    0.0      1        0  0.000000    0.000000                0   
+2017-03-13    0.5      1        0  0.333333    0.333333                0   
+2017-03-14    0.5      1        0  0.500000    0.333333                0   
+2017-03-15    0.5      1        0  0.333333    0.333333                0   
+2017-03-16    0.5      1        0  0.666667    0.333333                0   
+2017-03-17    0.5      1        0  0.500000    1.000000                0   
+2017-03-18    0.5      1        0  0.500000    0.333333                0   
+2017-03-19    0.0      1        1  0.000000    0.000000                0   
+2017-03-20    0.5      1        0  0.500000    0.333333                0   
+2017-03-21    0.5      1        0  0.666667    0.333333                0   
+2017-03-22    0.5      1        0  0.500000    1.000000                0   
+2017-03-23    0.5      1        0  0.333333    0.333333                0   
+2017-03-24    0.5      1        0  0.833333    1.000000                0   
+2017-03-25    1.0      1        0  0.166667    0.333333                0   
+2017-03-26    0.0      1        0  0.333333    0.000000                0   
+2017-03-27    0.5      1        0  0.500000    0.333333                0   
+2017-03-28    0.5      1        0  0.500000    0.333333                0   
+2017-03-29    0.5      1        0  0.500000    1.000000                0   
+2017-03-30    0.5      1        0  0.500000    0.333333                0   
+2017-03-31    1.0      1        0  1.000000    0.333333                0   
+2017-04-01    0.5      1        0  0.500000    0.333333                0   
+2017-04-02    0.0      1        0  0.166667    0.666667                0   
+2017-04-03    0.5      1        0  0.333333    0.333333                0   
+2017-04-04    0.5      1        0  0.333333    0.333333                0   
+2017-04-05    0.5      1        0  0.500000    1.000000                0   
+2017-04-06    0.5      1        0  0.333333    0.333333                0   
+2017-04-07    0.5      1        0  0.333333    0.333333                0   
+2017-04-08    0.5      1        0  0.000000    0.333333                0   
+2017-04-09    0.0      1        0  0.333333    0.666667                0   
+2017-04-10    0.5      1        0  0.166667    0.333333                0   
+
+            news/info  reality/talent  soap  sport  uominiedonne  
+2017-01-01   0.750000             0.0   0.0      0           0.0  
+2017-01-02   0.964286             0.0   0.0      0           0.0  
+2017-01-03   0.964286             0.0   0.0      0           0.0  
+2017-01-04   0.892857             0.0   0.0      0           0.0  
+2017-01-05   0.892857             0.0   0.0      0           0.0  
+2017-01-06   0.857143             0.0   0.0      0           0.0  
+2017-01-07   0.821429             0.0   0.0      0           0.0  
+2017-01-08   0.750000             0.0   0.0      0           0.0  
+2017-01-09   0.785714             0.0   0.5      0           1.0  
+2017-01-10   0.892857             0.0   0.5      0           1.0  
+2017-01-11   0.928571             0.0   0.5      0           1.0  
+2017-01-12   0.892857             0.0   0.5      0           1.0  
+2017-01-13   0.857143             0.0   0.5      0           1.0  
+2017-01-14   0.857143             0.0   0.5      0           0.0  
+2017-01-15   0.785714             0.0   0.0      0           0.0  
+2017-01-16   0.785714             0.0   0.5      0           1.0  
+2017-01-17   0.821429             0.0   0.5      0           1.0  
+2017-01-18   0.785714             0.0   0.5      0           1.0  
+2017-01-19   0.821429             0.0   0.5      0           1.0  
+2017-01-20   0.892857             0.0   0.5      0           1.0  
+2017-01-21   0.857143             0.0   0.5      0           0.0  
+2017-01-22   0.750000             0.0   0.0      0           0.0  
+2017-01-23   0.785714             0.5   0.5      0           1.0  
+2017-01-24   0.892857             0.0   0.5      0           1.0  
+2017-01-25   0.821429             0.0   0.5      0           1.0  
+2017-01-26   0.785714             0.0   0.5      0           1.0  
+2017-01-27   0.785714             0.0   0.5      0           1.0  
+2017-01-28   0.857143             0.0   0.5      0           0.0  
+2017-01-29   0.785714             0.0   0.0      0           0.0  
+2017-01-30   0.857143             0.5   0.5      0           1.0  
+...               ...             ...   ...    ...           ...  
+2017-03-12   0.750000             0.0   0.0      0           0.0  
+2017-03-13   0.857143             0.5   0.5      0           1.0  
+2017-03-14   0.785714             1.0   0.5      0           1.0  
+2017-03-15   0.821429             0.5   0.5      0           1.0  
+2017-03-16   0.785714             0.5   0.5      0           1.0  
+2017-03-17   0.785714             0.5   0.5      0           1.0  
+2017-03-18   0.892857             0.0   0.5      0           0.0  
+2017-03-19   0.750000             0.0   0.0      0           0.0  
+2017-03-20   0.785714             0.5   1.0      0           1.0  
+2017-03-21   0.785714             1.0   0.5      0           1.0  
+2017-03-22   0.857143             0.5   0.5      0           1.0  
+2017-03-23   0.857143             0.5   0.5      0           1.0  
+2017-03-24   0.821429             0.5   0.5      0           1.0  
+2017-03-25   1.000000             0.0   0.5      0           0.0  
+2017-03-26   0.785714             0.0   0.0      0           0.0  
+2017-03-27   0.785714             0.5   0.5      0           1.0  
+2017-03-28   0.785714             1.0   0.5      0           1.0  
+2017-03-29   0.821429             0.5   0.5      0           1.0  
+2017-03-30   0.785714             0.5   0.5      0           1.0  
+2017-03-31   0.821429             0.5   0.5      0           0.0  
+2017-04-01   0.892857             0.0   0.5      0           0.0  
+2017-04-02   0.821429             0.5   0.0      0           0.0  
+2017-04-03   0.928571             0.5   0.5      0           1.0  
+2017-04-04   0.857143             1.0   0.5      0           1.0  
+2017-04-05   0.821429             0.5   0.5      0           1.0  
+2017-04-06   0.785714             0.5   0.5      0           1.0  
+2017-04-07   0.821429             0.5   0.5      0           1.0  
+2017-04-08   0.857143             0.0   1.0      0           0.0  
+2017-04-09   0.750000             0.5   0.0      0           0.0  
+2017-04-10   0.607143             0.5   0.5      0           0.5  
+
+[100 rows x 11 columns]
+>>> (0, 0)
+(1, 0)
+(2, 0)
+(3, 0)
+(4, 0)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 42, in <module>
+    adSect = pd.DataFrame({'title':np.array(paliL)[:,0],'time':np.array(paliL)[:,1]})
+IndexError: too many indices for array
+>>> paliL
+[]
+>>> (0, 0)
+(0, 1)
+(0, 2)
+(0, 3)
+(0, 4)
+(0, 5)
+(0, 6)
+(0, 7)
+(0, 8)
+(0, 9)
+(0, 10)
+(0, 11)
+(0, 12)
+(0, 13)
+(0, 14)
+(0, 15)
+(0, 16)
+(0, 17)
+(0, 18)
+(0, 19)
+(0, 20)
+(0, 21)
+(0, 22)
+(0, 23)
+(0, 24)
+(0, 25)
+(0, 26)
+(0, 27)
+(0, 28)
+(0, 29)
+(0, 30)
+(1, 0)
+(1, 1)
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(1, 6)
+(1, 7)
+(1, 8)
+(1, 9)
+(1, 10)
+(1, 11)
+(1, 12)
+(1, 13)
+(1, 14)
+(1, 15)
+(1, 16)
+(1, 17)
+(1, 18)
+(1, 19)
+(1, 20)
+(1, 21)
+(1, 22)
+(1, 23)
+(1, 24)
+(1, 25)
+(1, 26)
+(1, 27)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(2, 6)
+(2, 7)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 33, in <module>
+    resq = requests.get(baseUrl+dateDir)
+  File "/usr/lib/python2.7/dist-packages/requests/api.py", line 67, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/requests/api.py", line 53, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/requests/sessions.py", line 468, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python2.7/dist-packages/requests/sessions.py", line 576, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/requests/adapters.py", line 437, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='www.mediaset.it', port=80): Max retries exceeded with url: /guidatv/inc/canali/201703/20170308_I1.sjson (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x7f4cf4426690>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+>>> (0, 0)
+(0, 1)
+(0, 2)
+(0, 3)
+(0, 4)
+(0, 5)
+(0, 6)
+(0, 7)
+(0, 8)
+(0, 9)
+(0, 10)
+(0, 11)
+(0, 12)
+(0, 13)
+(0, 14)
+(0, 15)
+(0, 16)
+(0, 17)
+(0, 18)
+(0, 19)
+(0, 20)
+(0, 21)
+(0, 22)
+(0, 23)
+(0, 24)
+(0, 25)
+(0, 26)
+(0, 27)
+(0, 28)
+(0, 29)
+(0, 30)
+(1, 0)
+(1, 1)
+(1, 2)
+(1, 3)
+(1, 4)
+(1, 5)
+(1, 6)
+(1, 7)
+(1, 8)
+(1, 9)
+(1, 10)
+(1, 11)
+(1, 12)
+(1, 13)
+(1, 14)
+(1, 15)
+(1, 16)
+(1, 17)
+(1, 18)
+(1, 19)
+(1, 20)
+(1, 21)
+(1, 22)
+(1, 23)
+(1, 24)
+(1, 25)
+(1, 26)
+(1, 27)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(2, 5)
+(2, 6)
+(2, 7)
+(2, 8)
+(2, 9)
+(2, 10)
+(2, 11)
+(2, 12)
+(2, 13)
+(2, 14)
+(2, 15)
+(2, 16)
+(2, 17)
+(2, 18)
+(2, 19)
+(2, 20)
+(2, 21)
+(2, 22)
+(2, 23)
+(2, 24)
+(2, 25)
+(2, 26)
+(2, 27)
+(2, 28)
+(2, 29)
+(2, 30)
+(3, 0)
+(3, 1)
+(3, 2)
+(3, 3)
+(3, 4)
+(3, 5)
+(3, 6)
+(3, 7)
+(3, 8)
+(3, 9)
+(3, 10)
+(4, 0)
+(5, 0)
+(6, 0)
+(7, 0)
+(8, 0)
+(9, 0)
+(10, 0)
+(11, 0)
+>>> paliPrg
+            amici  brand  fascino  fiction  il_segreto  intrattenimento  \
+2017-01-01    NaN    NaN      NaN      NaN         NaN              NaN   
+2017-01-02    NaN    NaN      NaN        6           1              NaN   
+2017-01-03    NaN    NaN      NaN        4           1              NaN   
+2017-01-04    NaN    NaN      NaN        4           1              NaN   
+2017-01-05    NaN    NaN      NaN        5           1              NaN   
+2017-01-06    NaN    NaN      NaN        4         NaN              NaN   
+2017-01-07    NaN    NaN        1        5           1              NaN   
+2017-01-08    NaN    NaN      NaN        3           2              NaN   
+2017-01-09    NaN    NaN      NaN        1           1              NaN   
+2017-01-10    NaN    NaN      NaN        1           1              NaN   
+2017-01-11    NaN    NaN      NaN        3           1              NaN   
+2017-01-12    NaN    NaN      NaN        1           1              NaN   
+2017-01-13    NaN    NaN      NaN        4           1              NaN   
+2017-01-14      1    NaN        1      NaN           1              NaN   
+2017-01-15    NaN      1      NaN        1           2              NaN   
+2017-01-16    NaN      1      NaN        2           2              NaN   
+2017-01-17    NaN      1      NaN        1           1              NaN   
+2017-01-18    NaN      1      NaN        1           1              NaN   
+2017-01-19    NaN      1      NaN        3           1              NaN   
+2017-01-20    NaN      1      NaN        1           1              NaN   
+2017-01-21      2      1        1        1           1              NaN   
+2017-01-22    NaN      1      NaN        1           2              NaN   
+2017-01-23    NaN      1      NaN        1           2              NaN   
+2017-01-24    NaN      1      NaN        1           1              NaN   
+2017-01-25    NaN      1      NaN        2           1              NaN   
+2017-01-26    NaN      1      NaN        3           1              NaN   
+2017-01-27    NaN      1        1        2           1              NaN   
+2017-01-28      1      1        1        1           1              NaN   
+2017-01-29    NaN      1      NaN        1           2              NaN   
+2017-01-30    NaN      1      NaN        2           1              NaN   
+...           ...    ...      ...      ...         ...              ...   
+2017-03-12    NaN      1      NaN      NaN         NaN              NaN   
+2017-03-13      1      1      NaN        2           1              NaN   
+2017-03-14      1      1      NaN        3           1              NaN   
+2017-03-15      1      1      NaN        2           1              NaN   
+2017-03-16      1      1      NaN        4           1              NaN   
+2017-03-17      1      1      NaN        3           3              NaN   
+2017-03-18      1      1      NaN        3           1              NaN   
+2017-03-19    NaN      1        1      NaN         NaN              NaN   
+2017-03-20      1      1      NaN        3           1              NaN   
+2017-03-21      1      1      NaN        4           1              NaN   
+2017-03-22      1      1      NaN        3           3              NaN   
+2017-03-23      1      1      NaN        2           1              NaN   
+2017-03-24      1      1      NaN        5           3              NaN   
+2017-03-25      2      1      NaN        1           1              NaN   
+2017-03-26    NaN      1      NaN        2         NaN              NaN   
+2017-03-27      1      1      NaN        3           1              NaN   
+2017-03-28      1      1      NaN        3           1              NaN   
+2017-03-29      1      1      NaN        3           3              NaN   
+2017-03-30      1      1      NaN        3           1              NaN   
+2017-03-31      2      1      NaN        6           1              NaN   
+2017-04-01      1      1      NaN        3           1              NaN   
+2017-04-02    NaN      1      NaN        1           2              NaN   
+2017-04-03      1      1      NaN        2           1              NaN   
+2017-04-04      1      1      NaN        2           1              NaN   
+2017-04-05      1      1      NaN        3           3              NaN   
+2017-04-06      1      1      NaN        2           1              NaN   
+2017-04-07      1      1      NaN        2           1              NaN   
+2017-04-08      1      1      NaN      NaN           1              NaN   
+2017-04-09    NaN      1      NaN        2           2              NaN   
+2017-04-10      1      1      NaN        1           1              NaN   
+
+            news/info  reality/talent  soap  sport  uominiedonne  
+2017-01-01         21             NaN   NaN    NaN           NaN  
+2017-01-02         27             NaN   NaN    NaN           NaN  
+2017-01-03         27             NaN   NaN    NaN           NaN  
+2017-01-04         25             NaN   NaN    NaN           NaN  
+2017-01-05         25             NaN   NaN    NaN           NaN  
+2017-01-06         24             NaN   NaN    NaN           NaN  
+2017-01-07         23             NaN   NaN    NaN           NaN  
+2017-01-08         21             NaN   NaN    NaN           NaN  
+2017-01-09         22             NaN     1    NaN             2  
+2017-01-10         25             NaN     1    NaN             2  
+2017-01-11         26             NaN     1    NaN             2  
+2017-01-12         25             NaN     1    NaN             2  
+2017-01-13         24             NaN     1    NaN             2  
+2017-01-14         24             NaN     1    NaN           NaN  
+2017-01-15         22             NaN   NaN    NaN           NaN  
+2017-01-16         22             NaN     1    NaN             2  
+2017-01-17         23             NaN     1    NaN             2  
+2017-01-18         22             NaN     1    NaN             2  
+2017-01-19         23             NaN     1    NaN             2  
+2017-01-20         25             NaN     1    NaN             2  
+2017-01-21         24             NaN     1    NaN           NaN  
+2017-01-22         21             NaN   NaN    NaN           NaN  
+2017-01-23         22               1     1    NaN             2  
+2017-01-24         25             NaN     1    NaN             2  
+2017-01-25         23             NaN     1    NaN             2  
+2017-01-26         22             NaN     1    NaN             2  
+2017-01-27         22             NaN     1    NaN             2  
+2017-01-28         24             NaN     1    NaN           NaN  
+2017-01-29         22             NaN   NaN    NaN           NaN  
+2017-01-30         24               1     1    NaN             2  
+...               ...             ...   ...    ...           ...  
+2017-03-12         21             NaN   NaN    NaN           NaN  
+2017-03-13         24               1     1    NaN             2  
+2017-03-14         22               2     1    NaN             2  
+2017-03-15         23               1     1    NaN             2  
+2017-03-16         22               1     1    NaN             2  
+2017-03-17         22               1     1    NaN             2  
+2017-03-18         25             NaN     1    NaN           NaN  
+2017-03-19         21             NaN   NaN    NaN           NaN  
+2017-03-20         22               1     2    NaN             2  
+2017-03-21         22               2     1    NaN             2  
+2017-03-22         24               1     1    NaN             2  
+2017-03-23         24               1     1    NaN             2  
+2017-03-24         23               1     1    NaN             2  
+2017-03-25         28             NaN     1    NaN           NaN  
+2017-03-26         22             NaN   NaN    NaN           NaN  
+2017-03-27         22               1     1    NaN             2  
+2017-03-28         22               2     1    NaN             2  
+2017-03-29         23               1     1    NaN             2  
+2017-03-30         22               1     1    NaN             2  
+2017-03-31         23               1     1    NaN           NaN  
+2017-04-01         25             NaN     1    NaN           NaN  
+2017-04-02         23               1   NaN    NaN           NaN  
+2017-04-03         26               1     1    NaN             2  
+2017-04-04         24               2     1    NaN             2  
+2017-04-05         23               1     1    NaN             2  
+2017-04-06         22               1     1    NaN             2  
+2017-04-07         23               1     1    NaN             2  
+2017-04-08         24             NaN     2    NaN           NaN  
+2017-04-09         21               1   NaN    NaN           NaN  
+2017-04-10         17               1     1    NaN             1  
+
+[100 rows x 11 columns]
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 76, in <module>
+    paliPrg.to_sql('inventory_tv_pali',conn,if_exists='replace',chunksize=100,index_label="date")
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 1003, in to_sql
+    dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 569, in to_sql
+    chunksize=chunksize, dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 1240, in to_sql
+    table.create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 697, in create
+    self._execute_create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 682, in _execute_create
+    self.table.create()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 753, in create
+    checkfirst=checkfirst)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1529, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 772, in visit_table
+    self.traverse_single(index)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 791, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1002, in _execute_ddl
+    compiled
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 226, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorvalue
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1170, "BLOB/TEXT column 'date' used in key specification without a key length") [SQL: u'CREATE INDEX ix_inventory_tv_pali_date ON inventory_tv_pali (date)']
+>>> paliPrg
+            amici  brand  fascino   fiction  il_segreto  intrattenimento  \
+2017-01-01    0.0      0        0  0.000000    0.000000                0   
+2017-01-02    0.0      0        0  1.000000    0.333333                0   
+2017-01-03    0.0      0        0  0.666667    0.333333                0   
+2017-01-04    0.0      0        0  0.666667    0.333333                0   
+2017-01-05    0.0      0        0  0.833333    0.333333                0   
+2017-01-06    0.0      0        0  0.666667    0.000000                0   
+2017-01-07    0.0      0        1  0.833333    0.333333                0   
+2017-01-08    0.0      0        0  0.500000    0.666667                0   
+2017-01-09    0.0      0        0  0.166667    0.333333                0   
+2017-01-10    0.0      0        0  0.166667    0.333333                0   
+2017-01-11    0.0      0        0  0.500000    0.333333                0   
+2017-01-12    0.0      0        0  0.166667    0.333333                0   
+2017-01-13    0.0      0        0  0.666667    0.333333                0   
+2017-01-14    0.5      0        1  0.000000    0.333333                0   
+2017-01-15    0.0      1        0  0.166667    0.666667                0   
+2017-01-16    0.0      1        0  0.333333    0.666667                0   
+2017-01-17    0.0      1        0  0.166667    0.333333                0   
+2017-01-18    0.0      1        0  0.166667    0.333333                0   
+2017-01-19    0.0      1        0  0.500000    0.333333                0   
+2017-01-20    0.0      1        0  0.166667    0.333333                0   
+2017-01-21    1.0      1        1  0.166667    0.333333                0   
+2017-01-22    0.0      1        0  0.166667    0.666667                0   
+2017-01-23    0.0      1        0  0.166667    0.666667                0   
+2017-01-24    0.0      1        0  0.166667    0.333333                0   
+2017-01-25    0.0      1        0  0.333333    0.333333                0   
+2017-01-26    0.0      1        0  0.500000    0.333333                0   
+2017-01-27    0.0      1        1  0.333333    0.333333                0   
+2017-01-28    0.5      1        1  0.166667    0.333333                0   
+2017-01-29    0.0      1        0  0.166667    0.666667                0   
+2017-01-30    0.0      1        0  0.333333    0.333333                0   
+...           ...    ...      ...       ...         ...              ...   
+2017-03-12    0.0      1        0  0.000000    0.000000                0   
+2017-03-13    0.5      1        0  0.333333    0.333333                0   
+2017-03-14    0.5      1        0  0.500000    0.333333                0   
+2017-03-15    0.5      1        0  0.333333    0.333333                0   
+2017-03-16    0.5      1        0  0.666667    0.333333                0   
+2017-03-17    0.5      1        0  0.500000    1.000000                0   
+2017-03-18    0.5      1        0  0.500000    0.333333                0   
+2017-03-19    0.0      1        1  0.000000    0.000000                0   
+2017-03-20    0.5      1        0  0.500000    0.333333                0   
+2017-03-21    0.5      1        0  0.666667    0.333333                0   
+2017-03-22    0.5      1        0  0.500000    1.000000                0   
+2017-03-23    0.5      1        0  0.333333    0.333333                0   
+2017-03-24    0.5      1        0  0.833333    1.000000                0   
+2017-03-25    1.0      1        0  0.166667    0.333333                0   
+2017-03-26    0.0      1        0  0.333333    0.000000                0   
+2017-03-27    0.5      1        0  0.500000    0.333333                0   
+2017-03-28    0.5      1        0  0.500000    0.333333                0   
+2017-03-29    0.5      1        0  0.500000    1.000000                0   
+2017-03-30    0.5      1        0  0.500000    0.333333                0   
+2017-03-31    1.0      1        0  1.000000    0.333333                0   
+2017-04-01    0.5      1        0  0.500000    0.333333                0   
+2017-04-02    0.0      1        0  0.166667    0.666667                0   
+2017-04-03    0.5      1        0  0.333333    0.333333                0   
+2017-04-04    0.5      1        0  0.333333    0.333333                0   
+2017-04-05    0.5      1        0  0.500000    1.000000                0   
+2017-04-06    0.5      1        0  0.333333    0.333333                0   
+2017-04-07    0.5      1        0  0.333333    0.333333                0   
+2017-04-08    0.5      1        0  0.000000    0.333333                0   
+2017-04-09    0.0      1        0  0.333333    0.666667                0   
+2017-04-10    0.5      1        0  0.166667    0.333333                0   
+
+            news/info  reality/talent  soap  sport  uominiedonne  
+2017-01-01   0.750000             0.0   0.0      0           0.0  
+2017-01-02   0.964286             0.0   0.0      0           0.0  
+2017-01-03   0.964286             0.0   0.0      0           0.0  
+2017-01-04   0.892857             0.0   0.0      0           0.0  
+2017-01-05   0.892857             0.0   0.0      0           0.0  
+2017-01-06   0.857143             0.0   0.0      0           0.0  
+2017-01-07   0.821429             0.0   0.0      0           0.0  
+2017-01-08   0.750000             0.0   0.0      0           0.0  
+2017-01-09   0.785714             0.0   0.5      0           1.0  
+2017-01-10   0.892857             0.0   0.5      0           1.0  
+2017-01-11   0.928571             0.0   0.5      0           1.0  
+2017-01-12   0.892857             0.0   0.5      0           1.0  
+2017-01-13   0.857143             0.0   0.5      0           1.0  
+2017-01-14   0.857143             0.0   0.5      0           0.0  
+2017-01-15   0.785714             0.0   0.0      0           0.0  
+2017-01-16   0.785714             0.0   0.5      0           1.0  
+2017-01-17   0.821429             0.0   0.5      0           1.0  
+2017-01-18   0.785714             0.0   0.5      0           1.0  
+2017-01-19   0.821429             0.0   0.5      0           1.0  
+2017-01-20   0.892857             0.0   0.5      0           1.0  
+2017-01-21   0.857143             0.0   0.5      0           0.0  
+2017-01-22   0.750000             0.0   0.0      0           0.0  
+2017-01-23   0.785714             0.5   0.5      0           1.0  
+2017-01-24   0.892857             0.0   0.5      0           1.0  
+2017-01-25   0.821429             0.0   0.5      0           1.0  
+2017-01-26   0.785714             0.0   0.5      0           1.0  
+2017-01-27   0.785714             0.0   0.5      0           1.0  
+2017-01-28   0.857143             0.0   0.5      0           0.0  
+2017-01-29   0.785714             0.0   0.0      0           0.0  
+2017-01-30   0.857143             0.5   0.5      0           1.0  
+...               ...             ...   ...    ...           ...  
+2017-03-12   0.750000             0.0   0.0      0           0.0  
+2017-03-13   0.857143             0.5   0.5      0           1.0  
+2017-03-14   0.785714             1.0   0.5      0           1.0  
+2017-03-15   0.821429             0.5   0.5      0           1.0  
+2017-03-16   0.785714             0.5   0.5      0           1.0  
+2017-03-17   0.785714             0.5   0.5      0           1.0  
+2017-03-18   0.892857             0.0   0.5      0           0.0  
+2017-03-19   0.750000             0.0   0.0      0           0.0  
+2017-03-20   0.785714             0.5   1.0      0           1.0  
+2017-03-21   0.785714             1.0   0.5      0           1.0  
+2017-03-22   0.857143             0.5   0.5      0           1.0  
+2017-03-23   0.857143             0.5   0.5      0           1.0  
+2017-03-24   0.821429             0.5   0.5      0           1.0  
+2017-03-25   1.000000             0.0   0.5      0           0.0  
+2017-03-26   0.785714             0.0   0.0      0           0.0  
+2017-03-27   0.785714             0.5   0.5      0           1.0  
+2017-03-28   0.785714             1.0   0.5      0           1.0  
+2017-03-29   0.821429             0.5   0.5      0           1.0  
+2017-03-30   0.785714             0.5   0.5      0           1.0  
+2017-03-31   0.821429             0.5   0.5      0           0.0  
+2017-04-01   0.892857             0.0   0.5      0           0.0  
+2017-04-02   0.821429             0.5   0.0      0           0.0  
+2017-04-03   0.928571             0.5   0.5      0           1.0  
+2017-04-04   0.857143             1.0   0.5      0           1.0  
+2017-04-05   0.821429             0.5   0.5      0           1.0  
+2017-04-06   0.785714             0.5   0.5      0           1.0  
+2017-04-07   0.821429             0.5   0.5      0           1.0  
+2017-04-08   0.857143             0.0   1.0      0           0.0  
+2017-04-09   0.750000             0.5   0.0      0           0.0  
+2017-04-10   0.607143             0.5   0.5      0           0.5  
+
+[100 rows x 11 columns]
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 76, in <module>
+    paliPrg.to_sql('inventory_tv_pali',conn,if_exists='replace',chunksize=100,index_label="date")
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 1003, in to_sql
+    dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 569, in to_sql
+    chunksize=chunksize, dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 1240, in to_sql
+    table.create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 690, in create
+    self._execute_create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 682, in _execute_create
+    self.table.create()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 753, in create
+    checkfirst=checkfirst)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1529, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 772, in visit_table
+    self.traverse_single(index)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 791, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1002, in _execute_ddl
+    compiled
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 226, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorvalue
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1170, "BLOB/TEXT column 'date' used in key specification without a key length") [SQL: u'CREATE INDEX ix_inventory_tv_pali_date ON inventory_tv_pali (date)']
+>>> paliPrg
+            amici  brand  fascino   fiction  il_segreto  intrattenimento  \
+2017-01-01    0.0      0        0  0.000000    0.000000                0   
+2017-01-02    0.0      0        0  1.000000    0.333333                0   
+2017-01-03    0.0      0        0  0.666667    0.333333                0   
+2017-01-04    0.0      0        0  0.666667    0.333333                0   
+2017-01-05    0.0      0        0  0.833333    0.333333                0   
+2017-01-06    0.0      0        0  0.666667    0.000000                0   
+2017-01-07    0.0      0        1  0.833333    0.333333                0   
+2017-01-08    0.0      0        0  0.500000    0.666667                0   
+2017-01-09    0.0      0        0  0.166667    0.333333                0   
+2017-01-10    0.0      0        0  0.166667    0.333333                0   
+2017-01-11    0.0      0        0  0.500000    0.333333                0   
+2017-01-12    0.0      0        0  0.166667    0.333333                0   
+2017-01-13    0.0      0        0  0.666667    0.333333                0   
+2017-01-14    0.5      0        1  0.000000    0.333333                0   
+2017-01-15    0.0      1        0  0.166667    0.666667                0   
+2017-01-16    0.0      1        0  0.333333    0.666667                0   
+2017-01-17    0.0      1        0  0.166667    0.333333                0   
+2017-01-18    0.0      1        0  0.166667    0.333333                0   
+2017-01-19    0.0      1        0  0.500000    0.333333                0   
+2017-01-20    0.0      1        0  0.166667    0.333333                0   
+2017-01-21    1.0      1        1  0.166667    0.333333                0   
+2017-01-22    0.0      1        0  0.166667    0.666667                0   
+2017-01-23    0.0      1        0  0.166667    0.666667                0   
+2017-01-24    0.0      1        0  0.166667    0.333333                0   
+2017-01-25    0.0      1        0  0.333333    0.333333                0   
+2017-01-26    0.0      1        0  0.500000    0.333333                0   
+2017-01-27    0.0      1        1  0.333333    0.333333                0   
+2017-01-28    0.5      1        1  0.166667    0.333333                0   
+2017-01-29    0.0      1        0  0.166667    0.666667                0   
+2017-01-30    0.0      1        0  0.333333    0.333333                0   
+...           ...    ...      ...       ...         ...              ...   
+2017-03-12    0.0      1        0  0.000000    0.000000                0   
+2017-03-13    0.5      1        0  0.333333    0.333333                0   
+2017-03-14    0.5      1        0  0.500000    0.333333                0   
+2017-03-15    0.5      1        0  0.333333    0.333333                0   
+2017-03-16    0.5      1        0  0.666667    0.333333                0   
+2017-03-17    0.5      1        0  0.500000    1.000000                0   
+2017-03-18    0.5      1        0  0.500000    0.333333                0   
+2017-03-19    0.0      1        1  0.000000    0.000000                0   
+2017-03-20    0.5      1        0  0.500000    0.333333                0   
+2017-03-21    0.5      1        0  0.666667    0.333333                0   
+2017-03-22    0.5      1        0  0.500000    1.000000                0   
+2017-03-23    0.5      1        0  0.333333    0.333333                0   
+2017-03-24    0.5      1        0  0.833333    1.000000                0   
+2017-03-25    1.0      1        0  0.166667    0.333333                0   
+2017-03-26    0.0      1        0  0.333333    0.000000                0   
+2017-03-27    0.5      1        0  0.500000    0.333333                0   
+2017-03-28    0.5      1        0  0.500000    0.333333                0   
+2017-03-29    0.5      1        0  0.500000    1.000000                0   
+2017-03-30    0.5      1        0  0.500000    0.333333                0   
+2017-03-31    1.0      1        0  1.000000    0.333333                0   
+2017-04-01    0.5      1        0  0.500000    0.333333                0   
+2017-04-02    0.0      1        0  0.166667    0.666667                0   
+2017-04-03    0.5      1        0  0.333333    0.333333                0   
+2017-04-04    0.5      1        0  0.333333    0.333333                0   
+2017-04-05    0.5      1        0  0.500000    1.000000                0   
+2017-04-06    0.5      1        0  0.333333    0.333333                0   
+2017-04-07    0.5      1        0  0.333333    0.333333                0   
+2017-04-08    0.5      1        0  0.000000    0.333333                0   
+2017-04-09    0.0      1        0  0.333333    0.666667                0   
+2017-04-10    0.5      1        0  0.166667    0.333333                0   
+
+            news/info  reality/talent  soap  sport  uominiedonne  
+2017-01-01   0.750000             0.0   0.0      0           0.0  
+2017-01-02   0.964286             0.0   0.0      0           0.0  
+2017-01-03   0.964286             0.0   0.0      0           0.0  
+2017-01-04   0.892857             0.0   0.0      0           0.0  
+2017-01-05   0.892857             0.0   0.0      0           0.0  
+2017-01-06   0.857143             0.0   0.0      0           0.0  
+2017-01-07   0.821429             0.0   0.0      0           0.0  
+2017-01-08   0.750000             0.0   0.0      0           0.0  
+2017-01-09   0.785714             0.0   0.5      0           1.0  
+2017-01-10   0.892857             0.0   0.5      0           1.0  
+2017-01-11   0.928571             0.0   0.5      0           1.0  
+2017-01-12   0.892857             0.0   0.5      0           1.0  
+2017-01-13   0.857143             0.0   0.5      0           1.0  
+2017-01-14   0.857143             0.0   0.5      0           0.0  
+2017-01-15   0.785714             0.0   0.0      0           0.0  
+2017-01-16   0.785714             0.0   0.5      0           1.0  
+2017-01-17   0.821429             0.0   0.5      0           1.0  
+2017-01-18   0.785714             0.0   0.5      0           1.0  
+2017-01-19   0.821429             0.0   0.5      0           1.0  
+2017-01-20   0.892857             0.0   0.5      0           1.0  
+2017-01-21   0.857143             0.0   0.5      0           0.0  
+2017-01-22   0.750000             0.0   0.0      0           0.0  
+2017-01-23   0.785714             0.5   0.5      0           1.0  
+2017-01-24   0.892857             0.0   0.5      0           1.0  
+2017-01-25   0.821429             0.0   0.5      0           1.0  
+2017-01-26   0.785714             0.0   0.5      0           1.0  
+2017-01-27   0.785714             0.0   0.5      0           1.0  
+2017-01-28   0.857143             0.0   0.5      0           0.0  
+2017-01-29   0.785714             0.0   0.0      0           0.0  
+2017-01-30   0.857143             0.5   0.5      0           1.0  
+...               ...             ...   ...    ...           ...  
+2017-03-12   0.750000             0.0   0.0      0           0.0  
+2017-03-13   0.857143             0.5   0.5      0           1.0  
+2017-03-14   0.785714             1.0   0.5      0           1.0  
+2017-03-15   0.821429             0.5   0.5      0           1.0  
+2017-03-16   0.785714             0.5   0.5      0           1.0  
+2017-03-17   0.785714             0.5   0.5      0           1.0  
+2017-03-18   0.892857             0.0   0.5      0           0.0  
+2017-03-19   0.750000             0.0   0.0      0           0.0  
+2017-03-20   0.785714             0.5   1.0      0           1.0  
+2017-03-21   0.785714             1.0   0.5      0           1.0  
+2017-03-22   0.857143             0.5   0.5      0           1.0  
+2017-03-23   0.857143             0.5   0.5      0           1.0  
+2017-03-24   0.821429             0.5   0.5      0           1.0  
+2017-03-25   1.000000             0.0   0.5      0           0.0  
+2017-03-26   0.785714             0.0   0.0      0           0.0  
+2017-03-27   0.785714             0.5   0.5      0           1.0  
+2017-03-28   0.785714             1.0   0.5      0           1.0  
+2017-03-29   0.821429             0.5   0.5      0           1.0  
+2017-03-30   0.785714             0.5   0.5      0           1.0  
+2017-03-31   0.821429             0.5   0.5      0           0.0  
+2017-04-01   0.892857             0.0   0.5      0           0.0  
+2017-04-02   0.821429             0.5   0.0      0           0.0  
+2017-04-03   0.928571             0.5   0.5      0           1.0  
+2017-04-04   0.857143             1.0   0.5      0           1.0  
+2017-04-05   0.821429             0.5   0.5      0           1.0  
+2017-04-06   0.785714             0.5   0.5      0           1.0  
+2017-04-07   0.821429             0.5   0.5      0           1.0  
+2017-04-08   0.857143             0.0   1.0      0           0.0  
+2017-04-09   0.750000             0.5   0.0      0           0.0  
+2017-04-10   0.607143             0.5   0.5      0           0.5  
+
+[100 rows x 11 columns]
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 76, in <module>
+    paliPrg.to_sql('inventory_tv_pali',conn,if_exists='replace',chunksize=100,index_label="date")
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 1003, in to_sql
+    dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 569, in to_sql
+    chunksize=chunksize, dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 1240, in to_sql
+    table.create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 690, in create
+    self._execute_create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 682, in _execute_create
+    self.table.create()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 753, in create
+    checkfirst=checkfirst)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1529, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 772, in visit_table
+    self.traverse_single(index)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 791, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1002, in _execute_ddl
+    compiled
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 226, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorvalue
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1170, "BLOB/TEXT column 'date' used in key specification without a key length") [SQL: u'CREATE INDEX ix_inventory_tv_pali_date ON inventory_tv_pali (date)']
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 76, in <module>
+    paliPrg.to_sql('inventory_tv_pali',conn,if_exists='replace',chunksize=100,index_label="date")
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 1003, in to_sql
+    dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 569, in to_sql
+    chunksize=chunksize, dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 1240, in to_sql
+    table.create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 690, in create
+    self._execute_create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 682, in _execute_create
+    self.table.create()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 753, in create
+    checkfirst=checkfirst)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1529, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 772, in visit_table
+    self.traverse_single(index)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 791, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1002, in _execute_ddl
+    compiled
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 226, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorvalue
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1170, "BLOB/TEXT column 'date' used in key specification without a key length") [SQL: u'CREATE INDEX ix_inventory_tv_pali_date ON inventory_tv_pali (date)']
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 76, in <module>
+    paliPrg.to_sql('inventory_tv_pali',conn,if_exists='replace',chunksize=100,index_label="date")
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 1003, in to_sql
+    dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 569, in to_sql
+    chunksize=chunksize, dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 1240, in to_sql
+    table.create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 690, in create
+    self._execute_create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 682, in _execute_create
+    self.table.create()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 753, in create
+    checkfirst=checkfirst)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1529, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 772, in visit_table
+    self.traverse_single(index)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 791, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1002, in _execute_ddl
+    compiled
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 226, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorvalue
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1170, "BLOB/TEXT column 'date' used in key specification without a key length") [SQL: u'CREATE INDEX ix_inventory_tv_pali_date ON inventory_tv_pali (date)']
+>>> paliPrg.index.unique()
+Index([u'2017-01-01', u'2017-01-02', u'2017-01-03', u'2017-01-04',
+       u'2017-01-05', u'2017-01-06', u'2017-01-07', u'2017-01-08',
+       u'2017-01-09', u'2017-01-10', u'2017-01-11', u'2017-01-12',
+       u'2017-01-13', u'2017-01-14', u'2017-01-15', u'2017-01-16',
+       u'2017-01-17', u'2017-01-18', u'2017-01-19', u'2017-01-20',
+       u'2017-01-21', u'2017-01-22', u'2017-01-23', u'2017-01-24',
+       u'2017-01-25', u'2017-01-26', u'2017-01-27', u'2017-01-28',
+       u'2017-01-29', u'2017-01-30', u'2017-01-31', u'2017-02-01',
+       u'2017-02-02', u'2017-02-03', u'2017-02-04', u'2017-02-05',
+       u'2017-02-06', u'2017-02-07', u'2017-02-08', u'2017-02-09',
+       u'2017-02-10', u'2017-02-11', u'2017-02-12', u'2017-02-13',
+       u'2017-02-14', u'2017-02-15', u'2017-02-16', u'2017-02-17',
+       u'2017-02-18', u'2017-02-19', u'2017-02-20', u'2017-02-21',
+       u'2017-02-22', u'2017-02-23', u'2017-02-24', u'2017-02-25',
+       u'2017-02-26', u'2017-02-27', u'2017-02-28', u'2017-03-01',
+       u'2017-03-02', u'2017-03-03', u'2017-03-04', u'2017-03-05',
+       u'2017-03-06', u'2017-03-07', u'2017-03-08', u'2017-03-09',
+       u'2017-03-10', u'2017-03-11', u'2017-03-12', u'2017-03-13',
+       u'2017-03-14', u'2017-03-15', u'2017-03-16', u'2017-03-17',
+       u'2017-03-18', u'2017-03-19', u'2017-03-20', u'2017-03-21',
+       u'2017-03-22', u'2017-03-23', u'2017-03-24', u'2017-03-25',
+       u'2017-03-26', u'2017-03-27', u'2017-03-28', u'2017-03-29',
+       u'2017-03-30', u'2017-03-31', u'2017-04-01', u'2017-04-02',
+       u'2017-04-03', u'2017-04-04', u'2017-04-05', u'2017-04-06',
+       u'2017-04-07', u'2017-04-08', u'2017-04-09', u'2017-04-10'],
+      dtype='object')
+>>> paliPrg.index.unique()
+array(['2017-01-01', '2017-01-02', '2017-01-03', '2017-01-04',
+       '2017-01-05', '2017-01-06', '2017-01-07', '2017-01-08',
+       '2017-01-09', '2017-01-10', '2017-01-11', '2017-01-12',
+       '2017-01-13', '2017-01-14', '2017-01-15', '2017-01-16',
+       '2017-01-17', '2017-01-18', '2017-01-19', '2017-01-20',
+       '2017-01-21', '2017-01-22', '2017-01-23', '2017-01-24',
+       '2017-01-25', '2017-01-26', '2017-01-27', '2017-01-28',
+       '2017-01-29', '2017-01-30', '2017-01-31', '2017-02-01',
+       '2017-02-02', '2017-02-03', '2017-02-04', '2017-02-05',
+       '2017-02-06', '2017-02-07', '2017-02-08', '2017-02-09',
+       '2017-02-10', '2017-02-11', '2017-02-12', '2017-02-13',
+       '2017-02-14', '2017-02-15', '2017-02-16', '2017-02-17',
+       '2017-02-18', '2017-02-19', '2017-02-20', '2017-02-21',
+       '2017-02-22', '2017-02-23', '2017-02-24', '2017-02-25',
+       '2017-02-26', '2017-02-27', '2017-02-28', '2017-03-01',
+       '2017-03-02', '2017-03-03', '2017-03-04', '2017-03-05',
+       '2017-03-06', '2017-03-07', '2017-03-08', '2017-03-09',
+       '2017-03-10', '2017-03-11', '2017-03-12', '2017-03-13',
+       '2017-03-14', '2017-03-15', '2017-03-16', '2017-03-17',
+       '2017-03-18', '2017-03-19', '2017-03-20', '2017-03-21',
+       '2017-03-22', '2017-03-23', '2017-03-24', '2017-03-25',
+       '2017-03-26', '2017-03-27', '2017-03-28', '2017-03-29',
+       '2017-03-30', '2017-03-31', '2017-04-01', '2017-04-02',
+       '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06',
+       '2017-04-07', '2017-04-08', '2017-04-09', '2017-04-10'], dtype=object)
+>>> 
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/sabeiro/lav/media/src/py/etl_pali.py", line 76, in <module>
+    paliPrg.to_sql('inventory_tv_pali',conn,if_exists='replace',chunksize=100,index_label="date")
+  File "/usr/lib/python2.7/dist-packages/pandas/core/generic.py", line 1003, in to_sql
+    dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 569, in to_sql
+    chunksize=chunksize, dtype=dtype)
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 1240, in to_sql
+    table.create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 690, in create
+    self._execute_create()
+  File "/usr/lib/python2.7/dist-packages/pandas/io/sql.py", line 682, in _execute_create
+    self.table.create()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/schema.py", line 753, in create
+    checkfirst=checkfirst)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1529, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 772, in visit_table
+    self.traverse_single(index)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 791, in visit_index
+    self.connection.execute(CreateIndex(index))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1002, in _execute_ddl
+    compiled
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1393, in _handle_dbapi_exception
+    exc_info
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/cursors.py", line 226, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/lib/python2.7/dist-packages/MySQLdb/connections.py", line 36, in defaulterrorhandler
+    raise errorvalue
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1170, "BLOB/TEXT column 'date' used in key specification without a key length") [SQL: u'CREATE INDEX ix_inventory_tv_pali_date ON inventory_tv_pali (date)']
+>>> >>> >>> 
+>>> 

@@ -1,0 +1,123 @@
+(var i=0;i<	esterostatecode.length ;i++) {
+		var datiNazione=esterostatecode[i].split(",");
+
+		if(datiNazione[0]==nazione) {
+			if(nazione=="US") {
+				esisteNazione = verificaAmerica(regione);
+			} else {
+				esisteNazione = i;
+			}
+		}
+	}
+
+	return esisteNazione;
+}
+
+function verificaAmerica(regione) {
+	var esisteRegione = -1;
+
+	for(var i = 0; i < esterostatecode.length; i++) {
+		var datiNazione=esterostatecode[i].split(",");
+		if(datiNazione[1]==regione) {
+			esisteRegione = i;
+		}
+	}
+
+	return esisteRegione;
+}
+
+function verificaEsistePopUp(indiceNazione, paese, areacode) {
+	if(indiceNazione < 0) {
+		var specifico = false;
+		var sezione = "";
+		var titolo = "";
+		var area = "";
+		var sito = document.location.href;
+		var sezionesito = "";
+
+		/************************web**************************/
+		if((sito.indexOf("www.mediaset.it") > -1) || (sito.indexOf("dev2.mediaset.it") > -1)) { sezionesito = "mediaset"; }
+		if((sito.indexOf("www.meteo.it") > -1) || (sito.indexOf("dev.meteo.it") > -1)) { sezionesito = "meteo";	}
+		if((sito.indexOf("www.video.mediaset.it") > -1) || (sito.indexOf("dev2.video.mediaset.it") > -1)) { sezionesito = "videomediaset"; }
+		if((sito.indexOf("www.tgcom24.mediaset.it") > -1) || (sito.indexOf("http://dev2.tgcom24.mediaset.it") > -1)) { sezionesito = "tgcom24"; }
+		if((sito.indexOf("www.sportmediaset.mediaset.it") > -1) || (sito.indexOf("dev.sport-mediaset.it") > -1)) { sezionesito = "sportmediaset"; }
+		/************************mobile**************************/
+		if((sito.indexOf("mobile.tgcom24.it") > -1) || (sito.indexOf("http://dev2mobile.tgcom24.mediaset.it") > -1)) { sezionesito = "tgcom24";	}
+		if((sito.indexOf("mobile.sportmediaset.it") > -1) || (sito.indexOf("http://devmobile.sport-mediaset.mediaset.it") > -1)) { sezionesito = "sportmediaset"; }
+		if((sito.indexOf("mobile.meteo.it") > -1) || (sito.indexOf("http://devmobile.meteo.mediaset.it") > -1))	{ sezionesito = "meteo"; }
+
+		jQuery.getJSON("http://www.mediasetitalia.com/popUp/listaPopUp.sjson?callback=?", function(data) {
+			jQuery.each(data, function(key, val) {
+				titolo = val["titolo"];
+				sezione = val["sezione"];
+				nazione = val["paese"];
+				area = val["area"];
+
+				if(sezione==sezionesito) {
+					if(nazione==paese) {
+						compilaHtml(val);
+						specifico = true;
+
+						var pageUrl = document.location.href;
+						var shinytStatUrl = escape(pageUrl);
+						var shinyStatSrc = "http://s42.shinystat.com/cgi-bin/csa.cgi?USER=popupsi&PAG="+shinytStatUrl+"%23popupsi";
+						createCookieMediasetItalia("mediasetEstero", "mediasetitalia", 1);
+					}
+				}
+			});
+		});
+
+		if(!specifico) {
+			jQuery.getJSON("http://www.mediasetitalia.com/popUp/listaPopUp.sjson?callback=?", function(data) {
+				jQuery.each(data, function(key, val) {
+					titolo = val["titolo"];
+					sezione = val["sezione"];
+					area = val["area"];
+
+					if(sezione==sezionesito) {
+						if(area==areacode) {
+							compilaHtml(val);
+							specifico = true;
+
+							var pageUrl = document.location.href;
+							var shinytStatUrl = escape(pageUrl);
+							var shinyStatSrc = "http://s42.shinystat.com/cgi-bin/csa.cgi?USER=popupsi&PAG="+shinytStatUrl+"%23popupsi";
+							createCookieMediasetItalia("mediasetEstero", "mediasetitalia", 1);
+						}
+					}
+				});
+			});
+		}
+	}
+}
+
+function compilaHtml(dati) {
+	stringaINNERHTML = '<div class="immagineBoxPopUp">';
+	stringaINNERHTML = stringaINNERHTML+'<div class="chiudiPopUp"><a onclick="javascript:chiudiMediasetEsiste();">chiudi<a><div>';
+	stringaINNERHTML = stringaINNERHTML+'<a href="'+dati['link']+'" target="'+dati['target']+'" title="'+dati['nomelink']+'" alt="'+dati['nomelink']+'">';
+	stringaINNERHTML = stringaINNERHTML+'<img src="'+dati['immagine']+'"><img>';
+	stringaINNERHTML = stringaINNERHTML+'</a>';
+	stringaINNERHTML = stringaINNERHTML+'</div>';
+	AttivaPopUpImmagine(stringaINNERHTML);
+}
+
+function scelgiPopUp() {
+}
+
+
+
+/* bcc */
+var bccConfig = {
+	debugCk: false,
+	authScroll: true,
+	authClick: true,
+	bgCookie: '#006AB3',
+	linkInformativa: 'http://www.mediaset.it/cookie_policy_mediaset_it.shtml',
+	txtLink: 'CLICCA QUI',
+	txtBottone: 'Autorizzo',
+	contentHtml: function() { return 'Questo sito utilizza cookie tecnici, di profilazione e di marketing, anche di terze parti, per inviarti pubblicit&agrave; e servizi in linea con le tue preferenze. Per saperne di pi&ugrave; o negare il consenso a tutti o alcuni cookie <a href="'+this.linkInformativa+'" title="Cookie Policy" target="_blank">'+this.txtLink+'</a>.<br/>Continuando la navigazione acconsenti all\'utilizzo dei cookie.' }
+}
+var cookieBan = bccGetCookie('rtiCookieLaw01');
+function bccAuthorize() {if(window.addEventListener) {window.removeEventListener('scroll',bccAuthorize,false);}else if(window.document.attachEvent){window.document.detachEvent('onscroll',bccAuthorize);}if((bccConfig.debugCk===true || cookieBan!=='on') && location.href!=bccConfig.linkInformativa) {/*if(bccConfig.debugCk===true) {alert('auth!');}*/var d=new Date();d.setTime(d.getTime()+(1000*60*60*24*365));document.cookie='rtiCookieLaw01=on;max-age='+60*60*24*365+';expires='+d.toGMTString()+';path=/';document.body.removeChild(cookieAdv);cookieBan='on';}}
+function bccGetCookie(cname) {var name=cname+'=';var ca=document.cookie.split(';');for(var i=0;i<ca.length;i++) {var c=ca[i];while(c.charAt(0)===' ') {c=c.substring(1);}if(c.indexOf(name)===0){return c.substring(name.length,c.length);}}return '';}
+function bccCheckCookie() {if((bccConfig.debugCk===true || (cookieBan!=='on' && cookieBan!=='off')) && location.href!=bccConfig.linkInformativa) {bccWriteCookieBan();if(bccConfig.authScroll===true) {if(window.addEventListener) {window.addEventListener('scroll',bccAuthorize,false);} else if(window.document.attachEvent) {window.document.attachEvent('onscroll',bccAuthorize);}} if(bccConfig.authClick===true) {if(window.addEventListener) {window.addEventListener('click',function(e) {if(e.target && (/(prev|next)/.test(e.target.className) || (e.target.nodeName==='A' && !/(advTitle)/.test(e.target.parentNode.classNa

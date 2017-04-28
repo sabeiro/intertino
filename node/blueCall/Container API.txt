@@ -1,0 +1,729 @@
+	API Call:
+
+http://services.bluekai.com/Services/WS/sites?bkuid=2a485752a542f032f7442c5a62ce97d070d72676&bksig=0h8BxPHSSm01S73QKme5O4sMNGn7G4jX6hSgsCGWXDw%3D
+
+Reponse Code:
+
+200
+
+Reponse Headers:
+
+{
+    "date": "Wed, 06 Apr 2016 20:50:42 GMT",
+    "set-cookie": [
+        "JSESSIONID=1EC8F3FACD03EA40C6A89BACBC78F6C4; Path=/Services; HttpOnly"
+    ],
+    "content-type": "application/json",
+    "cneonction": "close",
+    "transfer-encoding": "chunked"
+}
+
+Response Body:
+
+{
+    "sites": [
+        {
+            "name": "UNUSED_mobile",
+            "id": 33523,
+            "type": 1,
+            "labels": null,
+            "notes": "SWAP ID for data export",
+            "created_at": "2016-04-05 07:44:58-0500",
+            "updated_at": "2016-04-06 03:03:03-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 1,
+            "group_id": 33522,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "UNUSED",
+            "id": 33522,
+            "type": 0,
+            "labels": null,
+            "notes": "SWAP ID for data export",
+            "created_at": "2016-04-05 07:44:52-0500",
+            "updated_at": "2016-04-06 03:02:22-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 1,
+            "group_id": 33522,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "RTI DMP - Master Seat SDT Regex Swap Pixel_mobile",
+            "id": 33401,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-03-30 10:20:02-0500",
+            "updated_at": "2016-03-30 10:20:02-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 33400,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "RTI DMP - Master Seat SDT Regex Swap Pixel",
+            "id": 33400,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-03-30 10:20:02-0500",
+            "updated_at": "2016-03-30 10:22:17-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 0,
+            "group_id": 33400,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "RTI DMP Master - ID Swap For Export_mobile",
+            "id": 33399,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-03-30 10:17:14-0500",
+            "updated_at": "2016-03-30 10:30:29-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 33398,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "RTI DMP Master - ID Swap For Export",
+            "id": 33398,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-03-30 10:17:13-0500",
+            "updated_at": "2016-03-30 10:28:03-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 33398,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "SWAP_ID_mobile",
+            "id": 31832,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-02-20 04:17:31-0600",
+            "updated_at": "2016-02-20 04:17:31-0600",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 31831,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "SWAP_ID",
+            "id": 31831,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-02-20 04:17:28-0600",
+            "updated_at": "2016-02-20 04:17:31-0600",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 31831,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "MediaSet - Mobile App - Data Collection_mobile",
+            "id": 30582,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-01-18 07:42:39-0600",
+            "updated_at": "2016-03-17 11:24:52-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "false",
+            "data_transfer_boost_interval": null,
+            "transaction_scope": "none",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 30581,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": []
+        },
+        {
+            "name": "MediaSet - Mobile App - Data Collection",
+            "id": 30581,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-01-18 07:42:38-0600",
+            "updated_at": "2016-03-17 11:20:39-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "false",
+            "data_transfer_boost_interval": null,
+            "transaction_scope": "none",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 30581,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": []
+        },
+        {
+            "name": "Infinity DMP Main Data Collection_mobile",
+            "id": 30580,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-01-18 07:40:05-0600",
+            "updated_at": "2016-03-17 11:15:38-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "false",
+            "data_transfer_boost_interval": null,
+            "transaction_scope": "none",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 30579,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": []
+        },
+        {
+            "name": "Infinity DMP Main Data Collection",
+            "id": 30579,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2016-01-18 07:40:02-0600",
+            "updated_at": "2016-03-17 11:14:52-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "false",
+            "data_transfer_boost_interval": null,
+            "transaction_scope": "none",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 30579,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": []
+        },
+        {
+            "name": "Master Seat Universal Data Collection Seat_mobile",
+            "id": 30100,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2015-12-23 17:44:28-0600",
+            "updated_at": "2016-03-17 11:13:55-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 30099,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "Master Seat Universal Data Collection Seat",
+            "id": 30099,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2015-12-23 17:44:24-0600",
+            "updated_at": "2016-03-17 11:13:14-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "self",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 30099,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                }
+            ]
+        },
+        {
+            "name": "DonnaModerna.com_mobile",
+            "id": 29140,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2015-11-24 07:41:37-0600",
+            "updated_at": "2016-03-17 10:55:18-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "permissioned",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 29139,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                },
+                {
+                    "id": 3256,
+                    "name": "RTI DMP - MediaMond - JSON"
+                },
+                {
+                    "id": 3292,
+                    "name": "RTI DMP - Digitalia"
+                },
+                {
+                    "id": 3288,
+                    "name": "RTI DMP - Infinity"
+                },
+                {
+                    "id": 3291,
+                    "name": "RTI DMP - Mediashopping"
+                },
+                {
+                    "id": 3257,
+                    "name": "RTI DMP - Mondadori"
+                },
+                {
+                    "id": 3290,
+                    "name": "RTI DMP - MONDADORI - MARKETING SERVICES"
+                },
+                {
+                    "id": 3255,
+                    "name": "RTI DMP - Premium"
+                },
+                {
+                    "id": 3289,
+                    "name": "RTI DMP - Publitalia"
+                },
+                {
+                    "id": 3287,
+                    "name": "RTI DMP - RTI"
+                }
+            ]
+        },
+        {
+            "name": "DonnaModerna.com",
+            "id": 29139,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2015-11-24 07:41:37-0600",
+            "updated_at": "2016-03-17 10:55:58-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "permissioned",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 29139,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                },
+                {
+                    "id": 3256,
+                    "name": "RTI DMP - MediaMond - JSON"
+                },
+                {
+                    "id": 3292,
+                    "name": "RTI DMP - Digitalia"
+                },
+                {
+                    "id": 3288,
+                    "name": "RTI DMP - Infinity"
+                },
+                {
+                    "id": 3291,
+                    "name": "RTI DMP - Mediashopping"
+                },
+                {
+                    "id": 3257,
+                    "name": "RTI DMP - Mondadori"
+                },
+                {
+                    "id": 3290,
+                    "name": "RTI DMP - MONDADORI - MARKETING SERVICES"
+                },
+                {
+                    "id": 3255,
+                    "name": "RTI DMP - Premium"
+                },
+                {
+                    "id": 3289,
+                    "name": "RTI DMP - Publitalia"
+                },
+                {
+                    "id": 3287,
+                    "name": "RTI DMP - RTI"
+                }
+            ]
+        },
+        {
+            "name": "Mediaset.it Data Collection_mobile",
+            "id": 29138,
+            "type": 1,
+            "labels": null,
+            "notes": "",
+            "created_at": "2015-11-24 07:40:40-0600",
+            "updated_at": "2016-03-17 10:54:22-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "permissioned",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 29137,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                },
+                {
+                    "id": 3256,
+                    "name": "RTI DMP - MediaMond - JSON"
+                },
+                {
+                    "id": 3292,
+                    "name": "RTI DMP - Digitalia"
+                },
+                {
+                    "id": 3288,
+                    "name": "RTI DMP - Infinity"
+                },
+                {
+                    "id": 3291,
+                    "name": "RTI DMP - Mediashopping"
+                },
+                {
+                    "id": 3257,
+                    "name": "RTI DMP - Mondadori"
+                },
+                {
+                    "id": 3290,
+                    "name": "RTI DMP - MONDADORI - MARKETING SERVICES"
+                },
+                {
+                    "id": 3255,
+                    "name": "RTI DMP - Premium"
+                },
+                {
+                    "id": 3289,
+                    "name": "RTI DMP - Publitalia"
+                },
+                {
+                    "id": 3287,
+                    "name": "RTI DMP - RTI"
+                },
+                {
+                    "id": 3630,
+                    "name": "RTI DMP - MediaMond - PUSH"
+                }
+            ]
+        },
+        {
+            "name": "Mediaset.it Data Collection",
+            "id": 29137,
+            "type": 0,
+            "labels": null,
+            "notes": "",
+            "created_at": "2015-11-24 07:40:34-0600",
+            "updated_at": "2016-03-17 10:53:26-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "true",
+            "data_transfer_boost_interval": 5,
+            "transaction_scope": "permissioned",
+            "private_data": "true",
+            "analytics_only": "false",
+            "data_transfer_limit": 4,
+            "group_id": 29137,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": [
+                {
+                    "id": 3238,
+                    "name": "RTI DMP - Master Seat"
+                },
+                {
+                    "id": 3256,
+                    "name": "RTI DMP - MediaMond - JSON"
+                },
+                {
+                    "id": 3292,
+                    "name": "RTI DMP - Digitalia"
+                },
+                {
+                    "id": 3288,
+                    "name": "RTI DMP - Infinity"
+                },
+                {
+                    "id": 3291,
+                    "name": "RTI DMP - Mediashopping"
+                },
+                {
+                    "id": 3257,
+                    "name": "RTI DMP - Mondadori"
+                },
+                {
+                    "id": 3290,
+                    "name": "RTI DMP - MONDADORI - MARKETING SERVICES"
+                },
+                {
+                    "id": 3255,
+                    "name": "RTI DMP - Premium"
+                },
+                {
+                    "id": 3289,
+                    "name": "RTI DMP - Publitalia"
+                },
+                {
+                    "id": 3287,
+                    "name": "RTI DMP - RTI"
+                },
+                {
+                    "id": 3630,
+                    "name": "RTI DMP - MediaMond - PUSH"
+                }
+            ]
+        },
+        {
+            "name": "RTI DMP - Master Seat_buyersite_mobile",
+            "id": 28416,
+            "type": 1,
+            "labels": null,
+            "notes": null,
+            "created_at": "2015-10-21 07:18:07-0500",
+            "updated_at": "2015-10-28 09:42:48-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "false",
+            "data_transfer_boost_interval": null,
+            "transaction_scope": "none",
+            "private_data": "false",
+            "analytics_only": "false",
+            "data_transfer_limit": 0,
+            "group_id": 28415,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": []
+        },
+        {
+            "name": "RTI DMP - Master Seat_buyersite",
+            "id": 28415,
+            "type": 0,
+            "labels": null,
+            "notes": null,
+            "created_at": "2015-10-21 07:18:05-0500",
+            "updated_at": "2015-10-28 09:42:47-0500",
+            "blocked_countries": [
+                "NL"
+            ],
+            "data_transfer_boost_enabled": "false",
+            "data_transfer_boost_interval": null,
+            "transaction_scope": "none",
+            "private_data": "false",
+            "analytics_only": "false",
+            "data_transfer_limit": 0,
+            "group_id": 28415,
+            "partner": {
+                "name": "RTI DMP - Master Seat",
+                "id": 3238
+            },
+            "allowed_buyers": []
+        }
+    ],
+    "total_count": 20
+}
