@@ -40,6 +40,7 @@ campD = rbind(campD,idConv[,colnames(campD)])
 fs <- read.csv("log/bkOrderJan.csv",stringsAsFactor=F)
 fs <- rbind(fs,read.csv("log/bkOrderFeb.csv",stringsAsFactor=F))
 fs <- rbind(fs,read.csv("log/bkOrderMar.csv",stringsAsFactor=F))
+fs <- rbind(fs,read.csv("log/bkOrderApr.csv",stringsAsFactor=F))
 fs <- fs[grepl("=bk_",fs$MatchedKeyword) | grepl("^w=",fs$MatchedKeyword),]
 fs$key <- fs$MatchedKeyword %>% gsub("^.*=bk_","",.) %>% gsub("^.*w=","",.) %>% gsub("\\^.*$","",.)
 fs$key2 <- NULL

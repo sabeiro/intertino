@@ -130,10 +130,10 @@ ax <- ga$children[[2]]
 ax$widths <- rev(ax$widths)
 ax$grobs <- rev(ax$grobs)
 ax$grobs[[1]]$x <- ax$grobs[[1]]$x - unit(0.25, "cm")
-g1 <- gtable_add_cols(g1, gp2$widths[gp2$layout[ia, ]$l], length(g$widths) - 1)
-g1 <- gtable_add_grob(g1, ax, pp$t, length(g$widths) - 1, pp$b)
+g1 <- gtable_add_cols(g1, gp2$widths[gp2$layout[ia, ]$l], length(g1$widths) - 1)
+g1 <- gtable_add_grob(g1, ax, pp$t, length(g1$widths) - 1, pp$b)
 grobScale1 <- textGrob("percentage",rot=90,gp=gpar(fontsize=gFontSize-2))
-g1 <- gtable_add_grob(g1,grobScale1,pp$t,length(g$widths),pp$b)
+g1 <- gtable_add_grob(g1,grobScale1,pp$t,length(g1$widths),pp$b)
 
 gLabel = c("month","revenue (M/month)",paste("rev on target"),"type")
 bplot <- ggplot(esWeek,aes(x=week)) +
@@ -256,8 +256,6 @@ write.csv(keyF,"raw/impressionKeywordAdv.csv",row.names=F)
 ##clipB <- ddply(fs,.(camp,source,format),summarise,imps=sum(imps,na.rm=T))
 ##clipB <- ddply(fs,.(camp,source,format),summarise,imps=sum(imps,na.rm=T))
 ##clipB <- ddply(fs,.(week,camp,source),summarise,imps=sum(imps,na.rm=T))
-
-head(keyF)
 if(FALSE){
     clipB <- ddply(fs,.(week,source,format),summarise,imps=sum(imps,na.rm=T))##Riassunto
     clipB = clipB[sort(clipB$week),]
@@ -268,7 +266,6 @@ if(FALSE){
     fs4 = fs[grepl("VODAFONE",fs$camp) | grepl("Vodafone",fs$camp),]
     fs4 = fs4[grep("vodafone",fs4$source),]
     clipB = ddply(fs4,.(week,camp),summarise,imps=sum(imps))##storno
-
 
     con <- pipe("xclip -selection clipboard -i", open="w")
     write.csv(clipB,con,row.names=F)
@@ -363,17 +360,6 @@ for(chPie in 1:5){
         melted$val <- melted$imps
     }
     if(chPie==4){
-        melted <- ddply(keyF,.(client),summarise,imps=sum(imps),price=sum(price))
-        melted$aud <- paste(substring(tryTolower(melted$client),1,12),"_",sep="")
-        melted = melted[order(melted$imps),]
-        melted[melted$imps < quantile(melted$imps,.7),"aud"] = "rest"
-        melted <- ddply(melted,.(aud),summarise,imps=sum(imps),price=sum(price))
-        melted$price[is.na(melted$price)] = 0
-        melted$percentage <- melted$price/sum(melted$price,na.rm=T)
-        melted$var <- melted$aud
-        melted$val <- melted$price
-    }
-    if(chPie==5){
         set <- TRUE
         melted <- ddply(keyF[set,],.(Size),summarise,imps=sum(imps))
         melted$aud <- melted$Size
@@ -423,9 +409,47 @@ grid.arrange(pie[[1]],pie[[2]],ncol=2)
 dev.off()
 
 
+melted <- ddply(keyF,.(client),summarise,imps=sum(imps),price=sum(price))
+melted$aud <- paste(substring(tryTolower(melted$client),1,12),"_",sep="")
+melted = melted[order(melted$imps),]
+melted[melted$imps < quantile(melted$imps,.5),"aud"] = "rest"
+melted <- ddply(melted,.(aud),summarise,imps=sum(imps),price=sum(price))
+melted$price[is.na(melted$price)] = 0
+melted$percentage <- melted$price/sum(melted$price,na.rm=T)
+melted$var <- melted$aud
+melted$val <- melted$price
+strLen <- as.vector(regexpr("([a-z][ ].*){2}",melted$var))
+strLen[strLen<=0] <- Inf
+strLen[is.na(strLen)] <- Inf
+strLen <- pmin(strLen,nchar(melted$var,keepNA=0))
+melted$label <- substring(melted$var,first=1,last=strLen)
+melted$y <- cumsum(melted$percentage) - melted$percentage/2
+melted$valL <- paste(round(melted$val/1000000,1),"M")
+if(!sum(melted$val)/nrow(melted)>1000000){
+    melted$valL <- paste(round(melted$val/1000,1),"k")
+}
+melted$label = factor(melted$label,levels=melted$label[rev(order(melted$imps))])
+melted = melted[rev(order(melted$imps)),]
 
-fName <- paste("fig/audienceUsageSource4",chPie,".jpg",sep="")
-ggsave(file=fName, plot=pie[[4]], width=gHeight, height=gHeight)
+
+pClient <- ggplot(melted, aes(x=label,y=imps,fill=var,label=percent(percentage))) +
+    geom_bar(width=1,stat="identity") +
+    geom_text(aes(x=label,y=imps/2,label=percent(percentage)),size=2) +
+    geom_text(aes(x=label,y=imps/2+.02*max(imps),label=valL),size=2) +
+    theme(
+        panel.border = element_blank(),
+        text = element_text(size = gFontSize),
+        legend.position="none"
+    ) +
+    scale_fill_manual(values=c(gCol1,gCol1)) +
+    scale_y_continuous(breaks=seq(0,20000000,2000000),labels=paste(seq(0,20,2),"M")) +
+#    coord_polar("y",start=0) + 
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
+pClient
+
+
+fName <- paste("intertino/fig/audienceUsageSource4.jpg",sep="")
+ggsave(file=fName, plot=pClient, width=gWidth, height=gHeight)
 
 
 

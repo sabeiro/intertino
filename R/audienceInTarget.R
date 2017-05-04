@@ -52,6 +52,7 @@ if(TRUE){
         fs[set,"aud"] <- cMap$name[i]
     }
     fs$aud <- gsub("pub ","",fs$aud) %>% gsub("Pub ","",.)
+    fs$source[grepl("beha",fs$aud)] = "zalando beha"
     fs1 <- read.csv('raw/audCompBanzai.csv',stringsAsFactor=FALSE)
     fs1 <- ddply(fs1,.(Campaign.Name,Placement,Demo.Segment,Platform),summarise,unique=sum(Unique.Audience,na.rm=T))
     ## fs1 <- fs1[fs1$Country=="ITALY",]
@@ -68,21 +69,12 @@ if(TRUE){
     segMap <- segMap[!grepl("Total",rownames(segMap)),]
     segMap2 <- read.csv('raw/audCompSegMap2.csv',row.names=1)
     segMap2 <- ifelse(segMap2==1,TRUE,FALSE)
-    ## audL <- c(unique(fs$seg),"F","M","18 24","25 34","35 44","45 54","55 ")
-    ## audL <- audL[!grepl("i t",audL)]
-    ## audL <- audL[!is.na(audL)]
-    ## audL <- gsub(" $","",audL)
-    ## audL <- audL[order(audL)]
-    ## audL <- unique(audL)
     audL <- colnames(segMap2) %>% gsub("^X","",.) %>% gsub("[[:punct:]]"," ",.)
     segN <- colnames(segMap) %>% gsub("pub ","",.) %>% gsub("X","",.) %>% gsub("[[:punct:]]"," ",.) %>% gsub(" $","",.)
     audM <- audL %>% sub("pub ","",.) %>% gsub("[[:punct:]]"," ",.) %>% sub(" v","",.) %>% sub(" z","",.) %>% sub(" 1st","",.) %>% sub(" beha","",.) %>%  sub("BZ   SE ","",.) %>%  sub("BZ   SD ","",.) %>%  sub("BZ   SU ","",.)
     audSeg <- match(audM,segN)
-    uniT <- fs#ddply(fs,.(aud,seg,Demo.Segment,source,Platform),summarise,unique=sum(unique,na.rm=T),imps=sum(imps,na.rm=T))
-    #set <-  !(uniT$source == "banzai")
-##    uniT[("Total Digital"==uniT$Platform) & set,"unique"] <- uniT[("Digital (C/M)"==uniT$Platform) & set,"unique"]
-    ## set <- (uniT$Platform %in% devL)
-    ## uniT <- uniT[set,]
+    uniT <- fs
+    
     write.csv(uniT,paste("out/audComp","PostVal",".csv",sep=""))
     ab <- read.csv("raw/audCompBenchmark.csv")
     ab$percent <- ab$percent/100
@@ -159,25 +151,26 @@ melted$source <- as.character(melted$source)
 ##melted <- melted[melted$source %in% c("zalando s-d"),]
 ##melted <- melted[!melted$source %in% c("banzai"),]
 
-melted$source <- factor(melted$source,levels=c("all","none","first s-d","zalando s-d","vodafone s-d","banzai","exaudi","l-a kx"))
-melted <- melted[melted$source %in% c("all","none","first s-d","zalando s-d","vodafone s-d"),]
+melted$source <- factor(melted$source,levels=c("all","none","first s-d","zalando s-d","zalando beha","vodafone s-d","banzai","exaudi","l-a kx"))
+melted <- melted[melted$source %in% c("all","none","first s-d","zalando s-d","vodafone s-d","zalando beha"),]
 
 
 gLabel = c("device","segment",paste("reach in target",""),"percentuale")
 p <- ggplot(melted,aes(x=Var1,y=Var2,group=Var2)) +
 ##    geom_raster(data=meltTarget[!is.na(meltTarget$value),],aes(fill = value), interpolate = TRUE,alpha=0.7) + 
     geom_tile(aes(fill=value,color=accuracy),size=0.5,width=0.9,height=0.9) +
-    geom_text(aes(fill=value,label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=2) +
+    geom_text(aes(fill=value,label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=6) +
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
 ##    scale_fill_gradient(low="white",high="steelblue") +
     facet_grid(. ~ source) + ##,scales = "free", space = "free") +
     theme(
         ##axis.text.x = element_text(angle = 30,margin=margin(-10,0,0,0)),
-        text = element_text(family = "sans", colour = "grey50", size = 8, vjust = 1, lineheight = 0.9,face="plain",hjust=0.5,angle=0,margin=0,debug=0),
+        text = element_text(family = "sans", colour = "grey50", size = 18, vjust = 1, lineheight = 0.9,face="plain",hjust=0.5,angle=0,margin=0,debug=0),
         panel.background = element_blank()
     )
 p
-ggsave(file="intertino/fig/inTargetHeat.svg", plot=p, width=gWidth, height=gHeight)
+ggsave(file="intertino/fig/inTargetHeat.svg", plot=p, width=2*gWidth, height=2*gHeight)
+ggsave(file="intertino/fig/inTargetHeat.jpg", plot=p, width=2*gWidth, height=2*gHeight)
 ## fs <- fs[fs$Platform=="Digital (C/M)",]
 ## fs$Audience.Reach <- as.numeric(gsub("%","",fs$Audience.Reach))
 

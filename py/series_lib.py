@@ -80,6 +80,7 @@ def getSeries(sData):
     timeL = pd.DataFrame({'t':(np.array(resq.json()['data'])[:,0])/1000-3600})
     timeL = timeL.t.apply(lambda x: datetime.datetime.fromtimestamp(x))
     trainD = pd.DataFrame({'y':ser[:,1]/1000000},index=[timeL[0]+datetime.timedelta(x) for x in range(timeL.size)])
+    trainD.index = [pd.datetime.strptime(str(x)[0:10],'%Y-%m-%d') for x in trainD.index]
     trainD['t'] = ser[:,0]/1000000000
     trainD.dropna(inplace=True)
     tempD = trainD.copy(deep=True)
@@ -114,9 +115,10 @@ def getStartParam(sData):
     baseUrl = "http://analisi.ad.mediamond.it/jsonp.php?"
     resq = requests.get(baseUrl+urllib.urlencode(sData))##,'callback':'?'}))
     x0 = resq.json()['data']
-    return [x[1] for x in x0]
+    return x0
+##    return [x[1] for x in x0]
 
-def plotSer(sDay,testD):
+def plotSer(sDay,testD,nr):
     plt.plot(sDay.t,sDay.y,'-k',label='series')
     plt.plot(sDay.t,sDay.stat,label='stat')
     plt.plot(testD.t,testD.pred,label='prediction')
@@ -126,7 +128,7 @@ def plotSer(sDay,testD):
     plt.plot(sDay.t,sDay['resid'],label='residual')
     plt.xlabel('$t$')
     plt.ylabel('$y$')
-    plt.title("time series interpolation ")
+    plt.title("time series interpolation " + nr)
     plt.legend()
     plt.show()
 
@@ -136,12 +138,12 @@ from scipy.optimize import leastsq as least_squares
 
 def getHistory(sDay,nAhead,x0,hWeek):
     nLin = sDay.shape[0] + nAhead
-    nFit = sDay.shape[0] if int(x0[6]) <= 14 else int(x0[6])
+    nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     sDay['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(sDay['t'])
     sDay['hist'] = sDay['hist']/sDay['hist'].mean()
     lmFor = 'e_av ~ 1 + t + I(t**2) + I(t**3) + I(t**4) + I(t**5)'
     lm = smf.ols(formula=lmFor,data=sDay.tail(nFit)).fit()
-    sDay['stat'] = (sDay['y']*sDay['hist']*x0[10]-lm.predict(sDay))
+    sDay['stat'] = (sDay['y']*sDay['hist']*x0['hist_adj']-lm.predict(sDay))
     t_test = np.linspace(sDay['t'][0],sDay['t'][sDay.shape[0]-1]+sDay.t[nAhead]-sDay.t[0],nLin)
     testD = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     testD['y'] = sDay.y
@@ -151,23 +153,27 @@ def getHistory(sDay,nAhead,x0,hWeek):
     testD['pred'] = 0
     return testD, lm
 
+
 def extSeries(sDay,nAhead,x0,hWeek):
-    nFit = sDay.shape[0] if int(x0[6]) <= 14 else int(x0[6])
+    nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     testD, lm = getHistory(sDay,nAhead,x0,hWeek)
     testD = testD.tail(nFit+nAhead)
-    freqP = [x0[7],x0[8]]
+    freqP = x0['freq']
     #print 2.*np.pi/(sDay.t[7]-sDay.t[0])
     def fun(x,t):
         return x[0] + x[1] * np.sin(freqP[0]*t + x[2])*(1 + x[3]*np.sin(freqP[1]*t + x[4]))    ##confInt = stats.t.interval(0.95,len(y)-1,loc=np.mean(y),scale=stats.sem(y))
     def fun_min(x,t,y):
         return fun(x,t) - y
-    res_lsq = least_squares(fun_min,x0,args=(sDay.t,sDay.stat))#loss='soft_l1',f_scale=0.1,
+    res_lsq = least_squares(fun_min,x0['lsq'],args=(sDay.t,sDay.stat))#loss='soft_l1',f_scale=0.1,
+    x0['lsq'] = [x for x in res_lsq[0]]
     testD['lsq'] = fun(res_lsq[0],testD.t) # fun(res_robust.x,t_test)
-    sDay['resid'] = sDay['y'] - fun(res_lsq[0],sDay.t)/x0[10] - lm.predict(sDay)
-    rSquare = (sDay['resid'] - sDay['resid'].mean())**2
-    testD['pred'] = (testD['lsq']/x0[10] + lm.predict(testD))
+    sDay['resid'] = sDay['y'] - fun(res_lsq[0],sDay.t)/x0['hist_adj'] - lm.predict(sDay)
+    rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
+    x0['res'][1] = rSquare.sum()
+    x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
+    testD['pred'] = (testD['lsq']/x0['hist_adj'] + lm.predict(testD))
     testD = testD.drop(testD.index[0])
-    return testD, res_lsq[0], rSquare.sum()
+    return testD, x0
 
 import statsmodels.api as sm
 import statsmodels.tsa as tsa
@@ -186,35 +192,34 @@ def bestArima(sDay,nAhead,x0,hWeek):
     return par
 
 def serArma(sDay,nAhead,x0,hWeek):
-    x1 = [int(x) for x in x0]
     testD, lm = getHistory(sDay,nAhead,x0,hWeek)
     dta = sDay['y']
     dta.index = [pd.datetime.strptime(str(x)[0:10],'%Y-%m-%d') for x in dta.index]
+    sDay.index = dta.index
     t_line = [float(calendar.timegm(x.utctimetuple()))/1000000 for x in dta.index]
     t_line1 = [float(calendar.timegm(x.utctimetuple()))/1000000 for x in hWeek.index]
     sExog = pd.DataFrame({'y':sp.interpolate.interp1d(t_line1,hWeek.y,kind="cubic")(t_line)})
     #par = bestArima(dta,sExog)
     sExog.index = dta.index
-    result = sm.tsa.ARIMA(dta,(x1[0],x1[1],x1[2])).fit(trend="c",method='css-mle',exog=sExog)
+    result = sm.tsa.ARIMA(dta,(x0['arma'][0],x0['arma'][1],x0['arma'][2])).fit(trend="c",method='css-mle',exog=sExog)
     predT = [str(dta.index[0])[0:10],str(dta.index[len(dta)-1])[0:10]]
     histS = pd.DataFrame({'pred':result.predict(start=predT[0],end=predT[1])})
-    sDay['resid'] = sDay['y'] - histS['pred']
-    rSquare = (sDay['resid'] - sDay['resid'].mean())**2
     predT = [str(dta.index[0])[0:10],str(dta.index[len(dta)-1]+datetime.timedelta(days=nAhead))[0:10]]    
     predS = pd.DataFrame({'pred':result.predict(start=predT[0],end=predT[1])})
     predS.index = [dta.index[0]+datetime.timedelta(days=x) for x in range(0,len(dta)+nAhead)]
     predS['t'] = [float(calendar.timegm(x.utctimetuple()))/1000000 for x in predS.index]
     predS['hist'] = sp.interpolate.interp1d(t_line1,hWeek.y,kind="cubic")(predS['t'])
     predS['hist'] = predS['hist']/predS['hist'].mean()
-    predS['pred'] = predS['pred']*predS['hist']*x0[10]
+    predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
     predS['trend'] = lm.predict(predS)
+    predS['y'] = sDay['y']
     predS['lsq'] = 0
     ##predS['pred'] = (predS['pred']*predS['hist']+predS['trend'])
-    x2 = x0#.values
-    x2[3:(3+len(result.params))] = result.params
-    x2[9] = 1
-    predS = predS.drop(predS.index[0])
-    return predS, pd.DataFrame(x2), rSquare.sum()
+    x0['response'] = [x for x in result.params]
+    sDay['resid'] = sDay['y'] - predS['pred'][0:sDay.shape[0]]
+    rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
+    x0['res'][1:2] = [rSquare.sum(),rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()]
+    return predS, x0
     # plt.plot(dta,'-k',label="series")
     # plt.plot(sExog,label="exo")
     # plt.plot(hWeek.y,label="hist")
@@ -226,7 +231,6 @@ def serArma(sDay,nAhead,x0,hWeek):
 
 import pydlm    
 def SerBayes(sDay,nAhead,x0,hWeek):
-    x1 = [int(x) for x in x0]
     dta = sDay['y']
     dta.index = [pd.datetime.strptime(str(x)[0:10],'%Y-%m-%d') for x in dta.index]
     t_line = [float(calendar.timegm(x.utctimetuple()))/1000000 for x in dta.index]
@@ -249,27 +253,27 @@ import algo_holtwinters as ht
 def serHolt(sDay,nAhead,x0,hWeek):
     Y = [x for x in sDay.y]
     ##Yht, alpha, beta, gamma, rmse = ht.additive([x for x in sDay.y],int(x0[0]),nAhead,x0[1],x0[2],x0[3])
-    nAv = int(x0[0]) if int(x0[0]) > 1 else 5
-    Yht, alpha, beta, gamma, rmse = ht.additive([x for x in sDay.y],nAv,nAhead,x0[1],x0[2],x0[3])
+    nAv = int(x0['holt'][0]) if int(x0['holt'][0]) > 1 else 5
+    Yht, alpha, beta, gamma, rmse = ht.additive([x for x in sDay.y],x0['holt'][0],nAhead,x0['holt'][1],x0['holt'][2],x0['holt'][3])
     sDay['resid'] = sDay['y'] - Yht[0:sDay.shape[0]]
-    x0[1] = alpha
-    x0[2] = beta
-    x0[3] = gamma
-    x0[4] = rmse
+    x0['holt'] = [x0['holt'][0],alpha,beta,gamma,rmse]
     nLin = sDay.shape[0] + nAhead
     t_test = np.linspace(sDay['t'][0],sDay['t'][sDay.shape[0]-1]+sDay.t[nAhead]-sDay.t[0],nLin)
     predS = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     predS['pred'] = Yht
     predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
     predS['hist'] = predS['hist']/predS['hist'].mean()
-    predS['pred'] = predS['pred']*predS['hist']*x0[10]
+    predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
     lmFor = 'e_av ~ 1 + t + I(t**2) + I(t**3) + I(t**4) + I(t**5)'
     lm = smf.ols(formula=lmFor,data=sDay).fit()
-    predS['trend'] = lm.predict(predS)*x0[4]
+    predS['trend'] = lm.predict(predS)
     predS['lsq'] = 0
+    predS['y'] = sDay['y']
     sDay['resid'] = sDay['y'] - predS['pred'][0:sDay.shape[0]]
-    rSquare = (sDay['resid'] - sDay['resid'].mean())**2
-    return predS, x0, rSquare.sum()
+    rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
+    x0['res'][1] = rSquare.sum()
+    x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
+    return predS, x0
     
 from scipy.optimize import curve_fit
 def serAuto(sDay,nAhead,x0,hWeek):
@@ -278,19 +282,19 @@ def serAuto(sDay,nAhead,x0,hWeek):
     todayD = todayD.replace(hour=0,minute=0,second=0,microsecond=0)
     dta = pd.DataFrame({'y':sDay.y})
     dta['day'] = sDay.index.weekday
-    phase = dta.head(int(x0[6])).groupby(['day']).mean()
+    phase = dta.head(int(x0['obs_time'])).groupby(['day']).mean()
     phase['std'] = dta.groupby(['day']).std()['y']
     phase = phase.sort_values(['y'],ascending=False)
     phase['csum'] = phase['y'].cumsum()/phase['y'].sum()
     phaseN = phase.index[0] - todayD.weekday()
-    r,q,p = sm.tsa.acf(sDay['y'].tail(phaseN+int(x0[6])).squeeze(),qstat=True)
+    r,q,p = sm.tsa.acf(sDay['y'].tail(phaseN+int(x0['obs_time'])).squeeze(),qstat=True)
     def fit_fun(x,decay):
         return np.exp(-decay*x)
-    popt, pcov = curve_fit(fit_fun,np.array(range(0,6)),r[0:6]-min(r),p0=(x0[5]))
+    popt, pcov = curve_fit(fit_fun,np.array(range(0,6)),r[0:6]-min(r),p0=(x0['decay'][0]))
     X = np.array(range(0,r.size,7))
-    popt1, pcov1 = curve_fit(fit_fun,X,r[X],p0=(x0[5]))
+    popt1, pcov1 = curve_fit(fit_fun,X,r[X],p0=(x0['decay'][0]))
     autD = pd.DataFrame({'r':r,'exp':fit_fun(range(0,r.size),popt),'exp1':fit_fun(range(0,r.size),popt1)})    
-    x0[5] = popt
+    x0['decay'] = [x for x in popt]
     # testD = pd.DataFrame(index=[todayD + datetime.timedelta(days=x) for x in range(-sDay.shape[0],nAhead)])
     # testD['t'] = [float(calendar.timegm(x.utctimetuple()))/1000000. for x in testD.index]
     # testD['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(testD['t'])
@@ -303,29 +307,31 @@ def serAuto(sDay,nAhead,x0,hWeek):
         wN = wN + 1 if wN < 6 else 0
         if(wN == 0):
             sY = np.random.normal(phase['y'].head(1),dta.y.std()/2)
-        sY = sY*(1+testD['hist'][i]*x0[10])
+        sY = sY*(1+testD['hist'][i]*x0['hist_adj'])
         testD.loc[i,'pred'] = sY*fit_fun(float(wN),popt)
 
     # testD['pred1'] = testD['pred']
     testD['pred'] = serSmooth(testD['pred'],16,5)
     sDay['resid'] = sDay['y'] - testD['pred'][0:sDay.shape[0]]
     # sDay['resid1'] = sDay['resid']
-    freqP = [x0[7],x0[8]]
+    freqP = x0['freq']
     def fun(x,t):
         return x[0] + x[1] * np.sin(freqP[0]*t + x[2])*(1 + x[3]*np.sin(freqP[1]*t + x[4]))    
     def fun_min(x,t,y):
         return fun(x,t) - y
-    res_lsq = least_squares(fun_min,x0,args=(sDay['t'],sDay['resid']))
+    res_lsq = least_squares(fun_min,x0['lsq'],args=(sDay['t'],sDay['resid']))
     testD['lsq'] = fun(res_lsq[0],testD['t']) # fun(res_robust.x,t_test)
-    x0[0:res_lsq[0].size] = res_lsq[0]
+    x0['lsq'][0:res_lsq[0].size] = res_lsq[0]
     testD['pred2'] = testD['pred']
     testD['pred'] = testD['pred'] + testD['lsq']
     sDay['resid'] = sDay['y'] - testD['pred'][0:sDay.shape[0]]    
-    rSquare = (sDay['resid'] - sDay['resid'].mean())**2
+    rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
+    x0['res'][1] = rSquare.sum()
+    x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
     # sDay.to_csv('tmpAuto1.csv')
     # testD.to_csv('tmpAuto2.csv')
     # autD.to_csv('tmpAuto3.csv')
-    return testD, x0, rSquare.sum()
+    return testD, x0
     
 
 from pyneurgen.neuralnet import NeuralNet
@@ -333,7 +339,7 @@ from pyneurgen.nodes import BiasNode, Connection
 from pyneurgen.recurrent import NARXRecurrent
 def serNeural(sDay,nAhead,x0,hWeek):
     nLin = sDay.shape[0] + nAhead
-    nFit = sDay.shape[0] if int(x0[6]) <= 14 else int(x0[6])
+    nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     testD = getHistory(sDay,nAhead,x0,hWeek)
     population = [[float(i),sDay['y'][i],float(i%7)] for i in range(sDay.shape[0])]
     all_inputs = []

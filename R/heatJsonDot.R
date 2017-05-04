@@ -12,7 +12,7 @@ mList <- c("01","02","03","04","05","06","07","08","09","10","11","12")
 monthL <- c("January","February","March","April","May","June","July","August","September")
 monthL <- c("June","July","August","September","October","November","December")
 monthL <- c("2017January")
-monthL <- c("2017Feb","2017Mar")
+monthL <- c("2017Feb","2017Mar","2017Apr")
 
 fSect <- "section"
 month <- mList[1]
@@ -26,7 +26,7 @@ scCol <- "Channel"
 month <- monthL[7]
 for(month in monthL){
     print(month)
-    fs <- read.csv(paste("raw/priceSection",month,".csv",sep=""),stringsAsFactor=FALSE)
+    fs <- read.csv(paste("log/priceSection",month,".csv",sep=""),stringsAsFactor=FALSE)
     fs$FlightTotalSales <- as.numeric(gsub(",","\\.",fs$FlightTotalSales))
     ## fs$Data <- as.Date(fs$Data)
     ## fs$week <- format(fs$Data,"%W")

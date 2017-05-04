@@ -34,11 +34,11 @@ public class sql{
         //     System.out.println("Name::::" + strName);
         // }
 	
-        String url = "jdbc:mysql://analisi.ad.mediamond.it:3306/";
-        String dbName = "intertino";
+        String url = "jdbc:mysql://:3306/";
+        String dbName = "";
         String driver = "com.mysql.jdbc.Driver";
-        String userName = "anticolo";
-        String password = "E29ikVZ";
+        String userName = "";
+        String password = "";
         try{
             //Class.forName(driver).newInstance();
 	    Class.forName(driver);
