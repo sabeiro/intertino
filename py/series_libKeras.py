@@ -20,7 +20,7 @@ dataset = [[x] for x in sDay['y']]
 scaler = MinMaxScaler(feature_range=(0, 1))
 dataset = scaler.fit_transform(dataset)
 # split into train and test sets
-train_size = int(len(dataset) * 0.67)
+train_size = int(len(dataset) * 0.80)
 test_size = len(dataset) - train_size
 train, test = dataset[0:train_size,:], dataset[train_size:len(dataset),:]
 print(len(train), len(test))
@@ -34,7 +34,7 @@ def create_dataset(dataset, look_back=1):
 		dataY.append(dataset[i + look_back, 0])
 	return numpy.array(dataX), numpy.array(dataY)
 
-look_back = 1
+look_back = 4
 trainX, trainY = create_dataset(train, look_back)
 testX, testY = create_dataset(test, look_back)
 
@@ -62,7 +62,6 @@ trainScore = math.sqrt(mean_squared_error(trainY[0], trainPredict[:,0]))
 print('Train Score: %.2f RMSE' % (trainScore))
 testScore = math.sqrt(mean_squared_error(testY[0], testPredict[:,0]))
 print('Test Score: %.2f RMSE' % (testScore))
-
 
 # shift train predictions for plotting
 trainPredictPlot = numpy.empty_like(dataset)

@@ -8,14 +8,16 @@ import oauth2.error
 import oauth2.store.memory
 import oauth2.tokengenerator
 import oauth2.web.wsgi
+import json
 
-client_id     = "xxxxxxxxxxxxxxxxxxxxxx"
-client_secret = "xxxxxxxxxxxxxxxxxxxxxx"
-user_name     = "username"
-password      = "password"
+key_file = os.environ['HOME'] + '/lav/media/credenza/gemini.json'
+cred = []
+with open(key_file) as f:
+    cred = json.load(f)
+
 nuggad_api    = 'https://api.nuggad.net'
-oauth_client = OAuth2::Client.new(client_id, client_secret, :site => nuggad_api)
-token = oauth_client.password.get_token(user_name, password)
+oauth_client = OAuth2::Client.new(cred['client_id'],cred['client_secret'], :site => nuggad_api)
+token = oauth_client.password.get_token(cred['user_name'], cred['password'])
 response = token.get('/networks', :format => 'json')
 puts response.body
 

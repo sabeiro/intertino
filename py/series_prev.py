@@ -2,14 +2,9 @@ import os
 import sys
 import random
 import numpy as np
-import scipy as sp
 import pandas as pd
-from scipy import stats
 import pylab 
 import matplotlib.pyplot as plt
-#import statsmodels.formula.api as sm
-import statsmodels.tsa as tsa
-import sklearn.model_selection as crossval
 import series_lib as sl
 import db_sql as dbs
 import datetime
@@ -57,11 +52,11 @@ for nr in sorted(startC.keys(),key=lambda x:x[0]):
     elif(x0['model']=='autocor'):
         testD, x1 = sl.serAuto(sDay,nAhead,x0,hWeek)
     else:##lsq
-        testD, x1 = sl.extSeries(sDay,nAhead,x0,hWeek)
+        testD, x1 = sl.serLsq(sDay,nAhead,x0,hWeek)
 
     print x1
-    #sl.plotSer(sDay,testD,nr)
-
+    sl.plotSer(sDay,testD,nr + ' ' + x1['model'])
+    
     endC[nr] = x1
     predD[nr] = testD['pred']
 
@@ -77,7 +72,7 @@ print [ "%.2f" % x for x in resS]
 
 predD1 = predD[predD.index>yesterdayD]
 predD1.fillna(0,inplace=True)
-predD1.columns = startC.keys()
+predD1.columns = sorted(startC.keys(),key=lambda x:x[0])
 predD2 = predD1.apply(lambda x:x*1000000).astype(int)
 
 predD2['week'] = [predD2.index[x].isocalendar()[1] for x in range(predD2.shape[0])]
@@ -102,4 +97,4 @@ predDW.to_sql('inventory_prediction_weekly',conn,if_exists='replace',chunksize=1
 conn.close()
 
 
-
+print '--------series-prev-te-se-qe-te-ve-be-ne-------'

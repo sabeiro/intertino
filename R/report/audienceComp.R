@@ -123,7 +123,6 @@ for(i in 1:nrow(grpL)){
 }
 write(toJSON(list(name="audience offer",title="",children=circL),color="#ffffff"),"intertino/data/audience_offer.json")
 
-
 ##install.packages(c('beanplot','vioplot','digest'))
 require('beanplot')
 require(vioplot)

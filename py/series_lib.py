@@ -140,7 +140,8 @@ def getHistory(sDay,nAhead,x0,hWeek):
     nLin = sDay.shape[0] + nAhead
     nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     sDay['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(sDay['t'])
-    sDay['hist'] = sDay['hist']/sDay['hist'].mean()
+    histNorm = sDay['hist'].mean()
+    sDay['hist'] = sDay['hist']/histNorm
     lmFor = 'e_av ~ 1 + t + I(t**2) + I(t**3) + I(t**4) + I(t**5)'
     lm = smf.ols(formula=lmFor,data=sDay.tail(nFit)).fit()
     sDay['stat'] = (sDay['y']*sDay['hist']*x0['hist_adj']-lm.predict(sDay))
@@ -148,19 +149,18 @@ def getHistory(sDay,nAhead,x0,hWeek):
     testD = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     testD['y'] = sDay.y
     testD['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(testD['t'])
-    testD['hist'] = testD['hist']/sDay['hist'].mean()
+    testD['hist'] = testD['hist']/histNorm
     testD['trend'] = lm.predict(testD)
     testD['pred'] = 0
     return testD, lm
 
 
-def extSeries(sDay,nAhead,x0,hWeek):
+def serLsq(sDay,nAhead,x0,hWeek):
     nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     testD, lm = getHistory(sDay,nAhead,x0,hWeek)
     testD = testD.tail(nFit+nAhead)
     freqP = x0['freq']
-    #print 2.*np.pi/(sDay.t[7]-sDay.t[0])
-    def fun(x,t):
+    def fun(x,t):#print 2.*np.pi/(sDay.t[7]-sDay.t[0])
         return x[0] + x[1] * np.sin(freqP[0]*t + x[2])*(1 + x[3]*np.sin(freqP[1]*t + x[4]))    ##confInt = stats.t.interval(0.95,len(y)-1,loc=np.mean(y),scale=stats.sem(y))
     def fun_min(x,t,y):
         return fun(x,t) - y
@@ -171,7 +171,7 @@ def extSeries(sDay,nAhead,x0,hWeek):
     rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
     x0['res'][1] = rSquare.sum()
     x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
-    testD['pred'] = (testD['lsq']/x0['hist_adj'] + lm.predict(testD))
+    testD['pred'] = (testD['lsq']/(x0['hist_adj']*testD['hist']) + lm.predict(testD))
     testD = testD.drop(testD.index[0])
     return testD, x0
 
@@ -341,29 +341,35 @@ def serNeural(sDay,nAhead,x0,hWeek):
     nLin = sDay.shape[0] + nAhead
     nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     testD = getHistory(sDay,nAhead,x0,hWeek)
-    population = [[float(i),sDay['y'][i],float(i%7)] for i in range(sDay.shape[0])]
+    weekS = [x.isocalendar()[1] for x in sDay.index]
+    population = [[float(i),sDay['y'][i],float(i%7),weekS[i]] for i in range(sDay.shape[0])]
     all_inputs = []
     all_targets = []
     factorY = sDay['y'].mean()
     factorT = 1.0 / float(len(population))*factorY
     factorD = 1./7.*factorY
+    factorW = 1./52.*factorY
     factorS = 4.*sDay['y'].std()
     factorH = factorY/sDay['hist'].mean()
+
     def population_gen(population):
         pop_sort = [item for item in population]
 #        random.shuffle(pop_sort)
         for item in pop_sort:
             yield item
             
-    for t,y,y1 in population_gen(population):
-        all_inputs.append([t*factorT,(.5-random.random())*factorS+factorY,y1*factorD])
+    for t,y,y1,y2 in population_gen(population):
+        #all_inputs.append([t*factorT,(.5-random.random())*factorS+factorY,y1*factorD,y2*factorW])
+        all_inputs.append([y1*factorD,(.5-random.random())*factorS+factorY,y2*factorW])
         all_targets.append([y])
 
     if False:
-        plt.plot([x[0] for x in all_inputs],'b-',label='targets')
-        plt.plot([x[1] for x in all_inputs],'b-',label='targets')
-        plt.plot([x[2] for x in all_inputs],'g-',label='targets')
-        plt.plot([x[0] for x in all_targets],'r-',label='actuals')
+        plt.plot([x[0] for x in all_inputs],'-',label='targets0')
+        plt.plot([x[1] for x in all_inputs],'-',label='targets1')
+        plt.plot([x[2] for x in all_inputs],'-',label='targets2')
+        # plt.plot([x[3] for x in all_inputs],'-',label='targets3')
+        plt.plot([x[0] for x in all_targets],'-',label='actuals')
+        plt.legend(loc='lower left', numpoints=1)
         plt.show()
 
     net = NeuralNet()

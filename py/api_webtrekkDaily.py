@@ -65,6 +65,6 @@ conn = engine.connect()
 videoL.to_sql('inventory_webtrekk_preroll',conn,if_exists='append',chunksize=100,index_label="date")
 conn.close()
 
-
+print '---api-webtrekk-te-se-qe-te-ve-be-ne-------------'
 
 

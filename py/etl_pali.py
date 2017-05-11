@@ -2,7 +2,6 @@ import json
 import requests
 import os
 import sys
-sys.path.append("/home/sabeiro/lav/media/script/py/")
 import random
 import json
 import numpy as np
@@ -13,7 +12,15 @@ import cookielib
 import urlparse
 import datetime
 
-baseUrl = 'http://www.mediaset.it/guidatv/inc/canali/'
+print '------------------------------etl-pali-------------------------'
+
+key_file = os.environ['HOME'] + "/lav/media/credenza/medianet.json" 
+cred = []
+with open(key_file) as f:
+    cred = json.load(f)
+
+baseUrl = cred['medianet']
+
 monthL = ['2017' + '%02d/' % x for x in range(1,13)]
 monthDur = [31,28,31,30,31,30,31,31,30,31,30,31]
 monthU = '201703/'
@@ -85,4 +92,5 @@ conn.close()
 
 
 
+print '---etl-pali-te-se-qe-te-ve-be-ne-------------'
         
