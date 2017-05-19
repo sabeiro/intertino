@@ -19,7 +19,7 @@ baseUrl = 'https://report2.webtrekk.de/cgi-bin/wt/JSONRPC.cgi'
 
 sData = {"params": {},"version": "1.1","method": "getConnectionTest"}
 resq = requests.post(baseUrl,data=json.dumps(sData))
-key_file = os.environ['HOME'] + '/lav/media/credenza/webtrekk.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/webtrekk.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -54,7 +54,7 @@ videoL = pd.DataFrame(
 videoL.index.name = "idx"
 videoL = videoL.set_index(['date'])
 
-key_file = os.environ['HOME'] + '/lav/media/credenza/intertino.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/intertino.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)

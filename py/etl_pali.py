@@ -14,7 +14,7 @@ import datetime
 
 print '------------------------------etl-pali-------------------------'
 
-key_file = os.environ['HOME'] + "/lav/media/credenza/medianet.json" 
+key_file = os.environ['LAV_DIR'] + "/credenza/medianet.json" 
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -27,7 +27,7 @@ monthU = '201703/'
 dayU = '20170330'
 chU = '_KA'
 chU = '_C5'
-sectL = pd.read_csv(os.environ['HOME'] + "/lav/media/raw/inventoryVideoSection.csv")
+sectL = pd.read_csv(os.environ['LAV_DIR'] + "/raw/inventoryVideoSection.csv")
 sectD = pd.DataFrame(index = sectL.cluster.unique())
 titleL = pd.DataFrame()
 paliPrg = pd.DataFrame()
@@ -80,7 +80,7 @@ import MySQLdb
 from pandas.io import sql
 import sqlalchemy
 
-key_file = os.environ['HOME'] + '/lav/media/credenza/intertino.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/intertino.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)

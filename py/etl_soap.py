@@ -1,5 +1,6 @@
 from suds.client import Client
 import pandas as pd
+import os
 import json
 import pprint
 # from suds.wsse import *
@@ -13,7 +14,7 @@ import suds_requests
 # logging.getLogger('suds.client').setLevel(logging.DEBUG)
 # from suds.sudsobject import asdict
 
-key_file = '../../credenza/medianet.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/medianet.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)['soap']
@@ -32,7 +33,7 @@ for ch in chL:
         palii = pali.__getitem__(i)
         paliL.append({"name":palii.__getitem__(0),"time":palii.__getitem__(4),"type":palii.__getitem__(20),"genre":palii.__getitem__(26),"replica":palii.__getitem__(10)})
     paliDf = pd.DataFrame(paliL)
-    paliDf.to_csv("../../raw/paliSoap2017"+ch+".csv",encoding='utf-8')
+    paliDf.to_csv(os.environ['LAV_DIR'] + "/raw/paliSoap2017"+ch+".csv",encoding='utf-8')
 
 
 ##json.loads(r.read().decode(r.info().getparam('charset') or 'utf-8'))  

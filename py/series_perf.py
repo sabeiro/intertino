@@ -24,7 +24,7 @@ todayD = todayD.replace(hour=0,minute=0,second=0,microsecond=0)
 yesterdayD = todayD - datetime.timedelta(days=1)
 
 startC = {}
-with open(os.environ['HOME']+"/lav/media/train/series_interp.json") as f:
+with open(os.environ['LAV_DIR']+"/train/series_interp.json") as f:
     startC = json.load(f)
 
 predD = pd.DataFrame()
@@ -41,7 +41,7 @@ for nr in startC.keys():
     sPali, pWeek, pMonth = sl.getSeries({'tab':'tv_pali','sect':nr})
     hDay, hWeek, hMonth = sl.getSeries({'tab':'daily_hist','sect':nr})
     reload(sl)
-    startC = json.load(open(os.environ['HOME'] + "/lav/media/train/series_interp.json"))
+    startC = json.load(open(os.environ['LAV_DIR'] + "/train/series_interp.json"))
     x0 = startC[nr]
     #x0 = sl.getStartParam({'tab':'train_s','sect':nr})
     histPali = pd.concat([pWeek.y,hWeek.y],join='outer',axis=1)

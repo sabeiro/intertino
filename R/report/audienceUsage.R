@@ -220,7 +220,6 @@ con <- pipe("xclip -selection clipboard -i", open="w")
 write.table(melted,con,row.names=F,sep=",")
 close(con)
 
-
 melted <- keyD
 melted$week = format(melted$date,"%y-%W")
 weekL = as.data.frame(as.Date("2016-01-07") + seq(0,52*7*2,7))
@@ -503,13 +502,17 @@ esCl <- ddply(es,.(Cliente,Formato),summarise,imps=sum(QuantitÃ .Gratis+QuantitÃ
 esCl$cpm <- esCl$price/esCl$imps*1000
 write.csv(esCl,"raw/pricePerClient.csv")
 ##Size,FlightDescription,Data,FlightTotalSales,Imps,Click,Ctr %,Action,Registration,Smart Passback
-gs <- read.csv("raw/priceDataPlanning.csv",stringsAsFactor=F)
+gs <- read.csv("raw/priceDataPlanningTemplate.csv",stringsAsFactor=F)
+gs$FlightTotalSales <- 0
+head(gs)
 gs$pack <- "tot"
 gs[grepl("DATA PLANNING",gs$FlightDescription),"pack"] <- "target"
 gs$Size[grepl("APP",gs$Size)] <- "APP"
 gs$Size[gs$Size %in% c("OVERLAYER","LEADERBOARD","Mobile","PROMOBOX","Mobile Splash Page","SKYSCRAPER")] = "Rest"
-gs[gs$Size=="STRIP SKIN MASTHEAD","Size"] = "Skin/masthead"
+gs[gs$Size=="STRIP SKIN MASTHEAD","Size"] = "Masthead"
+gs[gs$Size=="Masthead" & grepl("SKIN",gs$AdTemplateDescription),"Size"] = "Skin"
 gs[gs$Size=="SPOT","Size"] = "Preroll"
+gs[gs$Size=="RECTANGLE","Size"] = "Rectangle"
 
 gs$cpm = gs$FlightTotalSales/gs$Imps*1000
 gs$cpm[is.nan(gs$cpm)] = 0
@@ -520,10 +523,10 @@ gs$ctr[is.nan(gs$ctr)] = 0
 gs$ctr[is.na(gs$ctr)] = 0
 gs$ctr[gs$ctr==Inf] = 0
 
-gsD <- ddply(gs[gs$Size %in% c("RECTANGLE","Preroll","Skin/masthead"),],.(Data,Size,pack),summarise,imps=sum(Imps,na.rm=T),click=sum(Click,na.rm=T),price=sum(FlightTotalSales,na.rm=T))
-write.csv(gsD,"raw/priceDataPlanningDec.csv")
-gsD$ctr <- gsD$click/gsD$imps*100
+gsD <- ddply(gs[gs$Size %in% c("RECTANGLE","Preroll","Masthead","Skin"),],.(Data,Size,pack),summarise,imps=sum(Imps,na.rm=T),click=sum(Click,na.rm=T),price=sum(FlightTotalSales,na.rm=T))
 gsD$cpm <- gsD$price/gsD$imps*1000
+gsD$ctr <- gsD$click/gsD$imps*100
+write.csv(gsD,"raw/priceDataPlanningDec.csv")
 
 es$pack <- "tot"
 es[grepl("DATA PLANNING",es$Pacchetto),"pack"] <- "target"
@@ -563,7 +566,7 @@ p3 <- ggplot(esD,aes(x=pack,y=cpm,color=Formato)) +
 
 
 jpeg("intertino/fig/audPerformance.jpg",width=pngWidth,height=pngHeight)
-grid.arrange(p1,p2,p3,ncol=3)
+grid.arrange(p1,p3,ncol=3)
 dev.off()
 
 
@@ -576,7 +579,7 @@ weighted.sd <- function(x,wt){
     sqrt(ret)
 }
 
-gs1 = gs[gs$Size %in% c("RECTANGLE","Preroll","Skin/masthead"),]
+gs1 = gs[gs$Size %in% c("Rectangle","Preroll","Skin","Masthead"),]
 lim = quantile(gs1$cpm,c(0.02,0.98))
 gs1 = gs1[gs1$cpm < lim[2],]##code alte
 lim = quantile(gs1$ctr,c(0.02,0.98))
@@ -593,7 +596,7 @@ esC = esC[esC$cpm < lim[2],]
 ## ggplot(gs,aes(x=cpm)) + geom_density() + xlim(c(0,50))
 ## weighted.mean(esC$cpm,esC$imps)
 ## weighted.mean(gs1$cpm,gs1$Imps)
-gs1 = gs[gs$Size %in% c("RECTANGLE","Preroll","Skin/masthead"),]
+gs1 = gs[gs$Size %in% c("Rectangle","Preroll","Skin","Masthead"),]
 gsM <- ddply(gs1,.(Size,pack),summarise,cpm=weighted.mean(cpm,Imps),ctr=weighted.mean(ctr,Imps))
 gsM$cpm_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$cpm, gs.sub$Imps))$V1
 gsM$ctr_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$ctr, gs.sub$Imps))$V1

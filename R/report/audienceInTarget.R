@@ -76,7 +76,7 @@ if(TRUE){
     uniT <- fs
     
     write.csv(uniT,paste("out/audComp","PostVal",".csv",sep=""))
-    ab <- read.csv("raw/audCompBenchmark.csv")
+    ab <- read.csv("raw/audCompBenchmarkGraph.csv")
     ab$percent <- ab$percent/100
     ab$target <- ab$target %>% gsub("[[:punct:]]"," ",.)
     ab$device <- ab$device %>% gsub(" Only","",.) %>% gsub("Total ","",.)
@@ -177,6 +177,7 @@ ggsave(file="intertino/fig/inTargetHeat.jpg", plot=p, width=2*gWidth, height=2*g
 
 #benMap <- as.matrix(read.csv("raw/audCompBenchmarkMap.csv",row.names=1))
 melted <- sqldf("SELECT * FROM meltTarget AS t LEFT JOIN ab AS s ON (t.Var2 = s.target) AND (t.Var1 = s.device)")
+melted <- sqldf("SELECT * FROM meltTarget AS t INNER JOIN ab AS s ON (t.Var2 = s.target) AND (t.Var1 = s.device)")
 
 melted = meltTarget
 colnames(melted) <- c("device","target","value","source","reach","accuracy")
@@ -209,16 +210,17 @@ if(FALSE){
 melted$source = as.character(melted$source)
 ##melted$source <- factor(melted$source,levels=c("all","none","benchmark","first s-d","zalando s-d","vodafone s-d","banzai","exaudi"))
 
-
+#melted2 <- melted
 melted1 <- melted[melted$accuracy>1,]
 melted1 <- melted1[!is.na(melted1$source),]
 melted1 <- melted1[!is.na(melted1$value),]
 melted1 <- melted1[melted1$source %in% c("all","benchmark","exaudi","first s-d","none","vodafone s-d","zalando s-d"),]
 gLabel = c("device","segment",paste("reach in target",""),"percentuale")
 p1 <- ggplot(melted1,aes(x=device,y=target,group=target)) +
-    geom_tile(aes(fill=value,color=accuracy),size=0.5) +
-    geom_text(aes(label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=2) +
-##    geom_raster(data=melted2,aes(fill=value),interpolate=TRUE,alpha=0.2) + 
+    #geom_tile(aes(fill=value,color=accuracy),size=0.5) +
+    geom_tile(aes(fill=value),size=0.5) +
+    geom_text(aes(label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=4) +
+    #geom_raster(data=melted2,aes(fill=value),interpolate=TRUE,alpha=0.2) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
     ## scale_fill_gradient(low="white",high="steelblue") +
     facet_grid(. ~ source) + ##,scales = "free", space = "free") +
@@ -229,11 +231,12 @@ p1 <- ggplot(melted1,aes(x=device,y=target,group=target)) +
     )
 p1
 ggsave(file="intertino/fig/inTargetHeatBench.svg", plot=p1, width=gWidth, height=gHeight)
+ggsave(file="intertino/fig/inTargetHeatBench.jpg", plot=p1, width=gWidth, height=gHeight)
 gLabel = c("device","segment",paste("uplift benchmark",""),"percentuale")
 melted1 <- melted1[!is.na(melted1$diff),]
 p2 <- ggplot(melted1,aes(x=device,y=target,group=target)) +
     geom_tile(aes(fill=diff,color=accuracy),size=0.5,colour="white") +
-    geom_text(aes(fill=diff,label=paste(formatC(diff*100,digit=0,format="f"),"",sep="")),colour="white",size=4) +
+    geom_text(aes(fill=diff,label=paste(formatC(diff*100,digit=0,format="f"),"",sep="")),colour="white",size=6) +
     geom_raster(data=melted,aes(fill=value),interpolate=TRUE,alpha=0.2) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
     ##scale_fill_gradient(low="white",high="steelblue") +

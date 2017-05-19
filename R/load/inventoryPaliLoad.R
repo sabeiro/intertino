@@ -8,14 +8,17 @@ library(dplyr)
 chL <- c("C5","I1","R4")
 paliL <- c("co – c5","co – i1","co – r4")
 timeC = data.frame(time=c(000,700,900,1200,1500,1800,2030,2230,2400),len=c(24,2,3,3,3,2.5,2,1.5,1.5))
+vSection <- read.csv("raw/inventoryVideoSection.csv",stringsAsFactor=F)
+vSection$canale = vSection$canale %>% tryTolower %>% gsub("[[:punct:]]"," ",.)
 
 aggrAll <- NULL
 i <- 1
 for(i in 1:length(chL)){
     print(chL[i])
-    fs <- read.csv(paste("raw/paliSoap2013",chL[i],".csv",sep=""),stringsAsFactor=F)
-    fs <- rbind(fs,read.csv(paste("raw/paliSoap2014",chL[i],".csv",sep=""),stringsAsFactor=F))
-    fs <- rbind(fs,read.csv(paste("raw/paliSoap2015",chL[i],".csv",sep=""),stringsAsFactor=F))
+    fs <- NULL
+    ## fs <- rbind(fs,read.csv(paste("raw/paliSoap2013",chL[i],".csv",sep=""),stringsAsFactor=F))
+    ## fs <- rbind(fs,read.csv(paste("raw/paliSoap2014",chL[i],".csv",sep=""),stringsAsFactor=F))
+    ## fs <- rbind(fs,read.csv(paste("raw/paliSoap2015",chL[i],".csv",sep=""),stringsAsFactor=F))
     fs <- rbind(fs,read.csv(paste("raw/paliSoap2016",chL[i],".csv",sep=""),stringsAsFactor=F))
     fs <- rbind(fs,read.csv(paste("raw/paliSoap2017",chL[i],".csv",sep=""),stringsAsFactor=F))
     fs = fs[!fs$type=="FILM",]
@@ -27,17 +30,16 @@ for(i in 1:length(chL)){
     row.names(dtparts) = NULL
     fs$date <- as.Date(dtparts[,1],"%d/%m/%Y")
     fs$min <- as.numeric(substring(dtparts[,2],1,5) %>% gsub(":","",.))
-    fw <- read.csv("log/paliViews2013.csv",stringsAsFactor=F)
-    fw <- rbind(fw,read.csv("log/paliViews2014.csv",stringsAsFactor=F))
-    fw <- rbind(fw,read.csv("log/paliViews2015.csv",stringsAsFactor=F))
-    fw <- rbind(fw,read.csv("log/paliViews2016.csv",stringsAsFactor=F))
+    fw <- NULL
+    ## fw <- rbind(fw,read.csv("log/paliViews2013.csv",stringsAsFactor=F))
+    ## fw <- rbind(fw,read.csv("log/paliViews2014.csv",stringsAsFactor=F))
+    ## fw <- rbind(fw,read.csv("log/paliViews2015.csv",stringsAsFactor=F))
+    fw <- rbind(fw,read.csv("log/paliViews2016.csv",stringsAsFactor=F)%>%head)
     fw <- rbind(fw,read.csv("log/paliViews2017.csv",stringsAsFactor=F))
-    fw$date <- as.Date(strptime(fw$day,format="%Y%m%d")) 
+    fw$day <- as.Date(strptime(fw$day,format="%Y%m%d")) 
     fw5 <- fw[fw$channel==paliL[i],]
 
-    vSection <- read.csv("raw/inventoryVideoSection.csv",stringsAsFactor=F)
-    vSection$canale = vSection$canale %>% tryTolower %>% gsub("[[:punct:]]"," ",.)
-    fs$cluster <- NA
+    fs$cluster <- "rest"
     for(j in 1:length(vSection$canale)){##assign ch
         fs[grepl(vSection[j,"canale"],fs$name),"cluster"] <- vSection[j,"cluster"]
     }
@@ -85,7 +87,7 @@ head(paliS)
 write.csv(paliS,"out/invVideoTimeSeqPali.csv")
 
 
-fw = fw[,c("date","channel","X00.24","X07.09","X09.12","X12.15","X15.18","X18.20.30","X20.30.22.30","X22.30.02")]
+fw = fw[,1:10]
 colnames(fw) = c("date","channel","tot","fascia7","fascia9","fascia12","fascia15","fascia18","fascia20","fascia22")
 head(fw)
 fs$fascia = substring(fs$time,12,13)
@@ -110,6 +112,7 @@ con <- dbConnect(MySQL(),user=db_usr,password=db_pass,dbname=db_db,host=db_host)
 on.exit(dbDisconnect(con))
 gs <- read.csv("out/invVideoTimeSeqTel.csv",row.names=1)
 dbGetQuery(con,"DROP TABLE inventory_tel")
+colnames(gs) = unique(vSection$cluster)
 dbWriteTable(con,"inventory_tel",gs)
 gs <- read.csv("out/invVideoTimeSeqPali.csv",row.names=1)
 dbGetQuery(con,"DROP TABLE inventory_pali")
@@ -118,7 +121,6 @@ dbGetQuery(con,"DROP TABLE inventory_tv_audience")
 dbWriteTable(con,"inventory_tv_audience",fw1)
 dbGetQuery(con,"DROP TABLE inventory_tv_audience_week")
 dbWriteTable(con,"inventory_tv_audience_week",fw4)
-
 
 dbDisconnect(con)
 

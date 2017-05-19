@@ -15,7 +15,7 @@ repUrl = '/api/v1/reports'
 flightUrl = '/api/v1/flights'
 posUrl = '/api/v1/sizesPositions'
 revUrl = '/api/v1/reports/monetization/'
-key_file = os.environ['HOME'] + '/lav/media/credenza/dotandmedia.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/dotandmedia.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)

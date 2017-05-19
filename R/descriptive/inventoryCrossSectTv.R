@@ -148,7 +148,6 @@ for(i in 1:ncol(aggrAll) ){
     p <- ggplot(data.frame(date=as.Date(rownames(aggrAll)),imps=aggrAll[,i]),aes(x=date,y=imps,group=1)) +
         geom_line(aes(color=gCol1[1])) +
         geom_line(data=foreI,aes(x=date,y=fore),color=gCol[3])
-    p
 }
 
 aggrSpe <- as.data.frame(aggrSpe)

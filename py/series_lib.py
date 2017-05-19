@@ -141,15 +141,17 @@ def getHistory(sDay,nAhead,x0,hWeek):
     nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     sDay['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(sDay['t'])
     histNorm = sDay['hist'].mean()
-    sDay['hist'] = sDay['hist']/histNorm
+    sDay['hist'] = ( (sDay['hist']-sDay['hist'].min())/(sDay['hist'].max()-sDay['hist'].min()) + 1.)*x0['hist_adj']
     lmFor = 'e_av ~ 1 + t + I(t**2) + I(t**3) + I(t**4) + I(t**5)'
     lm = smf.ols(formula=lmFor,data=sDay.tail(nFit)).fit()
-    sDay['stat'] = (sDay['y']*sDay['hist']*x0['hist_adj']-lm.predict(sDay))
+    sDay['stat'] = (sDay['y']*sDay['hist']-lm.predict(sDay))
     t_test = np.linspace(sDay['t'][0],sDay['t'][sDay.shape[0]-1]+sDay.t[nAhead]-sDay.t[0],nLin)
     testD = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     testD['y'] = sDay.y
     testD['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(testD['t'])
-    testD['hist'] = testD['hist']/histNorm
+    testD['hist'] = ( (testD['hist']-testD['hist'].min())/(testD['hist'].max()-testD['hist'].min()) + 1.)*x0['hist_adj']
+
+    testD['hist'] = testD['hist']/histNorm*sDay.shape[0]/testD.shape[0]
     testD['trend'] = lm.predict(testD)
     testD['pred'] = 0
     return testD, lm
@@ -389,7 +391,7 @@ def serNeural(sDay,nAhead,x0,hWeek):
 
     net.learn(epochs=125,show_epoch_results=True,random_testing=False)
     mse = net.test()
-    #net.save(os.environ['HOME'] + "/lav/media/out/train/net.txt")
+    #net.save(os.environ['LAV_DIR'] + "/out/train/net.txt")
 
     test_positions = [item[0][0] for item in net.get_test_data()]
     all_targets1 = [item[0][0] for item in net.test_targets_activations]
@@ -415,6 +417,101 @@ def serNeural(sDay,nAhead,x0,hWeek):
     plt.title("Mean Squared Error by Epoch")
     plt.show()
 
+def corS(x,y):
+    x1,x2,y1,y2,xy = (0,)*5
+    N = x.shape[0]
+    xM,yM = x.mean(),y.mean()
+    for i in range(N):
+        xy += (x[i]-xM)*(y[i]-yM)
+        x2 += (x[i]-xM)**2
+        y2 += (y[i]-yM)**2
+    return (xy)/np.sqrt(x2*y2)
 
-        
+def corM(M):
+    colL = [x for x in M.columns]
+    N = len(colL)
+    cM = np.zeros((N,N))
+    for i in range(N):
+        cM[i,i] = 1.;
+        for j in range(i+1,N):
+            cM[i,j] = corS(webH[colL[i]],webH[colL[j]])
+            cM[j,i] = corS(webH[colL[i]],webH[colL[j]])
+    return cM
 
+def autCorM(M):
+    colL = [x for x in M.columns]
+    acM = pd.DataFrame()
+    for i in colL:
+        r,q,p = sm.tsa.acf(M[i],qstat=True)
+        acM[i] = r
+    return acM
+
+def pautCorM(M):
+    colL = [x for x in M.columns]
+    acM = pd.DataFrame()
+    for i in colL:
+        r = tsa.stattools.pacf(M[i],nlags=20,method='ols')
+        acM[i] = r
+    return acM
+
+def xcorM(M,L):
+    colL = [x for x in M.columns]
+    acM = pd.DataFrame()
+    for i in colL:
+        r = np.correlate(M[i],L[i],"full")
+        acM[i] = r
+    return acM
+
+def decayM(M):
+    colL = [x for x in M.columns]
+    acM = pd.DataFrame()
+    def fit_fun(x,decay):
+        return np.exp(-decay*x)
+    for i in colL:
+        r = M[i]
+        X = np.array(range(0,r.size,7))
+        popt, pcov = curve_fit(fit_fun,np.array(range(0,6)),r[0:6]-min(r),p0=(1))
+        popt1, pcov1 = curve_fit(fit_fun,np.array(range(0,r.size,7)),r[X],p0=(1))
+        acM[i] = np.array([popt[0],pcov[0][0],popt1[0],pcov1[0][0]])
+    return acM
+
+def gaussM(M):
+    colL = [x for x in M.columns]
+    acM = pd.DataFrame()
+    def fun(x,t):
+        return x[2]*np.exp(-pow((t-x[0]),2)*x[1])
+    def fun_min(x,t,y):
+        return fun(x,t) - y
+    x0 = [float(M.shape[0]/2),1.,1.]
+    for i in colL:
+        t = [float(x) for x in M.index]
+        y = [x for x in M[i]]
+        res_lsq = least_squares(fun_min,x0,args=(t,y))
+        y = [fun(res_lsq[0],x) for x in t]
+        acM[i] = y#res_lsq[0]
+        x0 = res_lsq[0]
+    return acM
+
+    
+def matNN(M):
+    #in progress
+    colL = [x for x in M.columns]
+    N = len(colL)
+    Niter = 100
+    for i in range(Niter):
+        col1 = int(random.random()*N)
+        col2 = int(random.random()*N)
+        if(col1==col2):
+            next
+        colD = col1 - col2
+        cM = M
+    for i in range(N):
+        i1 = i+1 if i<N else 0
+        i2 = i-1 if i>0 else N
+        for j in range(i+1,N):
+            j1 = j+1 if j<N else 0
+            j2 = j-1 if j>0 else N
+            cM[i,j] = corS(webH[colL[i]],webH[colL[j]])
+            cM[j,i] = corS(webH[colL[i]],webH[colL[j]])
+    return cM
+    

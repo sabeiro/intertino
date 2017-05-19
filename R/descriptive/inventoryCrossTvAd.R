@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
-setwd('C:/Users/giovanni.marelli.PUBMI2/lav/media/')
-source('script/graphEnv.R')
+setwd('~/lav/media/')
+source('src/R/graphEnv.R')
 require('forecast')
 library(splines)
 
@@ -15,7 +15,7 @@ lagL <- NULL
 perL <- NULL
 nameL <- NULL
 isPlot <- TRUE
-k <- 5
+k <- 1
 for(k in 1:length(fMeasure)){
     fName <- paste('raw/',fMeasure[k],sep="")
     if(any(grep("syncCePostaPerTe2",fName))){next}
@@ -126,7 +126,7 @@ for(k in 1:length(fMeasure)){
     if(isPlot){##----------------------decomposition-autocorr--------------------
         plot(x=1:length(corF),corF,type="l",col="red",xlab="lag",ylab="cross correlation")
         lines(predict(reslm,data.frame(n=1:length(corF),corF=corF)),col="blue")
-        lines(rep(0,length(corF)))eccoci
+        lines(rep(0,length(corF)))
 
         legend("top",inset=-.05,cex=1,title="",c("x corr","fit"),horiz=TRUE,lty=c(1,1),lwd=c(2,2),col=c("red","blue"))
     }
@@ -165,8 +165,8 @@ for(k in 1:length(fMeasure)){
     foreI <-  cbind(foreI,as.data.frame(forecast(fit, 14)))
     ##fit <- ets(impr)
     ##fit <- auto.arima(ts(fs[,"web"], frequency=7, start=1))
-    hw <- HoltWinters(ts(fs[,"web"], frequency=7, start=1))
-    foreL <- predict(hw, n.ahead = 14, prediction.interval = T, level = 0.95)
+    hw <- HoltWinters(ts(fs[,"web"],frequency=7,start=1))
+    foreL <- predict(hw,n.ahead=14,prediction.interval=T,level=0.95)
     foreI <- cbind(foreI,as.data.frame(foreL))
     if(isPlot){##----------------------forecast--------------------
         plot(hw,foreL)

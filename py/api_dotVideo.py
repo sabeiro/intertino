@@ -9,6 +9,8 @@ import datetime
 import json
 import os
 
+print '-----------------------api-dot-video------------------------------'
+
 token = dot.getToken()
 dataQ = [(datetime.date.today() - datetime.timedelta(days=7)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
@@ -158,7 +160,7 @@ videoDW = videoD.groupby(["week"]).sum()
 adSect['group'] = 'rest'
 adSect['imps'] = adSect['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
 adSect['imps'] = pd.to_numeric(adSect['imps'])
-sectL = pd.read_csv(os.environ['HOME'] + "/lav/media/raw/inventoryVideoSection.csv")
+sectL = pd.read_csv(os.environ['LAV_DIR'] + "/raw/inventoryVideoSection.csv")
 for i in range(0,len(sectL)):
     idxA = adSect['section'].str.contains(str(sectL['canale'][i]))
     adSect['group'][idxA] = str(sectL['cluster'][i])
@@ -185,7 +187,7 @@ repTxt += dot.wrBuffer(adLayerG)
 layersW = pd.DataFrame(layers)
 layersW.columns = ['date','layer','type','imps']
 layersW['imps'] = layersW['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
-layersW['imps'] = layersW['imps'].convert_objects(convert_numeric=True)
+#layersW['imps'] = layersW['imps'].convert_objects(convert_numeric=True)
 layersW =  layersW.groupby(['layer','type']).sum()
 layersW['ratio'] = layersW['imps']/layersW['imps'].sum()
 repTxt += dot.wrBuffer(layersW)
@@ -201,4 +203,4 @@ f.close()
 
 #Action,AdDescription,AdExtID,AdId,AdQuota,AdSizeRefId,AdTemplateDescription,AdTemplateExtID,AdType,AdvertiserID,AdvertiserName,AdvertiserType,AdWeight,Area,Ctr,FlightStartDate,DeviceType,FlightAbsoluteEndDate,FlightCapDescription,FlightCapExtID,FlightDescription,FlightEndDate,FlightExtId,FlightID,FlightLayer,FlightPrice,FlightTotalSales,ImpsGoal,Keyword,MccDescription,MediapointId,MediapointTAG,Netspeed,NL7Description,Click,Imps,OrderDescription,OrderExtId,OrderId,Position,UserProfiles,Publisher,Registration,Section,Site,Size,SmartPassback
 
-print '---api-dot-te-se-qe-te-ve-be-ne-------------'
+print '---api-dot--video-te-se-qe-te-ve-be-ne-------------'

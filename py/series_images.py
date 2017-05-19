@@ -20,7 +20,7 @@ todayD = todayD.replace(hour=0,minute=0,second=0,microsecond=0)
 yesterdayD = todayD - datetime.timedelta(days=1)
 
 startC = {}
-with open(os.environ['HOME']+"/lav/media/train/series_interp.json") as f:
+with open(os.environ['LAV_DIR']+"/train/series_interp.json") as f:
     startC = json.load(f)
 
 resqW = pd.DataFrame()

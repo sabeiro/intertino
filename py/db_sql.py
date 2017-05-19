@@ -10,7 +10,7 @@ from pandas.io import sql
 import sqlalchemy
 
 def open_conn():
-    key_file = os.environ['HOME'] + '/lav/media/credenza/intertino.json'
+    key_file = os.environ['LAV_DIR'] + '/credenza/intertino.json'
     cred = []
     with open(key_file) as f:
         cred = json.load(f)

@@ -19,7 +19,7 @@ todayD = todayD.replace(hour=0,minute=0,second=0,microsecond=0)
 yesterdayD = todayD - datetime.timedelta(days=1)
 
 startC = {}
-with open(os.environ['HOME']+"/lav/media/train/series_interp.json") as f:
+with open(os.environ['LAV_DIR']+"/train/series_interp.json") as f:
     startC = json.load(f)
 
 predD = pd.DataFrame()
@@ -37,7 +37,7 @@ for nr in sorted(startC.keys(),key=lambda x:x[0]):
     sPali, pWeek, pMonth = sl.getSeries({'tab':'tv_pali','sect':nr})
     hDay, hWeek, hMonth = sl.getSeries({'tab':'daily_hist','sect':nr})
     reload(sl)
-    startC = json.load(open(os.environ['HOME'] + "/lav/media/train/series_interp.json"))
+    startC = json.load(open(os.environ['LAV_DIR'] + "/train/series_interp.json"))
     x0 = startC[nr]
     #x0 = sl.getStartParam({'tab':'train_s','sect':nr})
     histPali = pd.concat([pWeek.y,hWeek.y],join='outer',axis=1)
@@ -55,14 +55,15 @@ for nr in sorted(startC.keys(),key=lambda x:x[0]):
         testD, x1 = sl.serLsq(sDay,nAhead,x0,hWeek)
 
     print x1
-    sl.plotSer(sDay,testD,nr + ' ' + x1['model'])
+    if False:
+        sl.plotSer(sDay,testD,nr + ' ' + x1['model'])
     
     endC[nr] = x1
     predD[nr] = testD['pred']
 
 
     
-with open(os.environ['HOME']+"/lav/media/train/series_interp.json",'w') as outfile:
+with open(os.environ['LAV_DIR']+"/train/series_interp.json",'w') as outfile:
     json.dump(endC, outfile,indent=2)
 
 #print json.dumps(sorted(startC.keys(),key=lambda x:x[0]),indent=2,separators=(',', ':'))

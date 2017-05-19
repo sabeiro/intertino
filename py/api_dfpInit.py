@@ -7,8 +7,8 @@ from googleads import dfp
 from googleads import oauth2
 
 ##os.chdir('/home/sabeiro/lav/media')
-key_file = os.environ['HOME'] + '/lav/media/credenza/dfp-intertino-861da83250a9.json'
-key_file2 = os.environ['HOME'] + '/lav/media/credenza/dfp-intertino.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/dfp-intertino-861da83250a9.json'
+key_file2 = os.environ['LAV_DIR'] + '/credenza/dfp-intertino.json'
 
 cred = []
 with open(key_file) as f:

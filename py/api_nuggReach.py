@@ -10,7 +10,7 @@ import oauth2.tokengenerator
 import oauth2.web.wsgi
 import json
 
-key_file = os.environ['HOME'] + '/lav/media/credenza/gemini.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/gemini.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)

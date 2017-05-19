@@ -45,8 +45,8 @@ class Markov(object):
 
 # Create an instance of the markov chain. By default, it uses MarkovChain.py's location to
 # store and load its database files to. You probably want to give it another location, like so:
-mc = MarkovChain("../../out/twitterUD.db")
-text_file = os.environ['HOME'] + '/lav/media/out/twitterUD.csv'
+mc = MarkovChain(os.environ['LAV_DIR'] + "/out/twitterUD.db")
+text_file = os.environ['LAV_DIR'] + '/out/twitterUD.csv'
 cred = []
 with open(text_file,'rb') as f:
     rows = csv.reader(f, delimiter=',', quotechar='|')

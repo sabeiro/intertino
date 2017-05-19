@@ -23,7 +23,7 @@ today = time.strftime("%Y-%m-%d")
 dataQ = [(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
 sData = {"params": {},"version": "1.1","method": "getConnectionTest"}
-key_file = os.environ['HOME'] + '/lav/media/credenza/brightroll2.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/brightroll2.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -98,7 +98,6 @@ campDf = pd.DataFrame(campL)
 # aList = namedtuple('name', 'id')
 #
 
+#print 'curl "https://api.login.yahoo.com/oauth2/get_token" -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Basic '+base64.standard_b64encode(cred['client_id']+":"+cred['client_secret'])+'" -d "grant_type=authorization_code&redirect_uri=oob&code='+cred['app_code']+'"'
 
-
-
-print 'curl "https://api.login.yahoo.com/oauth2/get_token" -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Basic '+base64.standard_b64encode(cred['client_id']+":"+cred['client_secret'])+'" -d "grant_type=authorization_code&redirect_uri=oob&code='+cred['app_code']+'"'
+print '---------api-brightroll-te-se-qe-te-ve-be-te-ne--------------'
