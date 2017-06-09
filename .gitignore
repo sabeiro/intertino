@@ -1,0 +1,7 @@
+*.Rhistory
+*.~
+*.o
+*.pyc
+*.txt
+py/doc/
+
