@@ -25,11 +25,12 @@ function log(txt){
     console.log(txt);
 }
 FileCookieStore = require('tough-cookie-filestore');
-j = request.jar(new FileCookieStore('cookies.json'));
+cookieF = process.env.LAV_DIR + '/src/node/parser/cookies.json';
+j = request.jar(new FileCookieStore(cookieF));
 request = request.defaults({ jar : j })
 testIndex = 1
 testLoop = 1000
-var source = fs.createReadStream('./cookies.json');
+var source = fs.createReadStream(cookieF);
 
 function bridgeConsole(){
     var script = document.createElement('script');

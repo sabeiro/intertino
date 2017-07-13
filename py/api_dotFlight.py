@@ -20,13 +20,13 @@ query = {"token":token
          ,"request":{"id":"description","filters":[[{"op":"CONTAINS","v":["DATA PLANNING"]}]],}
          ,"pagination":{"rowNumber":20,"page":1}
 }
-dataP = dot.flightList(query)
+dataP = dot.flightList(query,headers)
 print dataP
 query = {"token":token,
          "request":{"id":"osi","filters":[[{"op":"<=","v":[-20]}]],}
-         "pagination":{"rowNumber":20,"page":1}
+         ,"pagination":{"rowNumber":20,"page":1}
 }
-under = dot.flightList(query)
+under = dot.flightList(query,headers)
 print under
 
 

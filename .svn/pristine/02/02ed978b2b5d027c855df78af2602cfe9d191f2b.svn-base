@@ -1,0 +1,54 @@
+import urlparse
+import urllib
+import urllib2
+import cookielib
+import hashlib
+import hmac
+import base64
+import requests
+import json
+
+headers = {"Accept":"application/json","Content-type":"application/x-www-form-urlencoded; charset=UTF-8","User_Agent":"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"}
+baseUrl = 'http://api.dashboard.ad.dotandad.com'
+credUrl = '/api/v1/token'
+repUrl = '/api/v1/reports'
+flightUrl = '/api/v1/flights'
+key_file = '../../credenza/dotandmedia.json'
+cred = []
+with open(key_file) as f:
+    cred = json.load(f)
+
+sData = {"params": {},"version": "1.1","method": "getConnectionTest"}
+resp = doRequest(baseUrl+credUrl,"POST",cred)
+print headers
+
+cJ = cookielib.CookieJar()
+req = urllib2.Request(baseUrl+credUrl,cred,headers)
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cJ))
+u = opener.open(req)
+rawData = u.read()
+ 
+print rexp
+
+print dir(urllib)
+
+r = requests.post(baseUrl+credUrl,data=json.dumps(cred))
+token = r.json()['resource']['token']
+query = {"token":token,
+        "request":{"id":"OrderId","filters":[[{"op":"=","v":[29516,28410]}]],}
+	}
+r = requests.post(baseUrl+flightUrl,data=json.dumps(query))
+print(r.status_code, r.reason)
+query = {"token":token,
+    "request":{"status":1},
+    "pagination":{"rowNumber":20,"page":1}
+}
+r = requests.post(baseUrl+flightUrl,data=json.dumps(query))
+print(r.status_code, r.reason)
+
+
+
+from urllib.request import Request, urlopen
+request = Request(baseUrl+credUrl, urllib.urlencode(cred).encode())
+json = urlopen(request).read().decode()
+print(json)

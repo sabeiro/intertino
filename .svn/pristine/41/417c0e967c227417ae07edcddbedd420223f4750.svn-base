@@ -1,0 +1,369 @@
+#!/usr/bin/env Rscript
+setwd('/home/sabeiro/lav/media/')
+source('script/graphEnv.R')
+library(shiny)
+library(plotly)
+
+##mediaTag vm_vu_rtb_vp_0_1
+
+##setInternet2(T)
+##fs <- read.csv('http://dashboard.ad.dotandad.com/downloadFullReportExcel.jsp?p=448d78ad-fbe3-42e5-a6ae-84e9f2a7d238_9220')
+
+fs <- read.csv('raw/impressions51.csv',encoding="UTF-8",fill=TRUE,sep=",",quote='"',header=TRUE,stringsAsFactors=FALSE)##
+fList <- list.files(path=".")
+head(fs)
+
+sectId <-  grepl('XAXIS',fs$Section) | grepl('RTB',fs$Section) | grepl('PUBMATIC',fs$Section) | grepl('STICKY',fs$Section)
+fs <- fs[!sectId,]
+tapIdx <- grepl('Tapp',fs$FlightDescription) | grepl('TAPP',fs$FlightDescription) |  grepl('tapp',fs$FlightDescription)
+tapDat <- ddply(fs[tapIdx,],.(Data),summarise,Tappi=sum(Imps,na.rm=TRUE))
+fs <- fs[!tapIdx,]
+tapDat$Tappi[tapDat$Tappi==NULL] <- 0
+filterDat <- ddply(fs,.(Data,AdvertiserType),summarise,Imps=sum(Imps,na.rm=TRUE))
+filterDat <- as.data.frame.matrix(xtabs(formula="Imps~.",data=filterDat))
+filterDat$Tappi <- if(any(tapIdx)){tapDat$Tappi}else{rep(0,7)}
+filterDat$Invenduto <- filterDat$Autopromo + filterDat$Default + filterDat$Tappi
+filterDat$Totale <- filterDat$Invenduto + filterDat$Paganti
+filterDat$Data <- as.Date(rownames(filterDat))
+filterDat$day <- rev(c("Sunday","Saturday","Friday","Thursday","Wednesday","Tuesday","Monday"))
+filterDat <- filterDat[,c("Data","day","Paganti","Default","Autopromo","Tappi","Invenduto","Totale")]
+
+fs1 <- read.csv('raw/impressionsPartner51.csv',encoding="UTF-8",fill=TRUE,sep=",",quote='"',header=TRUE,stringsAsFactors=FALSE)##
+head(fs1)
+fs1$Imps <- as.numeric(fs1$Imps)
+fs1$AdvertiserType <- gsub("Autopromo","Invenduto",fs1$AdvertiserType)
+fs1$AdvertiserType <- gsub("Default","Invenduto",fs1$AdvertiserType)
+partnerDat <- ddply(fs1,.(Data,AdvertiserType),summarise,Imps=sum(Imps,na.rm=TRUE))
+partnerDat <- as.data.frame.matrix(xtabs(formula="Imps~.",data=partnerDat))
+partnerDat$Data <- as.Date(rownames(partnerDat))
+partnerDat <- partnerDat[,c("Data","Paganti","Invenduto")]
+partnerDat$TotalePartner <- partnerDat$Paganti + partnerDat$Invenduto
+
+filterDat <- merge(filterDat,partnerDat,by="Data")
+filterDat <- filterDat[rev(order(filterDat$Data)),]
+filterDat$InvendutoPerc <- percent(filterDat$Invenduto.x/filterDat$Totale) 
+filterDat$PartnerPerc <- percent(filterDat$TotalePartner/filterDat$Totale)
+
+filterWeek <- filterDat[1,]
+filterWeek[,3:11] <- colSums(filterDat[,3:11])
+## filterWeek$InvendutoPerc <-  percent(filterWeek$Invenduto.x/filterWeek$Totale) 
+## filterWeek$PartnerPerc <- percent(filterWeek$TotalePartner/filterWeek$Totale)
+
+filterDat
+filterWeek
+
+con <- pipe("xclip -selection clipboard -i", open="w")
+write.table(filterDat,con,row.names=F,col.names=F,sep=",")
+close(con)
+con <- pipe("xclip -selection clipboard -i", open="w")
+write.table(filterWeek,con,row.names=F,col.names=F,sep=",")
+close(con)
+
+
+cSum <- colSums(filterDat[,3:11])
+cSum[1]+cSum[2]+cSum[3]+cSum[4]
+(cSum[2]+cSum[3]+cSum[4])/(cSum[1]+cSum[2]+cSum[3]+cSum[4])
+sum(filterDat$Paganti.y)/sum(filterDat$Paganti.x)
+
+
+sum(fs[grepl('RTB',fs$Section),"Imps"],na.rm=TRUE)
+progShare <- sum(fs[sectId,"Imps"],na.rm=TRUE)
+dirShare <- sum(fs[!sectId,"Imps"],na.rm=TRUE)
+progShare/dirShare
+sSum <- sapply(names(table(fs$Section)),function(x) sum(fs[fs$Section==x,"Imps"]))
+sSum <- sSum[order(-sSum)]
+sum(sSum[c(1:5)])/sum(sSum)
+sSum[c(1:5)]
+
+sSum <- sapply(names(table(fs1$Partner)),function(x) sum(fs1[fs1$Partner==x,"Imps"],na.rm=TRUE))
+sSum <- sSum[order(-sSum)]
+sSum/sum(sSum)
+
+sum(sSum)/(cSum[1]+cSum[2]+cSum[3]+cSum[4])
+
+##---------------------------graph----------------------------
+## ds <- read.csv("raw/inventoryVideoDaily.csv")
+## colnames(filterDat) <- colnames(ds)
+## ds <- rbind(filterDat,ds)
+##write.csv(ds,"raw/inventoryVideoDaily.csv",row.names=F)
+ws <- read.csv("raw/inventoryVideoWeekly.csv")
+ws$Data <- as.Date(ws$Data)
+ws$imps <- as.numeric(gsub("[[:punct:]]","",ws$Totale.inventory))
+ws$Totale.inventory <- as.numeric(gsub("[[:punct:]]","",ws$Totale.inventory))
+ws$Totale.partner <- as.numeric(gsub("[[:punct:]]","",ws$Totale.partner))
+ws$Invenduto <- as.numeric(gsub("[[:punct:]]","",ws$Invenduto))
+##ws <- read.csv("raw/inventoryVideoHist.csv")
+##ws$diff = ws$imps - ws$Totale.inventory
+##plot(ws$diff,type="l")
+##colnames(ws) <- colnames(filterWeek)
+##ws <- rbind(filterWeek,ws)
+##write.csv(ws,"raw/inventoryVideoWeekly.csv",row.names=F)
+wImps <- read.csv("raw/inventoryVideoHist.csv")
+##ws <- merge(ws,wImps,by.x="Data",by.y="date",all=T)
+##source('script/inventoryIngombriLoad.R')
+ingombriW <- read.csv('raw/ingombri2016.csv',stringsAsFactor=FALSE)
+ingombriW$imps <- ingombriW$imps/1000000
+ingombriW$date <- as.Date(ingombriW$date)
+ingombriW <- ingombriW[!is.na(ingombriW$date),]
+ingombriW <- ingombriW[-1,]
+
+melted <- ws[,c("Data","imps")]
+melted$imps <- melted$imps/1000000
+melted$group <- "measured"
+mSpline <- as.data.frame(spline(x=melted$Data,y=melted$imps))
+mSpline$x <- as.Date(mSpline$x,origin="1970-01-01")
+
+model <- lm("imps ~ Data",data=melted)
+timeAll <- merge(melted,ingombriW,by.x="Data",by.y="date",all=TRUE)
+pred <- predict(model,timeAll)
+
+ps <- read.csv("out/inventoryPredictionMonthEts.csv")
+ps$date <- as.Date(paste(ps$date,"16",sep="-"),format="%y-%m-%d")
+ps <- ps[order(ps$variable),]
+ps$variable <- factor(ps$variable,levels=ps$variable)
+##ps <- ddply(ps,.(date),summarise,imps=sum(imps))
+ps$imps <- ps$imps/4
+predM <- ddply(ps,.(date),summarise,imps=sum(imps))
+ws$month <- format(ws$Data,"%y-%m")
+predW <- ddply(ws,.(month),summarise,imps=sum(imps)/4000000,date=head(Data,1))
+##merge(predM,predW,all=T,by="date")
+
+mPartner <- data.frame(Data=ws[,"Data"],partner=(ws$Totale.inventory-ws$Totale.partner)/1000000,invenduto=(ws$Totale.inventory-ws$Invenduto)/1000000)
+today <- data.frame(date=melted[nrow(melted),"Data"],imps=melted[nrow(melted),"imps"])
+
+ss <- read.csv("raw/inventoryVideoSticky.csv")
+ss$date <- as.Date(ss$Day)
+ss$Requests <- as.numeric(gsub("[[:punct:]]","",ss$Requests))/1000
+
+gs <- read.csv("raw/inventoryCaricate.csv",stringsAsFactor=F)
+gs <- gs[gs$Formato=="Pre-Roll Video",]
+gs$date <- as.Date(gs$Data.Prenotazione)
+gs$week <- format(gs$date,format="%y-%W")
+gsW <- ddply(gs,.(week),summarise,day=tail(date,n=1),imps=sum(Quantità.Ordine)/1000000)
+
+if(FALSE){
+    gsO <- ddply(gs,.(Numero.Contratto),summarise,caricato=sum(Quantità.Ordine),erogate=sum(Quantità.Impression.Erogate),data=head(Data.Prenotazione,1),cliente=head(Cliente,1))
+    ##    gsD1 <- ddply(
+    gsD <- read.csv("raw/inventoryCaricateDot.csv",stringsAsFactor=F) 
+    gsE <- ddply(gsD,.(OrderExtId),summarise,goal=head(ImpsGoal,1),imps=sum(Imps),date=head(Data,1),adv=head(AdvertiserName,1))
+    gsO <- merge(gsO,gsE,by.x="Numero.Contratto",by.y="OrderExtId",all=T)
+    write.csv(gsO,"raw/inventoryCaricatoConfronto.csv")
+    gsO$x <- 1:nrow(gsO)
+    sum(is.na(gsO$caricato))/nrow(gsO)
+    sum(is.na(gsO$imps))/nrow(gsO)
+    
+    set <- is.na(gsO$caricato) | is.na(gsO$imps)
+    gsO <- gsO[!set,]
+    
+    gsD1 <- read.csv("raw/inventoryCaricateDot1.csv",stringsAsFactor=F)
+    gsD1$week <-format(as.Date(gsD1$Data),"%W")
+    gsD1 <- ddply(gsD1,.(week),summarise,imps=sum(Imps),goal=sum(ImpsGoal))
+    gsD1$imps <- gsD1$imps/sum(as.numeric(gsD1$imps))
+    gsD1$goal <- gsD1$goal/sum(as.numeric(gsD1$goal))
+    melted <- melt(gsD1,id="week")
+    ggplot(melted,aes(x=week,y=value,color=variable,group=variable)) + geom_line() #+ scale_y_continuous(limits = c(0,60))
+    
+    
+    sum(gsO$caricato,na.rm=T)/sum(gsO$goal,na.rm=T)
+    sum(gsO$caricato,na.rm=T)/sum(gsO$imps,na.rm=T)
+    
+    gsE$week <- format(as.Date(gsE$date),"%W")
+    melted <- melt(ddply(gsE,.(week),summarise,imps=sum(imps,na.rm=T),goal=sum(goal,na.rm=T)))
+    melted <- melted[!is.na(melted$week),]
+    ggplot(melted,aes(x=week,y=value/1000000,color=variable,group=variable)) + geom_line() + scale_y_continuous(limits = c(0,60))
+    
+    melted <- melt(ddply(gsO[,c("x","caricato","erogate","goal","imps")],id="x"))
+    ggplot(melted,aes(x=x,y=value,color=variable,group=variable)) + geom_line() + scale_y_continuous(limits = quantile(melted$value,c(0.25, .85),na.rm=T))
+    ggplot(melted,aes(x=variable,y=value,color=variable)) + geom_boxplot() + scale_y_continuous(limits = quantile(melted$value,c(0.25, .85),na.rm=T))
+    gsM <- as.matrix(gsO[,c("caricato","erogate","goal","imps")])
+    gsM[is.na(gsM)] <- 0
+    cor(gsM)
+    library('corrplot')
+    library('rpart')
+    corrplot.mixed(cor(gsM),lower="pie",upper="number")
+    require(boot)
+    fitC = glm(caricato~goal, data=gsO)
+    fitE = glm(erogate~imps, data=gsO)
+    cv.glm(gsO,fitC)$delta
+    summary(gsM)
+    gsTree = rpart(erogate ~ .,data=gsO[,c("caricato","erogate","goal","imps")],method="class")
+    ##gs <- read.csv("raw/impressionsCaricate1.csv",stringsAsFactor=F)
+    gsP <- ddply(gs,.(Pacchetto),summarise,imps=sum(Quantità.Ordine)/1000000)
+    ##gsP <- ddply(gs,.(Pacchetto),summarise,imps=sum(Quantità.Impression.Erogate)/1000000)
+    gsP$perc <- gsP$imps/sum(gsP$imps)
+    gsP <- gsP[order(gsP$imps),]
+}
+
+## wts <- read.csv("raw/inventoryVideoWebtrekk.csv",sep=",",stringsAsFactor=FALSE)
+## wts <- wts[wts$Media.Player.Actions=="play",]
+## wts$Qty.Media.Player.Actions <- wts$Qty.Media.Player.Actions/1000000
+## wts$Media.Player.Actions[grepl("roll",wts$Media.Player.Actions)] <- "roll"
+wtp <- read.csv("raw/inventoryVideoWebtrekkPreroll.csv",sep=",",stringsAsFactor=FALSE)
+head(wtp)
+wtp$Days <- as.Date(wtp$Days)
+wtp$week <- format(wtp$Days,format="%y-%W")
+wtp <- wtp[grepl("start",wtp$ Media.Player.Actions),]
+##wtp <- wtp[grepl("start",wtp$ Media.Player.Actions),]
+wtpW <- ddply(wtp,.(week),summarise,Days=tail(Days,n=1),imps=sum(Qty.Media.Player.Actions))##,play=sum(
+wtpW$imps <- wtpW$imps/1000000
+
+
+wts <- read.csv("raw/inventoryVideoWebtrekk.csv",sep=",",stringsAsFactor=FALSE)
+wts$Bounce.Rate.. <- as.numeric(gsub("%","",wts$Bounce.Rate..))
+##plot(wts$Bounce.Rate..)
+wts <- wts[wts$Media.Livello.04...Tipologia=="Sum",]
+##wts <- merge(wts,wts1,by="Days")
+wts$Days <- as.Date(wts$Days)
+wts$week <- format(wts$Days,format="%y-%W")
+wts$Media.Views <- wts$Media.Views/1000000
+wts$time <- 0
+timeStr <- strsplit(wts$Avg.Run.Time,split=":")
+i <- labels(timeStr)[1]
+for(i in as.numeric(labels(timeStr))){wts$time[i] <- as.numeric(try(timeStr[[i]][2]))*60 + as.numeric(try(timeStr[[i]][3]))}
+wts$time[is.na(wts$time)] <- 0
+##plot(wts$time,type="l")
+wtsW <- ddply(wts,.(week),summarise,Days=tail(Days,n=1),imps=sum(Media.Views))##,play=sum(Qty.Media.Player.Actions))
+
+gLabel = c("data","impression (Mio/settimana)",paste("evoluzione bacino video"),"sequenza","canale")
+p <- ggplot(melted,aes(x=Data,y=imps))+
+    ##geom_ribbon(data=mPartner,aes(x=Data,y=tot,ymax=tot,ymin=invenduto,fill="partner/invenduto")) +
+    geom_line(data=mPartner,aes(x=Data,y=invenduto,fill="venduto",color="venduto")) +
+    geom_line(data=mPartner,aes(x=Data,y=partner,color="partner",fill="- partner")) +
+    geom_point(data=today,aes(x=date,y=imps,color="oggi"),size=15,show.legend=FALSE,color=gCol1[1],fill=NA,stroke=1.5,shape=21) + 
+    geom_point(size=2,color=gCol1[3]) +
+    geom_bar(data=ps,aes(x=date,y=imps,fill=variable),stat="identity",position="stack",size=1,alpha=.2,show.legend=FALSE) +
+    ##geom_line(data=mSpline,aes(x=x,y=y,color="inventory"),size=1) +
+    geom_line(aes(color="inventory"),size=1) +
+    ##    geom_smooth(data=melted,method = "glm",family = gaussian(link="log"),aes(colour = "Exponential")) +
+    stat_smooth(aes(color="regressione 1",fill="regressione 1"),method=lm,formula=y~poly(x,8),size=1,alpha=.1,show.legend=FALSE,linetype="solid") +
+    stat_smooth(aes(color="regressione 2",fill="regressione 2"),method=lm,formula=y~splines::bs(x, 6),size=0,alpha=.1,show.legend=FALSE,linetype="solid") +
+    geom_line(data=ingombriW,aes(x=date,y=imps,color="ingombri"),size=1) +
+    geom_line(data=wtsW,aes(x=Days,y=imps,color="player wt"),size=1) +
+    geom_line(data=wtpW,aes(x=Days,y=imps,color="preroll wt"),size=1) +
+    geom_line(data=gsW,aes(x=day,y=imps,color="caricato"),size=1) +
+    geom_point(data=ingombriW,aes(x=date,y=imps,color="ingombri"),size=2) +
+    theme(
+        panel.background = element_blank(),
+        legend.position="bottom"
+    ) +
+    ##guides(colour=guide_legend(title=""),fill="none") +
+    scale_color_manual(values=gCol1[seq(3,length(gCol1),2)]) + 
+    scale_fill_manual(values=gCol1[seq(13,length(gCol1),1)]) + 
+    scale_x_date(limits=as.Date(c("2016-01-10",melted[nrow(melted),"Data"])), date_breaks = "1 week",labels=date_format("%y-%m")) + ##, date_labels = "%W") +
+    scale_y_continuous(breaks=seq(0,70,10)) + 
+    coord_cartesian(ylim=c(0,75))  + 
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],color=gLabel[4],fill=gLabel[5])
+p
+ggsave(file="fig/invHistDetail.png",plot=p,width=gWidth,height=gHeight)
+
+
+p <- ggplot(melted,aes(x=Data,y=imps))+
+    geom_line(data=mPartner,aes(x=Data,y=invenduto,color="venduto",fill="venduto")) +
+    geom_line(data=mPartner,aes(x=Data,y=partner,color="- partner",fill="- partner")) +
+    geom_bar(data=ps,aes(x=date,y=imps,fill="previsioni"),stat="identity",position="stack",alpha=.2,fill=gCol1[2]) +
+    geom_point(data=today,aes(x=date,y=imps,color="oggi"),size=15,color=gCol1[1],fill=NA,stroke=1.5,shape=21) + 
+    geom_line(aes(color="inventory",fill="inventory"),size=1) +
+    stat_smooth(aes(color="regressione 1",fill="regressione 1"),method=lm,formula=y~poly(x,8),size=1,alpha=.0,show.legend=FALSE,linetype="solid") +
+    geom_line(data=ingombriW,aes(x=date,y=imps,color="ingombri",fill="ingombri"),size=1) +
+    geom_line(data=wtsW,aes(x=Days,y=imps,color="player wt",fill="player wt"),size=1) +
+    geom_line(data=wtpW,aes(x=Days,y=imps,color="preroll wt",fill="preroll wt"),size=1) +
+    geom_line(data=gsW,aes(x=day,y=imps,color="caricato",fill="caricato"),size=1) +
+    ## geom_point(data=ingombriW,aes(x=date,y=imps,color="ingombri"),size=2) +
+    scale_color_manual(values=gCol1[seq(3,length(gCol1),2)]) + 
+    scale_fill_manual(values=gCol1[seq(5,length(gCol1),1)]) + 
+    scale_x_date(limits=as.Date(c("2016-01-10",melted[nrow(melted),"Data"])), date_breaks = "1 week",labels=date_format("%y-%m")) + ##, date_labels = "%W") +
+    scale_y_continuous( limits=c(0,70), breaks=seq(0,70,10)) +
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],color=gLabel[4],fill=gLabel[5])
+p
+
+p$filename <- "intertino/bacino.html"
+(gg <- ggplotly(p,filename="intertino/bacino.html"))
+##htmlwidgets::saveWidget(as.widget(gg),"intertino/bacino.html")
+
+1000*0.04
+
+gLabel = c("data","impression (Mio/settimana)",paste("evoluzione bacino video"),"sequenza","canale")
+head(ws)
+
+ws$Invenduto.. <- ws$Invenduto/ws$Totale.inventory
+ws$Partner.su.tot.. <- ws$Totale.partner/ws$Totale.inventory
+mPerc <- melt(ws[,c("Data","Invenduto..","Partner.su.tot..")],id="Data")
+head(mPerc)
+
+gLabel = c("data","percentuale",paste("evoluzione invenduto/partner"),"sequenza","tipo")
+p <- ggplot(mPerc,aes(x=Data,y=value,fill=variable))+
+    geom_bar(stat="identity",position="dodge",size=1,alpha=1) +
+    scale_fill_manual(values=gCol1[seq(3,length(gCol1),1)]) + 
+    scale_x_date(limits=as.Date(c("2015-12-01",melted[nrow(melted),"Data"])) ) +
+    scale_y_continuous(limits=c(0,0.25))+
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],color=gLabel[4],fill=gLabel[5])
+p
+
+
+
+cs <- read.csv("tmp.csv",stringsAsFactor=F)
+dateM <- data.frame(Mese=unique(cs$Mese),month=1:12)
+cs <- merge(cs,dateM,all=T)
+cs$month <- paste(cs$Anno,sprintf("%02d",cs$month),sep="-")
+set <- grepl("A M E",cs$Publisher) | grepl("R T I",cs$Publisher) | grepl("WEBTV",cs$Publisher)
+cs$Publisher[!set] <- "Terzi"
+cs$Publisher[ grepl("WEBTV",cs$Publisher)] <- "R T I"
+head(cs)
+csM <- ddply(cs,.(month,Publisher),summarise,imps=sum(Imps,na.rm=T))
+csMS <- ddply(cs[grepl("SPOT",cs$Size),],.(month,Publisher),summarise,imps=sum(Imps,na.rm=T))
+csT <- as.data.frame.matrix(xtabs("imps ~ Publisher + month",data=csM))
+csT <- rbind(csT, as.data.frame.matrix(xtabs("imps ~ Publisher + month",data=csMS)))
+con <- pipe("xclip -selection clipboard -i", open="w")
+##write.table(csT,con,row.names=F,col.names=F,sep=",")
+write.table(csT,con,sep=",")
+close(con)
+
+
+
+
+
+melted <- rollQ[!grepl("-stop",rollQ$Media.Player.Actions),]
+melted$percentage <- melted$imps/sum(melted$imps)
+melted$name <- factor(melted$Media.Player.Actions, levels=melted$Media.Player.Actions)
+gLabel = c("",lVar,paste("provider share",lVar),"provider")
+pie <- ggplot(melted, aes(x="",y=percentage,fill=name,label=percent(percentage))) +
+    geom_bar(width = 1,stat="identity") +
+    scale_fill_manual(values=gCol1) +
+    geom_text(aes(x=1,y = percentage/2 + c(0, cumsum(percentage)[-length(percentage)]),
+                  label = percent(percentage)), size=5) +
+    geom_text(aes(x=1.3,y = percentage/2 + c(0, cumsum(percentage)[-length(percentage)]),
+                  label = paste(round(imps),"M")), size=5) +
+    geom_text(aes(x=1.6,y = percentage/2 + c(0, cumsum(percentage)[-length(percentage)]),
+                  label = substring(name,first=1,last=16)), size=5) +
+    geom_text(aes(x=0,y =0,label=paste(round(sum(imps)),"M")), size=5) +
+    theme_bw() +
+    theme(
+        panel.border = element_blank(),
+        text = element_text(size = gFontSize),
+        axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks=element_blank(),
+        legend.position="none",
+        plot.background=element_blank(),
+        panel.background = element_blank()
+    ) +
+    coord_polar("y",start=0) + 
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
+pie
+
+
+
+
+
+fs <- read.csv('raw/impressionsPosition.csv',encoding="UTF-8",fill=TRUE,sep=",",quote='"',header=TRUE,stringsAsFactors=FALSE)##
+fs$Data <- as.Date(fs$Data)
+head(fs)
+
+ggplot(fs,aes(x=Data,y=Imps/1000000,color=Position,group=Position)) +
+    geom_line(position="stack") + 
+    ##    geom_line(data=wtsW,aes(x=Days,y=imps,color="player",group=1),size=1) + 
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],color=gLabel[4],fill=gLabel[5])
+posS <- ddply(fs,.(Position),summarise,imps=sum(Imps))
+posS$perc <- posS$imps/sum(posS$imps)
+
+

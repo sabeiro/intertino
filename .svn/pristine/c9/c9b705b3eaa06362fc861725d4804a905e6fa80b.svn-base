@@ -1,0 +1,128 @@
+#!/usr/bin/env Rscript
+setwd('/home/sabeiro/lav/media/')
+#setwd('..')
+
+##install.packages(c('textcat','svglite'))
+source('script/graphEnv.R')
+library('corrplot') #package corrplot
+library('svglite')
+library('ape')
+library(cluster)
+library(rjson)
+
+HCtoJSON<-function(hc){
+  labels<-hc$labels
+  merge<-data.frame(hc$merge)
+  for (i in (1:nrow(merge))) {
+    if (merge[i,1]<0 & merge[i,2]<0) {eval(parse(text=paste0("node", i, "<-list(name=\"", i, "\", children=list(list(name=labels[-merge[i,1]]),list(name=labels[-merge[i,2]],size=1 )))")))}
+    else if (merge[i,1]>0 & merge[i,2]<0) {eval(parse(text=paste0("node", i, "<-list(name=\"", i, "\", children=list(node", merge[i,1], ", list(name=labels[-merge[i,2]],size=1)))")))}
+    else if (merge[i,1]<0 & merge[i,2]>0) {eval(parse(text=paste0("node", i, "<-list(name=\"", i, "\", children=list(list(name=labels[-merge[i,1]],size=1), node", merge[i,2],"))")))}
+    else if (merge[i,1]>0 & merge[i,2]>0) {eval(parse(text=paste0("node", i, "<-list(name=\"", i, "\", children=list(node",merge[i,1] , ", node" , merge[i,2]," ))")))}
+  }
+  eval(parse(text=paste0("JSON<-toJSON(node",nrow(merge), ")")))
+  return(JSON)
+}
+
+
+
+
+fs <- read.csv('raw/comTaxonomy.csv',stringsAsFactor=F)
+fs <- fs[fs$STATUS=="OK",]
+head(fs)
+str(fs)
+catL <- unique(c(fs$IAB.CATEGORY.1,fs$IAB.CATEGORY.2,fs$IAB.CATEGORY.3,fs$IAB.CATEGORY.4,fs$IAB.CATEGORY.5))
+catL <- catL[order(catL)]
+catN <- c(4,6,8,10,12)
+proxM <- matrix(0,nrow=length(catL),ncol=length(catL))
+i <- 1
+for(i in 1:nrow(fs)){
+    for(j in 1:(length(catN)-1)){
+        j1 <- catN[j]
+        for(k in (j+1):length(catN)){
+            k1 <- catN[k]
+            rowL <- match(fs[i,j1],catL)
+            colL <- match(fs[i,k1],catL)
+            proxM[rowL,colL] = proxM[rowL,colL] + fs[i,j1+1] + fs[i,k1+1]
+        }
+    }
+}
+colnames(proxM) <- catL
+rownames(proxM) <- catL
+proxM[is.na(proxM)] <- 0
+proxM1 <- proxM
+if(FALSE){
+    lim = quantile(colSums(proxM),0.70)
+    setC <- colSums(proxM) > lim
+    lim = quantile(rowSums(proxM),0.70)
+    setR <- rowSums(proxM) > lim
+    proxM <- proxM[setR,setC]
+}
+proxF <- as.data.frame(proxM)
+
+catSpl <- strsplit(catL,split="::")
+catL1 <- NULL
+catL2 <- NULL
+for(i in as.numeric(labels(catSpl))){
+    catL1 <- c(catL1,try(catSpl[[i]][1]))
+    catL2 <- c(catL1,try(catSpl[[i]][2]))
+}
+
+
+head(proxM)
+
+rc <- rainbow(nrow(proxM), start = 0, end = .3)
+cc <- rainbow(ncol(proxM), start = 0, end = .3)
+hv <- heatmap(proxM, col = cm.colors(256), scale = "column",
+              RowSideColors = rc, ColSideColors = cc, margins = c(5,10),
+              xlab = "specification variables", ylab =  "Car Models",
+              main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+utils::str(hv) # the two re-ordering index vectors
+    
+## wss <- (nrow(proxM)-1)*sum(apply(proxM,2,var),na.rm=T)
+## for (i in 2:15) wss[i] <- sum(kmeans(proxM,centers=i)$withinss,na.rm=T)
+## plot(1:15, wss, type="b", xlab="Number of Clusters",ylab="Within groups sum of squares") 
+
+proxD <- dist(proxM, method = "euclidean") # distance matrix
+hc <- hclust(proxD, method="ward")
+dend <- as.dendrogram(hc)
+
+plot(as.phylo(hc),type="fan")
+groups <- cutree(hc, k=5) # cut tree into 5 clusters
+
+json <- HCtoJSON(hc)
+write(json,"intertino/data/comTaxonomy.json")
+
+
+
+
+
+fit <- kmeans(proxM, 5)
+library(cluster)
+clusplot(proxM, fit$cluster, color=TRUE, shade=TRUE,labels=2, lines=0)
+library(fpc)
+plotcluster(proxM, fit$cluster) 
+
+
+##cluster.stats(proxD, fit1$cluster, fit2$cluster) 
+
+fs <- read.csv("raw/trainingUrl.csv",stringsAsFactor=F,header=F)
+fs$V1 <- fs$V1[sample(1:length(fs$V1))]
+write.csv(fs,"raw/trainingUrl.csv")
+
+
+
+
+## Ward Hierarchical Clustering with Bootstrapped p values
+## install.packages('pvclust')
+## library(pvclust)
+## fit <- pvclust(proxM, method.hclust="ward",method.dist="euclidean")
+## plot(fit) # dendogram with p values
+## pvrect(fit, alpha=.95) 
+
+
+
+
+
+
+
+

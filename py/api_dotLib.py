@@ -15,7 +15,7 @@ repUrl = '/api/v1/reports'
 flightUrl = '/api/v1/flights'
 posUrl = '/api/v1/sizesPositions'
 revUrl = '/api/v1/reports/monetization/'
-key_file = os.environ['HOME'] + '/lav/media/credenza/dotandmedia.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/dotandmedia.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -35,7 +35,7 @@ def waitRep(token,query,headers):
     while stat not in [200,401,500]:
         rep = requests.post(url,data=json.dumps(query,separators=(',', ':')),headers=headers)
         stat = int(rep.status_code)
-        time.sleep(2)
+        time.sleep(6)
         counter += 1
         if(counter > 100):
             break

@@ -9,6 +9,8 @@ import datetime
 import json
 import os
 
+print '-----------------------api-dot-video------------------------------'
+
 token = dot.getToken()
 dataQ = [(datetime.date.today() - datetime.timedelta(days=7)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
@@ -19,7 +21,7 @@ query = {"token":token,
         "reportId":"MD",
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
-        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
+##        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"FlightDescription","visible": False,"sortp":4,"filters":[[{"op":"CONTAINS","v": ["Tapp"]}]]}
         ,{"id":"Imps"}
         ]
@@ -34,7 +36,7 @@ query = {"token":token,
         "reportId":"MD",
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
-        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
+##        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"FlightLayer","visible": True,"sortp":4}
         ,{"id":"AdvertiserType","visible": True,"sortp":4}
         ,{"id":"Imps"}
@@ -49,7 +51,7 @@ query = {"token":token,
         "reportId":"MD",
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
-        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
+##        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"AdvertiserType","sortd":"asc","sortp":4}
         ,{"id":"Imps"}
         ]
@@ -63,7 +65,7 @@ query = {"token":token,
         "reportId":"MD",
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
-        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
+##        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"Site","sortp":3,"visible": False,"filters":[[{"op":"=","v": ["VIDEOEXTRA"]}]]}
         ,{"id":"AdvertiserType","visible": False,"sortp":4,"filters":[[{"op":"=","v": ["Default"]}]]}
         ,{"id":"Imps"}
@@ -82,7 +84,7 @@ query = {"token":token,
         "reportId":"MD",
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
-        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
+##        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"Section","sort":"asc","sortp":3}
         ,{"id":"Imps"}
         ]
@@ -99,7 +101,7 @@ query = {"token":token,
         "reportId":"MD",
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
-        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
+##        ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"FlightLayer","sort":"asc","sortp":3}
         ,{"id":"AdvertiserType","sort":"asc","sortp":3}
         ,{"id":"Imps"}
@@ -131,7 +133,8 @@ query = {"token":token,
         "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
         ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
-        ,{"id":"Site","sortp":3,"visible": False,"filters":[[{"op":"=","v": ["LIVE"]}]]}
+                  ##,{"id":"Site","sortp":3,"visible": False,"filters":[[{"op":"=","v": ["LIVE"]}]]}
+        ,{"id":"Site","sortp":3,"visible": True}
         ,{"id":"Imps"}
         ]
     }
@@ -139,7 +142,7 @@ query = {"token":token,
 headers = {"Column-Names":"Date|FlightDescription|FlightID|Imps"}
 rep = dot.waitRep(token,query,headers)
 adLive = pd.DataFrame(dot.formRep(rep.content))
-adLive[1] = pd.to_numeric(adLive[1])
+adLive[2] = pd.to_numeric(adLive[2])
 
 weekD = ("Sunday","Saturday","Friday","Thursday","Wednesday","Tuesday","Monday")
 videoL = []
@@ -158,7 +161,7 @@ videoDW = videoD.groupby(["week"]).sum()
 adSect['group'] = 'rest'
 adSect['imps'] = adSect['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
 adSect['imps'] = pd.to_numeric(adSect['imps'])
-sectL = pd.read_csv(os.environ['HOME'] + "/lav/media/raw/inventoryVideoSection.csv")
+sectL = pd.read_csv(os.environ['LAV_DIR'] + "/raw/inventoryVideoSection.csv")
 for i in range(0,len(sectL)):
     idxA = adSect['section'].str.contains(str(sectL['canale'][i]))
     adSect['group'][idxA] = str(sectL['cluster'][i])
@@ -167,27 +170,30 @@ adWeek = adSect.groupby(["group"]).sum()
 sectImps = adSect.groupby(["section"]).sum()
 sectImps = sectImps.sort_values('imps',ascending=False)
 
+pushNr = adSect['imps'][adSect['section'].str.contains("PUSH")].sum()
+inreadNr = adSect['imps'][adSect['section'].str.contains("INREAD")].sum()
+inpageNr = adSect['imps'][adSect['section'].str.contains("INPAGE")].sum()
+
 
 repTxt = dot.wrMatrix(videoD)
 repTxt += dot.wrBuffer(videoDW)
 repTxt += 'perc invenduto' + str(videoDW['Invenduto']/videoDW['Totale inventory']) + "\n"
-repTxt += 'live: ' + str(adLive[1].sum()) + "\n"
+repTxt += 'live: ' + str(adLive.groupby([1]).sum()) + "\n"
+repTxt += 'altri editori: ' + str(videoD['Totale inventory'].sum() - adLive[2].sum())
+repTxt += 'push: ' + str(pushNr) + ' inpage: ' + str(inreadNr) + ' inread: ' + str(inpageNr)
 repTxt += dot.wrBuffer(adWeek.sort_values('imps',ascending=False))
 #repTxt += adLive[1]
-repTxt += dot.wrBuffer(sectImps[0:5])
-repTxt += dot.wrBuffer(sectImps[0:5].sum()/sectImps.sum())
+repTxt += dot.wrBuffer(sectImps[0:6])
+repTxt += 'top 5 quote' + dot.wrBuffer(sectImps[0:6].sum()/sectImps.sum())
 repTxt += 'ratio section: ' + str(sectImps.head(5)['imps'].sum()*100/sectImps['imps'].sum())
-
-adLayerG = adLayer.groupby(['layer','type']).sum()
-adLayerG['perc'] = adLayerG['imps']/adLayerG['imps'].sum()*100
-repTxt += dot.wrBuffer(adLayerG)
 
 layersW = pd.DataFrame(layers)
 layersW.columns = ['date','layer','type','imps']
 layersW['imps'] = layersW['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
-layersW['imps'] = layersW['imps'].convert_objects(convert_numeric=True)
+layersW['imps'] = pd.to_numeric(layersW['imps'])
 layersW =  layersW.groupby(['layer','type']).sum()
-layersW['ratio'] = layersW['imps']/layersW['imps'].sum()
+layersW['ratio'] = layersW['imps']/layersW['imps'].sum()*100
+##layersW['perc'] = layersW['imps']/layersW['imps'].sum()*100
 repTxt += dot.wrBuffer(layersW)
 
 repFile = '/var/www/webdav/report_dot/' + 'camp' + dataQ[0] + 'Dot' + '.txt'
@@ -201,5 +207,4 @@ f.close()
 
 #Action,AdDescription,AdExtID,AdId,AdQuota,AdSizeRefId,AdTemplateDescription,AdTemplateExtID,AdType,AdvertiserID,AdvertiserName,AdvertiserType,AdWeight,Area,Ctr,FlightStartDate,DeviceType,FlightAbsoluteEndDate,FlightCapDescription,FlightCapExtID,FlightDescription,FlightEndDate,FlightExtId,FlightID,FlightLayer,FlightPrice,FlightTotalSales,ImpsGoal,Keyword,MccDescription,MediapointId,MediapointTAG,Netspeed,NL7Description,Click,Imps,OrderDescription,OrderExtId,OrderId,Position,UserProfiles,Publisher,Registration,Section,Site,Size,SmartPassback
 
-
-
+print '---api-dot--video-te-se-qe-te-ve-be-ne-------------'

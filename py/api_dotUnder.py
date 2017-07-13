@@ -30,7 +30,7 @@ query = {"token":token
 headers = {"Content-Type":"application/json"}
 rep = dot.flightList(query,headers)
 
-print 'curl -X POST ' +  baseUrl+flightUrl + " --data '" + json.dumps(query) + "'" +  ' --header "Content-Type:application/json"'
+#print 'curl -X POST ' +  baseUrl+flightUrl + " --data '" + json.dumps(query) + "'" +  ' --header "Content-Type:application/json"'
 
 
 rep = dot.waitRep(token,query,headers)
@@ -125,7 +125,7 @@ videoD.set_index("data",inplace=True)
 adSect['group'] = 'rest'
 adSect['imps'] = adSect['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
 adSect['imps'] = pd.to_numeric(adSect['imps'])
-sectL = pd.read_csv(os.environ['HOME'] + "/lav/media/raw/inventoryVideoSection.csv")
+sectL = pd.read_csv(os.environ['LAV_DIR'] + "/raw/inventoryVideoSection.csv")
 for i in range(0,len(sectL)):
     idxA = adSect['section'].str.contains(str(sectL['canale'][i]))
     adSect['group'][idxA] = str(sectL['cluster'][i])
@@ -135,7 +135,7 @@ adWeek = adSect.groupby(["data","group"]).sum().unstack()
 ##------------------------load-----------------------------------
 
 ##from pandasql import sqldf
-key_file = os.environ['HOME'] + '/lav/media/credenza/intertino.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/intertino.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)

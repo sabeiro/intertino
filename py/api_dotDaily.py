@@ -1,5 +1,4 @@
 import sys
-sys.path.append("~/lav/media/src/py/")
 import api_dotLib as dot
 import numpy as np
 import pandas as pd
@@ -19,14 +18,15 @@ import os
 print '-------------------------------api-dot---------------------------------'
 
 token = dot.getToken()
-dataQ = ["2017-04-07","2017-04-08"]
+dataQ = ["2017-07-07","2017-07-08"]
 dataQ = [(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
+
 headers = {"Column-Names":"Date|FlightDescription|FlightID|Imps"}
 ##tappi
 query = {"token":token,
     "request":{
         "reportId":"MD",
-        "fields":[{"id":"Date","sortd":"desc","sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
+        "fields":[{"id":"Date","sortd":"desc","visible":True,"sortp":1,"filters":[[{"op":">=","v": [dataQ[0]]}],[{"op":"<=","v": [dataQ[1]]}]]}
         ,{"id":"Size","visible": False,"sortp":2,"filters":[[{"op":"=","v": ["SPOT"]}]]}
         ,{"id":"Publisher","visible": False,"sortp":3,"filters":[[{"op":"=","v": ["WEBTV"]}]]}
         ,{"id":"FlightDescription","visible": False,"sortp":4,"filters":[[{"op":"CONTAINS","v": ["Tapp"]}]]}
@@ -128,17 +128,17 @@ videoD.set_index("data",inplace=True)
 adSect['group'] = 'rest'
 adSect['imps'] = adSect['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
 adSect['imps'] = pd.to_numeric(adSect['imps'])
-sectL = pd.read_csv(os.environ['HOME'] + "/lav/media/raw/inventoryVideoSection.csv")
+sectL = pd.read_csv(os.environ['LAV_DIR'] + "/raw/inventoryVideoSection.csv")
 for i in range(0,len(sectL)):
     idxA = adSect['section'].str.contains(str(sectL['canale'][i]))
-    adSect['group'][idxA] = str(sectL['cluster'][i])
+    adSect.loc[idxA,['group']] = str(sectL['cluster'][i])
 
 adWeek = adSect.groupby(["data","group"]).sum().unstack()
 
 ##------------------------load-----------------------------------
 
 ##from pandasql import sqldf
-key_file = os.environ['HOME'] + '/lav/media/credenza/intertino.json'
+key_file = os.environ['LAV_DIR'] + 'credenza/intertino.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -155,7 +155,7 @@ cred = cred['mysql']['intertino']
 # conn.close()
 engine = sqlalchemy.create_engine('mysql://'+cred['user']+':'+cred['pass']+'@'+cred['host']+'/'+cred['db'],echo=False)
 conn = engine.connect()
-videoD.to_sql('inventory_video_daily',conn,if_exists='append',chunksize=100)
+#videoD.to_sql('inventory_video_daily',conn,if_exists='append',chunksize=100)
 adWeek.imps.to_sql('inventory_video_section',conn,if_exists='append',chunksize=100)
 conn.close()
 
@@ -163,5 +163,6 @@ conn.close()
 
 #Action,AdDescription,AdExtID,AdId,AdQuota,AdSizeRefId,AdTemplateDescription,AdTemplateExtID,AdType,AdvertiserID,AdvertiserName,AdvertiserType,AdWeight,Area,Ctr,FlightStartDate,DeviceType,FlightAbsoluteEndDate,FlightCapDescription,FlightCapExtID,FlightDescription,FlightEndDate,FlightExtId,FlightID,FlightLayer,FlightPrice,FlightTotalSales,ImpsGoal,Keyword,MccDescription,MediapointId,MediapointTAG,Netspeed,NL7Description,Click,Imps,OrderDescription,OrderExtId,OrderId,Position,UserProfiles,Publisher,Registration,Section,Site,Size,SmartPassback
 
+print '---api-dot-te-se-qe-te-ve-be-ne-------------'
 
 

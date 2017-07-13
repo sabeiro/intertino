@@ -1,0 +1,112 @@
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from config import FB_APP_ID, FB_APP_SECRET, FORWARDING_URL
+from config import TEMBOO_ACCOUNT_NAME, TEMBOO_APP_NAME, TEMBOO_APP_KEY
+from temboo.Library.Facebook.OAuth import InitializeOAuth
+from temboo.Library.Facebook.OAuth import FinalizeOAuth
+from temboo.Library.Facebook.Reading import User
+from temboo.core.session import TembooSession
+import uuid
+
+# Replace with your Facebook and Temboo credentials
+FB_APP_ID = "YOUR_FACEBOOK_APP_ID"
+FB_APP_SECRET = "YOUR_FACEBOOK_APP_SECRET"
+TEMBOO_ACCOUNT_NAME = "ACCOUNT_NAME"
+TEMBOO_APP_NAME = "APP_NAME"
+TEMBOO_APP_KEY = "APP_KEY"
+FORWARDING_URL = "http://127.0.0.1:8000/profile"
+
+from django.conf.urls import patterns, include, url
+import controller
+
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    url(r'^admin/', include(admin.site.urls)),
+    # These URLs are necessary for this Temboo example
+    url(r'^$', controller.home, name='home'),
+    url(r'^login/', controller.get_login_url, name='login'),
+    url(r'^profile/$', controller.get_user_info, name='profile')
+)
+
+SESSION = TembooSession(TEMBOO_ACCOUNT_NAME, TEMBOO_APP_NAME,TEMBOO_APP_KEY)
+def home(request):
+    return HttpResponse('''Login with <a href="login">Facebook</a>.<br />''')
+
+def get_login_url(request):
+    # Generate a random state token which is used as the CustomCallbackID and in the ForwardingURL
+    customCallbackId = str(uuid.uuid4())
+    # Instantiate the InitializeOAuth choreo to begin the OAuth process.
+    initializeOAuthChoreo = InitializeOAuth(SESSION)
+    # Get an InputSet object for the InitializeOAuth choreo
+    initializeOAuthInputs = initializeOAuthChoreo.new_input_set()
+    # Set inputs for InitializeOAuth
+    # Append the state token to the Forwarding URL
+    initializeOAuthInputs.set_AppID(FB_APP_ID)
+    initializeOAuthInputs.set_CustomCallbackID(customCallbackId)
+    initializeOAuthInputs.set_ForwardingURL(FORWARDING_URL + "?state=" + TEMBOO_ACCOUNT_NAME + "/" + customCallbackId)
+    # Execute InitializeOAuth choreo
+    initializeOAuthResults = initializeOAuthChoreo.execute_with_results(initializeOAuthInputs)
+    print "~~~~The Authorization URL is: " + initializeOAuthResults.get_AuthorizationURL()
+    # Redirect user to the AuthorizationURL so that they can login and grant the application access
+    return HttpResponseRedirect(initializeOAuthResults.get_AuthorizationURL())
+
+def get_user_info(request):
+    # Instantiate the FinalizeOAuth choreo
+    finalizeOAuthChoreo = FinalizeOAuth(SESSION)
+    # Get an InputSet object for the FinalizeOAuth choreo
+    finalizeOAuthInputs = finalizeOAuthChoreo.new_input_set()
+    # Set inputs for FinalizeOAuth
+    # Get the state token parameter after the redirect to use as the CallbackID
+    finalizeOAuthInputs.set_AppID(FB_APP_ID)
+    finalizeOAuthInputs.set_AppSecret(FB_APP_SECRET)
+    print "~~~~The state token is: " + request.GET.get('state')
+    finalizeOAuthInputs.set_CallbackID(request.GET.get('state'))
+    # Execute FinalizeOAuth choreo to complete the OAuth process and retrieve an access token
+    finalizeOAuthResults = finalizeOAuthChoreo.execute_with_results(finalizeOAuthInputs)
+    # Intiate the Facebook.Reading.User choreo to get the user's profile
+    userChoreo = User(SESSION)
+    # Get an InputSet object for the Facebook.Reading.User choreo
+    userInputs = userChoreo.new_input_set()
+    # Set the access token input
+    userInputs.set_AccessToken(finalizeOAuthResults.get_AccessToken())
+    # Execute Facebook.Reading.User choreo
+    userResults = userChoreo.execute_with_results(userInputs)
+    # Return user json and display it on the page
+    return HttpResponse(userResults.get_Response(), mimetype='application/json')
+
+
+
+def get_user_info(request):
+
+    # Instantiate the FinalizeOAuth choreo
+    finalizeOAuthChoreo = FinalizeOAuth(SESSION)
+
+    # Get an InputSet object for the FinalizeOAuth choreo
+    finalizeOAuthInputs = finalizeOAuthChoreo.new_input_set()
+
+    # Set inputs for FinalizeOAuth
+    # Get the state token parameter after the redirect to use as the CallbackID
+    finalizeOAuthInputs.set_AppID(FB_APP_ID)
+    finalizeOAuthInputs.set_AppSecret(FB_APP_SECRET)
+    print "~~~~The state token is: " + request.GET.get('state')
+    finalizeOAuthInputs.set_CallbackID(request.GET.get('state'))
+
+    # Execute FinalizeOAuth choreo to complete the OAuth process and retrieve an access token
+    finalizeOAuthResults = finalizeOAuthChoreo.execute_with_results(finalizeOAuthInputs)
+
+    # Intiate the Facebook.Reading.User choreo to get the user's profile
+    userChoreo = User(SESSION)
+
+    # Get an InputSet object for the Facebook.Reading.User choreo
+    userInputs = userChoreo.new_input_set()
+
+    # Set the access token input
+    userInputs.set_AccessToken(finalizeOAuthResults.get_AccessToken())
+
+    # Execute Facebook.Reading.User choreo
+    userResults = userChoreo.execute_with_results(userInputs)
+
+    # Return user json and display it on the page
+    return HttpResponse(userResults.get_Response(), mimetype='application/json')

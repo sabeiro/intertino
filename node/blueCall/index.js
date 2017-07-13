@@ -28,9 +28,11 @@ var api_base_url = "http://services.bluekai.com/Services/WS/";
 
 var api_bluekai_sect = ["sites","classificationRules","Taxonomy","audiences","classificationCategories","Order","Vertical"];
 
-var cred = JSON.parse(fs.readFileSync('/home/sabeiro/lav/media/credenza/intertino.json', 'utf8'));
-var uid = cred['json']['bkuid'];
-var secretkey = cred['json']['bksecretkey'];
+var name = 'RTI DMP Mediamond JSON Mediamond ',
+    uid='750191b6ae4af549a35fffae8dd27930500f6b5ec43569b72b741680f92ab26f',
+    secretkey= '0e3cb02cacfcca23724e25515b4cbe61b2ac954dc0fc495d1daadd246eddd0c5',
+    BK_site_ID= [], //29139,29140,30579,30580,30099,30100,30581,30582,29137,29138,28415,28416
+    BK_partner_ID= 3256;
 
 //require('./config/app_config.js')
 
@@ -82,7 +84,7 @@ var doRequest = (url, method, data) => {
 	REQUEST.get(options, function(error, response, body) {
 	    if (error == null  && !error && response.statusCode == 200) {
 		//log(body);
-		FS.writeFile("/home/sabeiro/lav/media/node/json/audiences.json",body, function(err) {
+		FS.writeFile("/Users/giovanni.marelli.PUBMI2/lav/media/node/json/audiences.json",body, function(err) {
 		    if(err) {return console.log(err);}
 		    console.log("The file was saved!");
 		});

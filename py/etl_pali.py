@@ -2,7 +2,6 @@ import json
 import requests
 import os
 import sys
-sys.path.append("/home/sabeiro/lav/media/script/py/")
 import random
 import json
 import numpy as np
@@ -13,14 +12,22 @@ import cookielib
 import urlparse
 import datetime
 
-baseUrl = 'http://www.mediaset.it/guidatv/inc/canali/'
+print '------------------------------etl-pali-------------------------'
+
+key_file = os.environ['LAV_DIR'] + "/credenza/medianet.json" 
+cred = []
+with open(key_file) as f:
+    cred = json.load(f)
+
+baseUrl = cred['medianet']
+
 monthL = ['2017' + '%02d/' % x for x in range(1,13)]
 monthDur = [31,28,31,30,31,30,31,31,30,31,30,31]
 monthU = '201703/'
 dayU = '20170330'
 chU = '_KA'
 chU = '_C5'
-sectL = pd.read_csv(os.environ['HOME'] + "/lav/media/raw/inventoryVideoSection.csv")
+sectL = pd.read_csv(os.environ['LAV_DIR'] + "/raw/inventoryVideoSection.csv")
 sectD = pd.DataFrame(index = sectL.cluster.unique())
 titleL = pd.DataFrame()
 paliPrg = pd.DataFrame()
@@ -73,7 +80,7 @@ import MySQLdb
 from pandas.io import sql
 import sqlalchemy
 
-key_file = os.environ['HOME'] + '/lav/media/credenza/intertino.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/intertino.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -85,4 +92,5 @@ conn.close()
 
 
 
+print '---etl-pali-te-se-qe-te-ve-be-ne-------------'
         

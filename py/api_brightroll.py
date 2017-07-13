@@ -18,21 +18,20 @@ import os
 print '-----------------------api-brightroll--------------------------------'
 
 headers = {"Accept":"application/json","Content-type":"application/x-www-form-urlencoded; charset=UTF-8","User_Agent":"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"}
+baseUrl = 'https://api.login.yahoo.com/oauth2/'
 today = time.strftime("%Y-%m-%d")
 dataQ = [(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
 sData = {"params": {},"version": "1.1","method": "getConnectionTest"}
-key_file = os.environ['HOME'] + '/lav/media/credenza/gemini.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/brightroll2.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
 
-sData = {"grant_type":"authorization_code","redirect_uri":"oob","code":cred['app_code']}
-sData = {"grant_type":"refresh_token","redirect_uri":"oob","refresh_token":cred['refresh_token']}
-headers = {"Authorization":"Basic "+base64.standard_b64encode(cred['client_id']+":"+cred['client_secret']),"Content-Type":"application/json"}
-sData = {"grant_type":"refresh_token","redirect_uri":"oob","refresh_token":cred['refresh_token']}
-baseUrl = 'https://api.login.yahoo.com/oauth2/'
-resq = requests.post(baseUrl+'get_token',headers=headers, data=json.dumps(sData))
+headers = {"Authorization":"Basic "+base64.standard_b64encode(cred['client_id']+":"+cred['client_secret']),"Content-Type":"application/x-www-form-urlencoded"}
+# sData = {"grant_type":"authorization_code","redirect_uri":"oob","code":cred['app_code']} # gen refresh token
+sData = {"grant_type":"refresh_token","redirect_uri":"oob","refresh_token":cred['refresh_token']} # get access token
+resq = requests.post(baseUrl+'get_token',headers=headers,data=sData)
 token = resq.json()['access_token']
 headers = {"Content-Type":"application/json","X-Auth-Method":"OAUTH","X-Auth-Token":token}
 sData = {"reportOption": {
@@ -99,6 +98,6 @@ campDf = pd.DataFrame(campL)
 # aList = namedtuple('name', 'id')
 #
 
+#print 'curl "https://api.login.yahoo.com/oauth2/get_token" -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Basic '+base64.standard_b64encode(cred['client_id']+":"+cred['client_secret'])+'" -d "grant_type=authorization_code&redirect_uri=oob&code='+cred['app_code']+'"'
 
-
-
+print '---------api-brightroll-te-se-qe-te-ve-be-te-ne--------------'

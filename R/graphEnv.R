@@ -1,6 +1,7 @@
 Sys.setlocale(category = "LC_ALL", locale = "English_United States.1252")
 Sys.setenv(LANG = "en_US.UTF-8")
 ##Sys.setlocale('LC_ALL', 'UTF-8');
+options(stringsAsFactors=FALSE)
 
 library(ggplot2)
 library(RColorBrewer)
@@ -14,7 +15,7 @@ library(magrittr)
 library(ggplot2)
 library(stringi)
 library(RColorBrewer)
-#library("textcat")
+                                        #library("textcat")
 require(grDevices) # for colours
 library(gtable)
 library(grid)
@@ -34,7 +35,7 @@ gCol2 = c("#000033","#FFb915")
 luftPal = c("#EE9900","#FFCC00","#AAAAAA","#999999","#5A5a5a","#007ACC","#003399","#000099");
 gCol1 <- brewer.pal(11,"RdYlBu")
 gCol1 <- hcl(12,c=100,l=seq(from=10,to=100,by=3)) #diverge_hcl(12,c=100,l=c(50,90),power=1)
-#gCol1 = c("#EE9900","#FFCC00","#007ACC","#003399","#EE9900","#FFCC00","#007ACC","#003399","#EE9900","#FFCC00","#007ACC","#003399");
+##gCol1 = c("#EE9900","#FFCC00","#007ACC","#003399","#EE9900","#FFCC00","#007ACC","#003399","#EE9900","#FFCC00","#007ACC","#003399");
 gCol1 <- hcl(12,c=100,l=seq(from=10,to=100,by=3)) #diverge_hcl(12,c=100,l=c(50,90),power=1)
 gCol2 <- c("#b6dbe1","#d2daef","#f5e0e9","#f4e3c9","#f4d9d0","#d6cdc8","#d8e0b1","#dee0d3")
 gCol2 = c(gCol2,gCol2,gCol2)
@@ -78,8 +79,8 @@ gRes <- 300
 theme_new <- theme_set(theme_bw())
 theme_new <- theme_update(
     legend.justification=c(0,0),
-##    legend.position=c(.75,.73),
-##    legend.background = element_rect(fill=alpha('white',0.3)),
+    ##    legend.position=c(.75,.73),
+    ##    legend.background = element_rect(fill=alpha('white',0.3)),
     legend.position ="right",
     panel.background = element_blank(),
     panel.border = element_blank(),
@@ -88,7 +89,70 @@ theme_new <- theme_update(
     legend.background = element_blank()
                                         #    text = element_text(family = "sans", colour = "grey50", size = gFontSize, vjust = 1, lineheight = 0.9,face="plain",hjust=0.5,angle=0,margin=0,debug=0)
 )
+RadarTheme <- theme(
+    panel.background=element_blank(),
+    plot.title= element_text(size=13,face=c("bold","italic")),
+                                        #plot.margin = unit(c(.5, .5, .5, .5), "cm"),
+    text=element_text(family="Open Sans"),aspect.ratio=1,
+    legend.position="none",
+    legend.title=element_blank(),legend.direction="horizontal",
+    ## strip.text.x = element_text(size=rel(0.8)),
+    axis.text.x = element_text(size=8,face ="bold",angle=0,hjust=1),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    ## axis.line.x=element_line(size=0.5),
+    panel.grid.major=element_line(size=0.3,linetype = 2,colour="grey"))
 
+coord_radar <- function(theta="x",start=0,direction=1){
+    theta <- match.arg(theta, c("x", "y"))
+    r <- if(theta == "x") "y" else "x"
+    ggproto("CordRadar", CoordPolar,theta=theta,r=r,start=start,direction=sign(direction),is_linear = function(coord) TRUE)
+}
+
+PieTheme <- theme(
+    panel.border = element_blank(),
+    text = element_text(size = gFontSize),
+    axis.line=element_blank(),
+    axis.text.x=element_blank(),
+    axis.ticks=element_blank(),
+    legend.position="none",
+    plot.background=element_blank(),
+    panel.background = element_blank()
+)
+
+facetTheme <- theme(strip.text.x = element_text(size=12, angle=0),
+                    strip.text.y = element_text(size=12, face="bold"),
+                    strip.background = element_rect(colour="#FFFFFF", fill="#FFFFFF"))
+
+overlapTheme <- theme(
+    axis.text.x = element_text(angle = 30, hjust = 1),
+    text = element_text(size = gFontSize),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    legend.justification=c(0,0),
+    legend.position=c(.5,.73),
+    legend.background = element_rect(fill=alpha('white',0.3)),
+    legend.position ="right"
+)
+
+blankTheme <- theme(
+    panel.border = element_blank(),
+    text = element_text(size = gFontSize),
+    axis.ticks = element_blank(),
+    axis.text.x = element_blank(),
+    axis.line = element_blank(), 
+    axis.text.x = element_blank(), 
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(), 
+    axis.title.x = element_blank(), 
+    axis.title.y = element_blank(), 
+    ## axis.ticks.margin = unit(c(0,0,0,0), "lines"), 
+    legend.position="none",
+    plot.background=element_blank(),
+    panel.background = element_blank()
+) 
 
 calWeek <- function(date) {
     d <- as.numeric(format(date, "%d"))
@@ -218,10 +282,66 @@ map2color(0:11,rainbow(200),limits=c(1,10))
 
 
 comprss <- function(tx) {
-      div <- findInterval(as.numeric(gsub("\\,", "", tx)),
-                          c(1, 1e3, 1e6, 1e9, 1e12) )
-      paste(round( as.numeric(gsub("\\,","",tx))/10^(3*(div-1)), 2),
-           c("","K","M","B","T")[div] )}
+    div <- findInterval(as.numeric(gsub("\\,", "", tx)),
+                        c(1, 1e3, 1e6, 1e9, 1e12) )
+    paste(round( as.numeric(gsub("\\,","",tx))/10^(3*(div-1)), 2),
+          c("","K","M","B","T")[div] )}
+
+
+df2l <- function(tD){
+    tList <- list()
+    for(i in 1:nrow(tD)){
+        rList = "list("
+        for(j in colnames(tD)){
+            chr <-  ifelse(typeof(tD[i,j])=="character",paste(j,"=\"",tD[i,j],"\",",sep=""),paste(j,"=",tD[i,j],",",sep=""))
+            rList <- paste(rList,chr)
+        }
+        rList <- paste(gsub(",$","",rList),")",sep="")
+        rVect <- eval(parse(text=rList))
+        tList[[i]] = rVect
+    }
+    return(tList)
+}
+
+
+group2l <- function(df,gVar){
+    grpL <- unique(df[,gVar])
+    pointL = list()
+    for(i in 1:length(grpL)){
+        melted1 = df[df[,gVar]==grpL[i],]
+        empG = list()
+        for(k in 1:nrow(melted1)){
+            rList = "list("
+            for(j in colnames(melted1)){
+                chr <-  ifelse(typeof(melted1[k,j])=="character",paste(j,"=\"",melted1[k,j],"\",",sep=""),paste(j,"=",melted1[k,j],",",sep=""))
+                rList <- paste(rList,chr)
+            }
+            rList <- paste(gsub(",$","",rList),")",sep="")
+            rVect <- eval(parse(text=rList))
+            empG[[k]] = rVect
+        }
+        sumV <- lapply(colSums(melted1[sapply(melted1,is.numeric)]),function(x) x)
+        if(length(sumV)>0){
+            sumV[['name']] = grpL[i]
+            sumV[['size']] = nrow(melted1)
+            sumV[['children']] = empG
+            pointL[[i]] = sumV
+        } else {
+            pointL[[i]] = list(name=grpL[i],size=nrow(melted1),children=empG)
+        }            
+    }
+    return(pointL)
+}
+
+
+toInt <- function(col,alpha){
+    str <- 'rgba('
+    str = paste(str,strtoi(paste("0",substring(col,2,3),sep="x")),",",sep="")
+    str = paste(str,strtoi(paste("0",substring(col,4,5),sep="x")),",",sep="")
+    str = paste(str,strtoi(paste("0",substring(col,6,7),sep="x")),",",alpha,")",sep="")
+    return(str)
+}
+
 
 
 ## Sys.setenv("HADOOP_CMD"="/usr/hdp/2.3.2.0-2950/hadoop/bin/yarn")

@@ -11,7 +11,7 @@ from googleads import errors
 
 class dfpAuth():
     def __init__(self):
-        credFile = '/home/sabeiro/lav/media/credenza/googleads.yaml'
+        credFile = os.environ['LAV_DIR'] + '/credenza/googleads.yaml'
         dfp_client = dfp.DfpClient.LoadFromStorage(credFile)
         network_service = dfp_client.GetService('NetworkService', version='v201702')
         self.report_downloader = dfp_client.GetDataDownloader(version='v201702')

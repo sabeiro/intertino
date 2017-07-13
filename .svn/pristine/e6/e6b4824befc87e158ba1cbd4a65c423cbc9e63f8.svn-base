@@ -1,0 +1,366 @@
+#!/usr/bin/env Rscript
+setwd('/home/sabeiro/lav/media/')
+##install.packages(c('textcat','svglite'))
+source('script/graphEnv.R')
+library('corrplot') #package corrplot
+library('svglite')
+require(stats)
+require(dplyr)
+library(grid)
+library(sqldf)
+
+
+if(FALSE){
+    fs <- read.csv('raw/audienceNielsen.csv',stringsAsFactor=FALSE)
+    fMap <- read.csv('raw/audienceNielsenMap.csv',stringsAsFactor=FALSE)
+    for(i in 1:nrow(fMap)){fs[fs$Campaign.Name == fMap$name1[i],"aud"] <- fMap$name2[i]}
+    fs$source <- "interest"
+    fs <- fs[!grepl("Total",fs$Demo.Segment),]
+    uniT <- ddply(fs,.(aud,seg,Demo.Segment,source),summarise,unique=sum(Total.Digital,na.rm=T))
+}
+if(TRUE){
+fs <- read.csv('raw/audCompAll.csv',stringsAsFactor=FALSE)
+fMap <- read.csv('raw/audCampList.csv',stringsAsFactor=FALSE)
+fs <- fs[!grepl("All",fs$Site),]
+fs$Placement[fs$Placement=="test bk 1 dinamic"] <- "mediamond_plc0001"
+cMap <- ddply(fMap,.(source),summarise,camp=head(camp,1))
+for(i in 1:nrow(cMap)){fs[fs$Campaign.Name == cMap$camp[i],"source"] <- cMap$source[i]}
+cMap <- ddply(fMap,.(source,pc),summarise,name=head(name,1))
+for(i in 1:nrow(cMap)){fs[fs$Placement == cMap$pc[i] & fs$source == cMap$source[i],"aud"] <- cMap$name[i]}
+devL <- c("Total Digital","Computer Only","Mobile Only")
+##devL <- c("Digital (C/M)","Computer Only","Mobile Only")
+fs$aud <- gsub("pub ","",fs$aud)
+fs1 <- read.csv('raw/audCompBanzai.csv',stringsAsFactor=FALSE)
+fs1 <- fs1[fs1$Country=="ITALY",]
+fs1$aud <- fs1$Placement
+fs1$Platform.Device <- fs1$Platform
+fs1$source <- "banzai"
+fs1$aud <- fs1$aud %>% gsub("BZ - ","",.) %>% gsub("ALL","",.) %>%  gsub("SD","F",.) %>%  gsub("SU","M",.) %>% gsub("SE ","",.) %>% gsub("\\_","",.)
+fs <- fs[,c("Demo.Segment","Platform.Device","Unique.Audience","source","aud")]
+head(fs)
+fs <- rbind(fs,fs1[,c("Demo.Segment","Platform.Device","Unique.Audience","source","aud")])
+fs <- fs[!grepl("Total",fs$Demo.Segment),]
+##
+fs$seg <- fs$aud %>% sub("pub ","",.) %>% gsub("[[:punct:]]"," ",.) %>% sub(" v","",.) %>% sub(" z","",.) %>% sub(" 1st","",.) %>% sub(" beha","",.) %>%  sub("BZ   SE ","",.) %>%  sub("BZ   SD ","",.) %>%  sub("BZ   SU ","",.)
+audL <- c(unique(fs$seg),"F","M","18 24","25 34","35 44","45 54","55 ")
+audL <- audL[!grepl("i t",audL)]
+audL <- audL[!is.na(audL)]
+audL <- gsub(" $","",audL)
+audL <- audL[order(audL)]
+audL <- unique(audL)
+audM <- audL %>% sub("pub ","",.) %>% gsub("[[:punct:]]"," ",.) %>% sub(" v","",.) %>% sub(" z","",.) %>% sub(" 1st","",.) %>% sub(" beha","",.) %>%  sub("BZ   SE ","",.) %>%  sub("BZ   SD ","",.) %>%  sub("BZ   SU ","",.)
+segMap <- read.csv('raw/audCompSegMap.csv',row.names=1)
+segMap <- segMap[!grepl("Total",rownames(segMap)),]
+segMap2 <- read.csv('raw/audCompSegMap2.csv',row.names=1)
+segMap2 <- ifelse(segMap2==1,TRUE,FALSE)
+segN <- colnames(segMap) %>% gsub("pub ","",.) %>% gsub("X","",.) %>% gsub("[[:punct:]]"," ",.) %>% gsub(" $","",.)
+audSeg <- match(audM,segN)
+sourceL <- unique(fs$source)
+uniT <- ddply(fs,.(aud,seg,Demo.Segment,source,Platform.Device),summarise,unique=sum(Unique.Audience,na.rm=T))
+set <-  !(uniT$source == "banzai")
+uniT[("Total Digital"==uniT$Platform.Device) & set,"unique"] <- uniT[("Digital (C/M)"==uniT$Platform.Device) & set,"unique"]
+set <- (uniT$Platform.Device %in% devL)
+uniT <- uniT[set,]
+}
+##----------------------benchmark-----------------------------
+## mMap <- melt(read.csv('raw/audCompSegMap.csv'),id.vars="X")
+## mMap$variable <- mMap$variable %>% gsub("X","",.) %>% gsub("[[:punct:]]"," ",.) %>% gsub(" $","",.)
+
+## tmp <- sqldf("SELECT * FROM fs AS f LEFT JOIN mMap AS s ON (t.Var2 = s.seg) AND (t.source = s.source)")
+
+meltTarget <- NULL
+reachTarget <- NULL
+sour <- sourceL[2]
+for(sour in sourceL[!grepl("i-t",sourceL)]){
+    inTarget <- NULL
+    tReach <- NULL
+    d <- devL[1]
+    for(d in devL){
+        print(d)
+        set <- uniT$Platform.Device==d & uniT$source == sour
+        uniD <- uniT[set,]
+        inTarget1 <- NULL
+        tReach1 <- NULL
+        i <- 9
+        for(i in 1:length(audL)){
+            set2 <- segMap2[,audL[i] == colnames(segMap2) %>% gsub("X","",.) %>% gsub("[[:punct:]]"," ",.)]
+            set3 <- FALSE
+            for(s in names(set2[set2])){set3 <- set3 | grepl(s,uniD$seg)}
+            uniD1 <- uniD[set3,]
+            setC <- unique(uniD1[,"seg"])
+            sel <- segMap[,audL[i] == segN]
+            selT <- rep(sel,length(setC))
+            inTarget1[i] <- sum(uniD1[selT,"unique"],na.rm=T)/sum(uniD1[,"unique"],na.rm=T)
+            tReach1[i] <- sum(uniD1[,"unique"],na.rm=T)
+        }
+        inTarget <- rbind(inTarget,inTarget1)
+        tReach <- rbind(tReach,tReach1)
+    }
+    colnames(inTarget) <- audL
+    rownames(inTarget) <- devL
+    colnames(tReach) <- audL
+    rownames(tReach) <- devL
+    meltTarget <- rbind(meltTarget,cbind(melt(inTarget),source=sour))
+    reachTarget <- rbind(reachTarget,cbind(melt(tReach),source=sour))
+}
+meltTarget$reach <- reachTarget$value
+meltTarget$accuracy <- as.numeric(cut(meltTarget$reach,breaks=c(0,quantile(meltTarget$reach,seq(1,5)/5,na.rm=T)),labels=1:5))
+
+write.csv(meltTarget,"out/audCompInTarget.csv")
+write.csv(as.data.frame.matrix(xtabs("value ~ Var2 + Var1",data=meltTarget)),"out/audCompInTarget.csv",sep=",")
+write.csv(fs,"out/audCompAll.csv")
+
+##meltTarget <- meltTarget[grepl("first",meltTarget$source),]
+
+melted <- meltTarget
+melted <- melted[!is.na(melted$value),]
+melted <- melted[melted$accuracy > 1,]
+gLabel = c("device","segment",paste("reach in target",""),"percentuale")
+p <- ggplot(melted,aes(x=Var1,y=Var2,group=Var2)) +
+    geom_raster(data=meltTarget[!is.na(meltTarget$value),],aes(fill = value), interpolate = TRUE,alpha=0.7) + 
+    geom_tile(aes(fill=value,color=accuracy),size=1,width=0.9,height=0.9) +
+    geom_text(aes(fill=value,label=paste(formatC(value*100,digit=0,format="f"),"",sep="%")),colour="white",size=5) +
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
+##    scale_fill_gradient(low="white",high="steelblue") +
+    facet_grid(. ~ source) + ##,scales = "free", space = "free") +
+    theme(
+        ##axis.text.x = element_text(angle = 30,margin=margin(-10,0,0,0)),
+        panel.background = element_blank()
+    )
+p
+ggsave(file="fig/inTargetHeat.png", plot=p, width=gWidth, height=gHeight)
+## fs <- fs[fs$Platform.Device=="Digital (C/M)",]
+## fs$Audience.Reach <- as.numeric(gsub("%","",fs$Audience.Reach))
+
+
+benMap <- as.matrix(read.csv("raw/audCompBenchmarkMap.csv",row.names=1))
+ab <- read.csv("raw/audCompBenchmark.csv")
+ab$percent <- ab$percent/100
+ab$target <- ab$target %>% gsub("[[:punct:]]"," ",.)
+melted <- sqldf("SELECT * FROM meltTarget AS t LEFT JOIN ab AS s ON (t.Var2 = s.target) AND (t.Var1 = s.device)")
+melted <- melted[!is.na(melted$target),]
+melted$diff <- melted$value-melted$percent
+write.csv(melted,"out/audCompInTargetBenchmark.csv")
+
+
+melted1 <- melted[melted$accuracy>1,]
+melted1 <- melted1[!is.na(melted1$source),]
+gLabel = c("device","segment",paste("reach in target",""),"percentuale")
+p1 <- ggplot(melted1,aes(x=device,y=target,group=target)) +
+    geom_tile(aes(fill=value,color=accuracy),size=1.5) +
+    geom_text(aes(label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=6) +
+    geom_raster(data=melted,aes(fill=value),interpolate=TRUE,alpha=0.2) + 
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
+    ## scale_fill_gradient(low="white",high="steelblue") +
+    facet_grid(. ~ source) + ##,scales = "free", space = "free") +
+    theme(
+        ##axis.text.x = element_text(angle = 30,margin=margin(-10,0,0,0)),
+        panel.background = element_blank()
+    )
+##p1
+gLabel = c("device","segment",paste("uplift benchmark",""),"percentuale")
+melted1 <- melted1[!is.na(melted1$diff),]
+p2 <- ggplot(melted1,aes(x=device,y=target,group=target)) +
+    geom_tile(aes(fill=diff,color=accuracy),colour="white") +
+    geom_text(aes(fill=diff,label=paste(formatC(diff*100,digit=0,format="f"),"",sep="")),colour="white",size=6) +
+    geom_raster(data=melted,aes(fill=value),interpolate=TRUE,alpha=0.2) + 
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
+    ##scale_fill_gradient(low="white",high="steelblue") +
+    facet_grid(. ~ source) + ##,scales = "free", space = "free") +
+    theme(
+        ##axis.text.x = element_text(angle = 30,margin=margin(-10,0,0,0)),
+        panel.background = element_blank()
+    )
+##p2
+grid.arrange(p1,p2,ncol=2)
+
+##fs$Audience...Share <- as.numeric(gsub("%","",fs$Audience...Share))
+## fs$Total.Digital.1 <- as.numeric(gsub("%","",fs$Total.Digital.1))
+## fs$Mobile.1 <- as.numeric(gsub("%","",fs$Mobile.1))
+## ms <- as.matrix(fs[,-1])
+## iCorr <- cor(ms)
+## corrplot.mixed(iCorr,lower="pie",upper="number")
+##----------------------aud-comp-----------------------------
+dispV <- "Audience...Share"
+dispV <- "Total.Digital.1"
+dispV <- "Audience.Reach"
+dispV <- "Unique.Audience"
+dispV <- "unique"
+
+write.csv(uniT,"tmp.csv")
+
+
+set <- uniT$source == sourceL[4] & uniT$Platform.Device == devL[1] 
+audComp <- uniT[set,]
+## audComp <- audComp[!grepl("Un",audComp$Demo.Segment),]
+## audComp <- audComp[!grepl("Total",audComp$Demo.Segment),]
+audComp$Gender[grepl("Female",audComp$Demo.Segment)] <- "Female"
+audComp$Gender[grepl("Male",audComp$Demo.Segment)] <- "Male"
+audComp$audG <- "Both"
+audComp$audG[grepl(" F",audComp$aud)] <-  "Female"
+audComp$audG[grepl(" M",audComp$aud)] <-  "Male"
+audComp$Demo.Segment <- gsub("Male ","",audComp$Demo.Segment)
+audComp$Demo.Segment <- gsub("Female ","",audComp$Demo.Segment)
+audComp <- audComp[order(audComp$aud),]
+## audComp$aud <- gsub(" M","",audComp$aud)
+## audComp$aud <- gsub(" F","",audComp$aud)
+audComp$value <- audComp[,dispV]
+audComp$value[is.na(audComp$value)] <- 0
+##audComp$value <- unlist((audComp[,c("audG","source",dispV)] %>% group_by(audG,source) %>% mutate_each(funs(./sum(.,na.rm=T))))[3])
+##tmp <- ddply(audComp,.(audG,Gender,source),summarise,value=sum(value,na.rm=T),unique=sum(unique,na.rm=T))
+audComp$value <- unlist((audComp[,c("aud",dispV)] %>% group_by(aud) %>% mutate_each(funs(./sum(.,na.rm=T))))[2])
+audComp[grepl("Female",audComp$Gender),"value"] <- - audComp[grepl("Female",audComp$Gender),"value"]
+audComp$value[is.na(audComp$value)] <- 0
+##tmp <- ddply(audComp,.(aud,source),summarise,value=sum(value,na.rm=T),unique=sum(unique,na.rm=T))
+
+head(audComp)
+
+audL <- unique(audComp[,"aud"])
+
+audTot <- ddply(audComp,.(aud,Gender),summarise,value=sum(value,na.rm=T),unique=sum(unique,na.rm=T))
+audTot$x <- ifelse(audTot$Gender %in% "Female",0.7,0.7)
+audTot$y <- ifelse(audTot$Gender %in% "Female",-0.1,0.1)
+audPlace <- ddply(audComp,.(Demo.Segment,aud,Gender),summarise,value=sum(value,na.rm=T),unique=sum(unique,na.rm=T))
+audTot <- audTot[!is.na(audTot$Gender),]
+audTot$Gender[audTot$Gender=="Female"] <- "F"
+audTot$Gender[audTot$Gender=="Male"] <- "M"
+audPlace$label <- round(100*abs(audPlace$value))
+audPlace$label[audPlace$label<3] <- NA
+
+##nDev <- max(2,length(unique(audComp$Platform.Device))-2)
+##melted <- audComp[set,]
+gLabel = c("","",paste("Audience composition"),"")
+p <- ggplot(audComp,aes(x=Demo.Segment,y=value,color=aud,fill=aud,group=Gender))+
+    ##geom_density(alpha=0.3,stat="identity",position="dodge") +
+    geom_bar(alpha=0.3,stat="identity",position="identity") +
+    geom_text(data=audPlace,aes(y=value,label=label),color="black") +
+    geom_text(data=audTot,aes(x=x,y=y,label=paste(round(abs(value)*100),"",sep="")),color="black") +
+    ##    geom_text(data=audTot,aes(x=x-0.25,y=y,label=Gender),color="black") +
+    facet_grid(. ~ aud) + ##,scales = "free", space = "free") +
+    theme(
+        legend.position="none",legend.box = "horizontal",
+        ##axis.text.x = element_text(angle = 30,margin=margin(-10,0,0,0)),
+        axis.ticks = element_blank(),
+        strip.text.y = element_text(size=12, face="bold"),
+        strip.background = element_rect(colour="white", fill="#EEEEEE"),
+        ##axis.text.x = element_blank(),
+        panel.background = element_blank()
+    ) +
+    scale_y_continuous(breaks=c(-0.1,0.1),labels=c("F","M")) +
+    scale_colour_discrete(guide = FALSE) +
+    coord_flip() +
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],color=gLabel[4])
+p
+
+
+
+
+melted <- fs[grepl("pub",fs$aud),]
+melted <- melted[!grepl("Un",melted$Demo.Segment),]
+melted <- melted[!grepl("Total",melted$Demo.Segment),]
+melted$audG <- "Female"
+melted$audG[grepl(" M",melted$aud)] <- "Male"
+melted$aud <- gsub(" F","",melted$aud)
+melted$aud <- gsub(" F","",melted$aud)
+melted$value <- melted[,dispV]
+melted$value[is.na(melted$value)] <- 0
+melted$value <- unlist((melted[,c("audG","source",dispV)] %>% group_by(audG,source) %>% mutate_each(funs(./sum(.,na.rm=T))))[3])
+melted$value[is.na(melted$value)] <- 0
+melted$Gender <- "Male"
+melted[grepl("Female",melted$Demo.Segment),"Gender"] <-  "Female"
+melted$Demo.Segment <- gsub("Male ","",melted$Demo.Segment)
+melted$Demo.Segment <- gsub("Female ","",melted$Demo.Segment)
+melted <- melted[order(melted$aud),]
+
+audTot <- ddply(melted,.(audG,Gender),summarise,value=sum(value),unique=sum(Unique.Audience,na.rm=T),source=head(source,1))
+audTot$value <- abs(audTot$value)
+audPlace <- ddply(melted[melted$aud %in% audL,],.(Demo.Segment,aud,Gender),summarise,value=sum(value),unique=sum(Unique.Audience),source=head(source,1))
+audPlace$value <- abs(audPlace$value)
+audTot$Gender[audTot$Gender=="Female"] <- "F"
+audTot$Gender[audTot$Gender=="Male"] <- "M"
+audPlace$label <- round(100*abs(audPlace$value))
+audPlace$label[audPlace$label<3] <- NA
+##ddply(audPlace,.(Gender,source),summarise,reach=sum(value),unique=sum(un)
+
+
+head(melted)
+str(melted)
+write.csv(audPlace,paste("out/audComp",sour,".csv",sep=""))
+write.csv(audTot,paste("out/audCompTot",sour,".csv",sep=""))
+
+
+
+
+
+
+
+head(fs)
+melted <- fs[!grepl("Total",fs$Demo.Segment),]
+melted <- melted[!grepl("Un",melted$Demo.Segment),]
+dispV <- "Total.Digital.1"
+melted$value <- melted[,dispV]
+dispV <- "Audience...Share"
+melted$pc <- melted[,dispV]
+dispV <- "Mobile.1"
+melted$mob <- melted[,dispV]
+table(melted$aud)
+melted$Gender <- "Male"
+melted[grepl("Female",melted$Demo.Segment),"Gender"] <-  "Female"
+##melted[grepl("Male",melted$Gender),"value"] <- - melted[grepl("Male",melted$Gender),"value"]
+##melted$variable <- gsub("_mob","",melted$variable)
+melted$Demo.Segment <- gsub("Male ","",melted$Demo.Segment)
+melted$Demo.Segment <- gsub("Female ","",melted$Demo.Segment)
+melted <- melted[order(melted$aud),]
+
+gLabel = c("age group","percentage",paste("age distribution"),"gender")
+p <- ggplot(melted,aes(x=Demo.Segment,y=value,color=Gender,group=Demo.Segment))+
+    geom_violin(data=melted[grepl("Female",melted$Gender),],size=1.5) +
+    geom_violin(data=melted[grepl("Male",melted$Gender),],size=1.5) +
+    ##geom_boxplot(size=1.5) +
+    ##facet_grid(. ~ Gender) +
+    scale_y_continuous(breaks = round(seq(min(melted$value), max(melted$value), by = 1),0)) +
+    geom_jitter() +
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4],color=gLabel[4])
+p
+
+
+melted1 <- melt(melted[,colnames(melted) %in% c("pc","mob","Demo.Segment")],id="Demo.Segment")
+melted1 <- melted1[!melted1$value<=0,]
+gLabel = c("age group","percentage",paste("age distribution"),"device")
+p <- ggplot(melted1,aes(x=Demo.Segment,y=value,color=variable,group=Demo.Segment))+
+    geom_violin(data=melted1[grepl("pc",melted1$variable),],size=1.5,alpha=.7) +
+    geom_violin(data=melted1[grepl("mob",melted1$variable),],size=1.5,alpha=.7) +
+    ##geom_boxplot(size=1.5) +
+    ##facet_grid(. ~ Gender) +
+    scale_y_continuous(breaks = round(seq(min(melted$value), max(melted$value), by = 1),0)) +
+    geom_jitter() +
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4],color=gLabel[4])
+p
+
+
+
+
+
+p <- ggplot(melted1,aes(x=value,fill=variable))+
+    stat_density(alpha=0.3,position="identity") +
+    xlim(0,100000) +
+    ##stat_density(aes(ymax = ..density..,  ymin = -..density..),fill = "grey50", colour = "grey50",geom = "ribbon", position = "identity") +
+    ##    stat_density(aes(ymin=-value,ymax=value),alpha=0.3,position="identity",geom="ribbon") +
+    ##geom_violin(size=1.5) +
+    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
+p
+
+
+
+
+fs <- read.csv('rep/NielsenEvoluzioneDonnamoderna.csv')
+rownames(fs) <- fs$Segment
+fs1 <- fs[!grepl("Total",fs$Segment),]
+ms <- as.matrix(fs1[,-1])
+melted <- melt(fs1,id="Segment")
+p <- ggplot(melted,aes(x=Segment,y=value,color=variable,group=variable))+
+    geom_line(alpha=0.3,size=1.5)
+p
+
+
+
