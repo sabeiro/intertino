@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 import api_blueLib as bk
-from threading import Thread
+import threading
 from Queue import Queue
 
 Url = 'http://services.bluekai.com/Services/WS/SegmentInventory?countries=ALL'
@@ -25,11 +25,9 @@ aCamp.append(json.dumps(audComp['campaigns']))
 dataRef = audComp['segments']
 aud = audL['audiences'][17]
 
-concurrent = 20
-
-def singReq(aud):
-    print aud['name']
-    newUrl = bk.signatureInputBuilder(uDom+uPath+uServ+'/'+str(aud['id']),'GET', None)
+def singReq(q,audId,audName):
+    print audName
+    newUrl = bk.signatureInputBuilder(uDom+uPath+uServ+'/'+str(audId),'GET', None)
     audComp = json.loads(bk.doRequest(newUrl,'GET', None))
     aCamp.append(json.dumps(audComp['campaigns']))
     dataId = audComp['segments']
@@ -44,30 +42,22 @@ def singReq(aud):
     data = json.dumps(dataId,separators=(',', ':'))
     newUrl = bk.signatureInputBuilder(Url,'POST',data)
     respId = json.loads(bk.doRequest(newUrl,'POST',data))
-    aLine = {'name':aud['name'],'id':aud['id'],'AND':respAND['reach'],'OR':respOR['reach'],'second':respId['reach']}
+    aLine = {'name':audName,'id':audId,'AND':respAND['reach'],'OR':respOR['reach'],'second':respId['reach']}
     aReach.append(aLine)
+    q.put(aLine)
+    # q.task_done()
 
+    
 aReach = []
+concurrent = 20
+q = Queue(concurrent*2)
 for aud in audL['audiences']:
-    singReq(aud)
+    singReq(q,aud['id'],aud['name'])
 
-def doWork():
-    while True:
-        aud = q.get()
-        sigReq(aud)
-        q.task_done()
-
-# q = Queue(concurrent * 2)
-# for i in range(concurrent):
-#     t = Thread(target=doWork)
+# for aud in audL['audiences']:
+#     t = threading.Thread(target=singReq,args=(q,aud['id'],aud['name']))
 #     t.daemon = True
 #     t.start()
-# try:
-#     for aud in audL['audiences'][1:3]:
-#         q.put(aud['id'])
-#     q.join()
-# except KeyboardInterrupt:
-#     sys.exit(1)
 
 
 audState = pd.DataFrame(aReach)

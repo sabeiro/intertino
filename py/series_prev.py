@@ -28,7 +28,11 @@ endC = {}
 resS = []
 resqW = pd.DataFrame()
 nAhead = 14 + datetime.datetime.today().weekday()
+<<<<<<< HEAD
 nr = startC.keys()[9]
+=======
+nr = startC.keys()[1]
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 for nr in sorted(startC.keys(),key=lambda x:x[0]):
     print '-------------------' + nr + '--------------------------'
     sData = {'tab':'daily','sect':nr}

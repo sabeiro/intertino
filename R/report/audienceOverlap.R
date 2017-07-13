@@ -22,7 +22,7 @@ if(FALSE){
     cs <- cs[!grepl("Televisione",cs$Category.Name),]
     cs <- cs[!grepl("Geo",cs$Category.Path),]
 }
-if(FALSE){
+if(TRUE){
     cs <- read.csv("raw/overlapMaxMara.csv",stringsAsFactor=F)
     fs1 <- read.csv("raw/audClusterMapBanzai.csv",stringsAsFactor=F)
     cs$group = "rest"
@@ -47,151 +47,52 @@ if(FALSE){
     cs$Volume = cs$Second.Segment.Population
     cs = cs[cs$Index > 5,]
 }
-if(TRUE){
-    cs <- read.csv("raw/audReachOverlap.csv",stringsAsFactor=F)
-    cs$group <- "rest"
-    fs1 <- read.csv('raw/audClusterMapBluekai.csv',stringsAsFactor=F)
-    for(i in 1:length(fs1$target)){
-        set <-  match(cs$name,fs1$target[i])
-        if(any(!is.na(set))){
-            cs[!is.na(set),"group"] = fs1$cluster[i]
-        }
-    }
-    cs = cs[cs$group %in% c("cucina","sport","abbigliamento","finanza","casa","media","eventi","lifestyle","motori","acquisti","viaggi","tech","socio-demo","genitori","ecologia","animali","cultura","benessere","istruzione"),]
-#c("cucina","sport","abbigliamento","finanza","analisi","casa","media","eventi","lifestyle","sync","motori","brand","acquisti","viaggi","tech","socio-demo","genitori","ecologia","animali","second","cultura","benessere","g-o","geo","istruzione")
-    normF = max(cs$AND)
-    cs$name = cs$name %>% gsub("i-t ","",.) %>% gsub("an ","",.) %>% gsub("i-b ","",.)
-    cs$affinity = cs$AND/cs$second
-    cs$affinity[cs$affinity==Inf] = 0
-    cs = cs[rev(order(cs$affinity)),]
-    breakN = as.vector(unique(c(0,quantile(cs$affinity,rev(seq(1,10))/10,na.rm=T))))
-    breakN = breakN[order(breakN)]
-    breakN = seq(0,10)/10
-    cs$Index <- as.numeric(cut(cs$affinity,breaks=breakN,labels=1:(length(breakN)-1)))
-    cs = cs[!is.na(cs$Index),]
-    cs$Index <- max(cs$Index)-cs$Index
-    ##cs = cs[cs$Index > 5,]
-}
-
-##-------------------------------blob-plot------------------------------
-
-cs1 <- ddply(cs,.(Index),summarise,grpSum=sum(AND,na.rm=T))
+cs1 <- ddply(cs,.(Index),summarise,sVisitor=sum(Visitors,na.rm=T))
 cs <- merge(cs,cs1)
-cs$percent <- cs$affinity
-cs$percent <- as.data.frame((cs[,c("Index","percent")] %>% group_by(Index) %>% mutate(sum.n = percent/sum(percent))))[,3]
-
+cs$percent <- cs$Visitors/cs$sVisitor
+cs$Index <- max(cs$Index)-cs$Index
+cs <- cs[order(cs$Index),]
 cs[,"pos"] <- (cs[,c("Index","percent")] %>% group_by(Index) %>% mutate_each(funs(cumsum(.))))[2]
 cs[,"posL"] <- (cs[,c("Index","percent")] %>% group_by(Index) %>% mutate_each(funs(cumsum(.)-.*0.5)))[2]
 cs$angle <- 0# 180-cs$posL*360
-##cs$posL <- cs$posL/cs$OR
+
+##cs$posL <- cs$posL/cs$Volume
 lim <- quantile(cs$posL,probs=c(.35,.65))
-lim <- quantile(cs$posL,probs=c(.15,.95))
+lim <- quantile(cs$posL,probs=c(.45,.55))
 set <- (cs$posL > lim[1] & cs$posL < lim[2]) & (cs$Index < quantile(cs$Index,0.9))
-set <- TRUE
-gLabel = c("Category","AND",paste(""),"gruppo")
+
+gLabel = c("\nCategory","Visitors",paste("Category Affinity"),"Name")
 pie <- ggplot(cs[set,]) +
 ##    geom_bar(aes(x=Index,y=percent,fill=Category.Name),width = 1,stat="identity") +
-    geom_point(aes(x=Index,y=posL,color=group,size=second),stat="identity",alpha=0.3,show.legend=FALSE) +
-    geom_point(aes(x=Index,y=posL,color=group,size=AND),stat="identity",alpha=0.3) +
-    geom_text(aes(x=Index,y=posL,angle=angle,label=name),size=2) + 
-    scale_size(range = c(0,30),guide = FALSE) +
-    scale_color_manual(values=c(brewer.pal(11,'RdBu'),gCol1)) +
-    blankTheme +
-theme(legend.position="right",legend.text=element_text(size=8)) +
-    coord_polar("y",start=0) + 
-    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4],color=gLabel[4])
-pie
-ggsave(plot=pie,filename="fig/audOverlap.svg", height=gHeight, width=gWidth)
-ggsave(plot=pie,filename="fig/audOverlap.jpg", height=gHeight, width=gWidth)
-
-
-
-##-------------------------------bar-plot------------------------------
-
-melted <- cs[,]
-melted = melted[rev(order(melted$AND)),]
-melted[melted$name=="Sciure","name"] = "Fiction"
-melted$AND = melted$AND/1000
-melted$name <- factor(melted$name,levels=melted$name)
-freqG = table(melted$group)
-melted = melted[melted$group %in% names(freqG[freqG>3]),]
-melted = melted[!melted$group == "socio-demo",]
-gLabel = c("category","affinity",paste("audience affinity"),"gruppo")
-polyP = list()
-nCol = 1
-gLabel = c("","",paste(""),"")
-for(chPoly in unique(melted$group)){
-    melted1 = melted[melted$group==chPoly,]
-    polyP[[chPoly]] = ggplot(melted1) + 
-        geom_bar(aes(x=name,y=AND,fill=group),width = .9,stat="identity",alpha=.5) +
-        theme(
-            ## panel.border = element_blank(),
-            axis.text.y = element_blank(),
-            ## axis.title.y = element_blank(), 
-            legend.position="none"
-            ## plot.background=element_blank(),
-            ## panel.background = element_blank()
-        ) +
-        labs(x=gLabel[1],y=gLabel[2],title=chPoly,color=gLabel[4],fill=gLabel[5])
-    polyP[[chPoly]]$color = gCol1[nCol]
-    nCol = nCol + 1
-}
-grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
-
-#svg("fig/audOverlapBar.svg")
-jpeg("fig/audOverlapBarTab.jpg",width=pngWidth,height=pngHeight)
-grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
-dev.off()
-
-
-melted <- cs[set,]
-melted = melted[rev(order(melted$AND)),]
-melted$name <- factor(melted$name,levels=melted$name)
-bar <- ggplot(melted) +
-    geom_bar(aes(x=name,y=AND,fill=group),width = 1,stat="identity") +
-    scale_size(range = c(0, 20)) +
-    scale_fill_manual(values=gCol1) +
+    geom_point(aes(x=Index,y=posL,color=group,size=Volume),stat="identity",alpha=0.5) +
+    geom_point(aes(x=Index,y=posL,color=group,size=Visitors),stat="identity",alpha=0.5) +
+    theme_bw() +
+    geom_text(aes(x=Index,y=posL,angle=angle,label=Category.Name),size=2) + 
+    scale_size(range = c(0, 30)) +
     theme(
-        text = element_text(size = 10)
+        panel.border = element_blank(),
+        text = element_text(size = gFontSize),
+        axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks=element_blank(),
+        axis.ticks = element_blank(), axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.line = element_blank(), 
+        axis.text.x = element_blank(), 
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(), 
+        axis.title.x = element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.ticks.margin = unit(c(0,0,0,0), "lines"), 
+        legend.position="none",
+        plot.background=element_blank(),
+        panel.background = element_blank()
     ) +
-    ## coord_polar("y",start=0) +
+    coord_polar("y",start=0) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
-bar
-ggsave(plot=bar,filename="fig/audOverlapAffinity.jpg", height=gHeight, width=gWidth)
+pie
+
+ggsave(plot=pie, filename="fig/audOverlap.svg", height=gHeight, width=gWidth)
 
 
-##-------------------------------radar-plot------------------------------
-
-melted <- cs[,]
-melted = melted[rev(order(melted$affinity)),]
-melted$name <- factor(melted$name,levels=melted$name)
-freqG = table(melted$group)
-melted = melted[melted$group %in% names(freqG[freqG>3]),]
-melted = melted[!melted$group == "socio-demo",]
-polyP = list()
-nCol = 1
-gLabel = c("","",paste(""),"")
-for(chPoly in unique(melted$group)){
-    melted1 = melted[melted$group==chPoly,]
-    polyP[[chPoly]] = ggplot(melted1,aes(x=name,y=affinity,group=group)) + 
-        geom_polygon(aes(group=group,color=group,fill=group),alpha=0.4,size=1,show.legend=TRUE) +
-        RadarTheme +
-        theme(axis.text.x=element_text(angle=0, hjust=1)) + 
-        coord_radar() +
-        scale_y_continuous(limits=c(0,1.)) +
-        ##scale_x_discrete(labels=melted$X, expand=c(0, 0)) +
-        ##facet_grid(variable ~ .,scales="free",space="free") + 
-        ## facet_wrap( ~ variable,ncol=3) +
-        guides(fill = guide_legend(keywidth = rel(1.3), keyheight = rel(1.3))) + 
-        labs(x=gLabel[1],y=gLabel[2],title=chPoly,color=gLabel[4],fill=gLabel[5])
-    polyP[[chPoly]]$color = gCol1[nCol]
-    nCol = nCol + 1
-}
-grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
-
-
-svg("fig/audOverlapRadar.svg")
-#jpeg("fig/audOverlapRadar.jpg",width=pngWidth,height=pngHeight)
-grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
-dev.off()
-
+ 

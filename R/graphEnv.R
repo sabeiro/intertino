@@ -92,7 +92,11 @@ theme_new <- theme_update(
 RadarTheme <- theme(
     panel.background=element_blank(),
     plot.title= element_text(size=13,face=c("bold","italic")),
+<<<<<<< HEAD
                                         #plot.margin = unit(c(.5, .5, .5, .5), "cm"),
+=======
+    #plot.margin = unit(c(.5, .5, .5, .5), "cm"),
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     text=element_text(family="Open Sans"),aspect.ratio=1,
     legend.position="none",
     legend.title=element_blank(),legend.direction="horizontal",
@@ -102,6 +106,43 @@ RadarTheme <- theme(
     axis.text.y = element_blank(),
     ## axis.line.x=element_line(size=0.5),
     panel.grid.major=element_line(size=0.3,linetype = 2,colour="grey"))
+<<<<<<< HEAD
+=======
+
+coord_radar <- function(theta="x",start=0,direction=1){
+    theta <- match.arg(theta, c("x", "y"))
+    r <- if(theta == "x") "y" else "x"
+    ggproto("CordRadar", CoordPolar,theta=theta,r=r,start=start,direction=sign(direction),is_linear = function(coord) TRUE)
+}
+
+PieTheme <- theme(
+    panel.border = element_blank(),
+    text = element_text(size = gFontSize),
+    axis.line=element_blank(),
+    axis.text.x=element_blank(),
+    axis.ticks=element_blank(),
+    legend.position="none",
+    plot.background=element_blank(),
+    panel.background = element_blank()
+)
+
+facetTheme <- theme(strip.text.x = element_text(size=12, angle=0),
+                    strip.text.y = element_text(size=12, face="bold"),
+                    strip.background = element_rect(colour="#FFFFFF", fill="#FFFFFF"))
+
+overlapTheme <- theme(
+        axis.text.x = element_text(angle = 30, hjust = 1),
+        text = element_text(size = gFontSize),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        legend.justification=c(0,0),
+        legend.position=c(.5,.73),
+        legend.background = element_rect(fill=alpha('white',0.3)),
+        legend.position ="right"
+    )
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 
 coord_radar <- function(theta="x",start=0,direction=1){
     theta <- match.arg(theta, c("x", "y"))
@@ -286,6 +327,7 @@ comprss <- function(tx) {
                         c(1, 1e3, 1e6, 1e9, 1e12) )
     paste(round( as.numeric(gsub("\\,","",tx))/10^(3*(div-1)), 2),
           c("","K","M","B","T")[div] )}
+<<<<<<< HEAD
 
 
 df2l <- function(tD){
@@ -342,6 +384,8 @@ toInt <- function(col,alpha){
     return(str)
 }
 
+=======
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 
 
 ## Sys.setenv("HADOOP_CMD"="/usr/hdp/2.3.2.0-2950/hadoop/bin/yarn")

@@ -37,6 +37,7 @@ colnames(idConv) = c("name","id","code","type","active")
 campD = rbind(campD,idConv[,colnames(campD)])
 
 ##fs <- read.csv("log/bkKeyOrder.csv",stringsAsFactor=F)
+<<<<<<< HEAD:R/load/audienceUsageLoad2017.R
 fs <- NULL
 fs <- rbind(fs,read.csv(gzfile("log/bkOrderJan.csv.gz"),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile("log/bkOrderFeb.csv.gz"),stringsAsFactor=F))
@@ -44,6 +45,13 @@ fs <- rbind(fs,read.csv(gzfile("log/bkOrderMar.csv.gz"),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile("log/bkOrderApr.csv.gz"),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile("log/bkOrderMay.csv.gz"),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile("log/bkOrderJun.csv.gz"),stringsAsFactor=F))
+=======
+fs <- read.csv("log/bkOrderJan.csv",stringsAsFactor=F)
+fs <- rbind(fs,read.csv("log/bkOrderFeb.csv",stringsAsFactor=F))
+fs <- rbind(fs,read.csv("log/bkOrderMar.csv",stringsAsFactor=F))
+fs <- rbind(fs,read.csv("log/bkOrderApr.csv",stringsAsFactor=F))
+fs <- rbind(fs,read.csv("log/bkOrderMay.csv",stringsAsFactor=F))
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/load/audienceUsageLoad2017.R
 fs <- fs[grepl("=bk_",fs$MatchedKeyword) | grepl("^w=",fs$MatchedKeyword),]
 fs$key <- fs$MatchedKeyword %>% gsub("^.*=bk_","",.) %>% gsub("^.*w=","",.) %>% gsub("\\^.*$","",.)
 fs$key2 <- NULL

@@ -1,5 +1,0 @@
-# Client ID and secret. They can be found in the APIs console.
-clientId=400165953993-i0t270n09k7e6hf2pqkm64312lk9er74.apps.googleusercontent.com
-clientSecret=NCut4eyDMhGFEVGxVgqOjPiJ
-# API scopes. Space separated.
-scopes=https://www.googleapis.com/auth/tasks

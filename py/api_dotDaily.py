@@ -18,7 +18,11 @@ import os
 print '-------------------------------api-dot---------------------------------'
 
 token = dot.getToken()
+<<<<<<< HEAD
 dataQ = ["2017-07-07","2017-07-08"]
+=======
+dataQ = ["2017-05-29","2017-05-31"]
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 dataQ = [(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
 headers = {"Column-Names":"Date|FlightDescription|FlightID|Imps"}

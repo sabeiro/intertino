@@ -1,7 +1,0 @@
-#!/usr/bin/env Rscript
-setwd('/home/sabeiro/lav/media/')
-
-source('script/graphEnv.R')
-
-fs <- read.csv('raw/impressionDelivered.csv',encoding="UTF-8")
-

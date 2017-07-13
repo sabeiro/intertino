@@ -144,5 +144,9 @@ breakN = unique(c(0,quantile(meltTarget$reach,seq(1,5)/5,na.rm=T)))
 meltTarget$accuracy <- as.numeric(cut(meltTarget$reach,breaks=breakN,labels=1:(length(breakN)-1)))
 
 write.csv(meltTarget,"out/audCompInTarget.csv")
+<<<<<<< HEAD
 ##write.csv(as.data.frame.matrix(xtabs("value ~ Var2 + Var1",data=meltTarget)),"out/audCompInTarget.csv",sep=",")
+=======
+write.csv(as.data.frame.matrix(xtabs("value ~ Var2 + Var1",data=meltTarget)),"out/audCompInTarget.csv",sep=",")
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 write.csv(fs,"out/audCompAll.csv")

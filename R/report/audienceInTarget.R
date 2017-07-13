@@ -30,7 +30,11 @@ gLabel = c("device","segment",paste("reach in target",""),"percentuale")
 p <- ggplot(melted,aes(x=Var1,y=Var2,group=Var2)) +
 ##    geom_raster(data=meltTarget[!is.na(meltTarget$value),],aes(fill = value), interpolate = TRUE,alpha=0.7) + 
     geom_tile(aes(fill=value,color=accuracy),size=0.5,width=0.9,height=0.9) +
+<<<<<<< HEAD:R/report/audienceInTarget.R
     geom_text(aes(fill=value,label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=5) +
+=======
+    geom_text(aes(fill=value,label=paste(formatC(value*100,digit=0,format="f"),"",sep="")),colour="white",size=6) +
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceInTarget.R
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4]) +
 ##    scale_fill_gradient(low="white",high="steelblue") +
     facet_grid(. ~ source) + ##,scales = "free", space = "free") +
@@ -159,7 +163,12 @@ for(sour in c(sourceL,"all")){
         set <- grepl(devL[1],uniT$Platform) & uniT$source == sour
     }
     audComp <- uniT[set,]
+<<<<<<< HEAD:R/report/audienceInTarget.R
      
+=======
+ 
+    
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceInTarget.R
     audComp$Gender[grepl("Female",audComp$Demo.Segment)] <- "Female"
     audComp$Gender[grepl("Male",audComp$Demo.Segment)] <- "Male"
     audComp$aud <- audComp$aud %>% gsub(" 1st$","",.) %>% gsub(" z$","",.) %>% gsub(" v$","",.) %>% gsub("^i-t","",.) %>% gsub(" z beha$","",.)

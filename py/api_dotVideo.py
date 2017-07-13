@@ -190,7 +190,11 @@ repTxt += 'ratio section: ' + str(sectImps.head(5)['imps'].sum()*100/sectImps['i
 layersW = pd.DataFrame(layers)
 layersW.columns = ['date','layer','type','imps']
 layersW['imps'] = layersW['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
+<<<<<<< HEAD
 layersW['imps'] = pd.to_numeric(layersW['imps'])
+=======
+#layersW['imps'] = layersW['imps'].convert_objects(convert_numeric=True)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 layersW =  layersW.groupby(['layer','type']).sum()
 layersW['ratio'] = layersW['imps']/layersW['imps'].sum()*100
 ##layersW['perc'] = layersW['imps']/layersW['imps'].sum()*100

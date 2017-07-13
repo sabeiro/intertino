@@ -165,23 +165,38 @@ def getHistory(sDay,nAhead,x0,hWeek):
     sDay['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(sDay['t'])
     histNorm = sDay['hist'].mean()
     sDay['hist'] = ( (sDay['hist']-sDay['hist'].min())/(sDay['hist'].max()-sDay['hist'].min()) + 1.)*x0['hist_adj']
+<<<<<<< HEAD
     fitD = np.array([sDay.t.tail(nFit),sDay.e_av.tail(nFit)])
     fitobj = kmpfit.Fitter(residuals=ser_residuals,data=fitD)
     fitobj.fit(params0=x0['poly'])
     x0['poly'] = fitobj.params
     sDay['stat'] = (sDay['y']-ser_poly(x0['poly'],sDay.t))
+=======
+    lmFor = 'e_av ~ 1 + t + I(t**2) + I(t**3) + I(t**4) + I(t**5)'
+    lm = smf.ols(formula=lmFor,data=sDay.tail(nFit)).fit()
+    sDay['stat'] = (sDay['y']-lm.predict(sDay))
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     t_test = np.linspace(sDay['t'][0],sDay['t'][sDay.shape[0]-1]+sDay.t[nAhead]-sDay.t[0],nLin)
     predS = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     predS['y'] = sDay.y
     predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
     predS['hist'] = ( (predS['hist']-predS['hist'].min())/(predS['hist'].max()-predS['hist'].min()) + 1.)*x0['hist_adj']
+<<<<<<< HEAD
     predS['trend'] = ser_poly(x0['poly'],predS['t'])
     predS['pred'] = 0
     return predS, x0
+=======
+
+    #predS['hist'] = predS['hist']/histNorm*sDay.shape[0]/predS.shape[0]
+    predS['trend'] = lm.predict(predS)
+    predS['pred'] = 0
+    return predS, lm
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 
 
 def serLsq(sDay,nAhead,x0,hWeek):
     nFit = sDay.shape[0] #if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
+<<<<<<< HEAD
     predS, x0 = getHistory(sDay,nAhead,x0,hWeek)
     predS = predS.tail(nFit+nAhead)
     freqP = x0['freq']
@@ -194,6 +209,23 @@ def serLsq(sDay,nAhead,x0,hWeek):
     x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
     #predS['pred'] = (predS['lsq'] + lm.predict(predS))*predS['hist']*x0['hist_adj']
     predS['pred'] = (predS['lsq'] + ser_poly(x0['poly'],predS['t']))*predS['hist']*x0['hist_adj']
+=======
+    predS, lm = getHistory(sDay,nAhead,x0,hWeek)
+    predS = predS.tail(nFit+nAhead)
+    freqP = x0['freq']
+    def fun(x,t):#print 2.*np.pi/(sDay.t[7]-sDay.t[0])
+        return x[0] + x[1] * np.sin(freqP[0]*t + x[2])*(1 + x[3]*np.sin(freqP[1]*t + x[4]))    ##confInt = stats.t.interval(0.95,len(y)-1,loc=np.mean(y),scale=stats.sem(y))
+    def fun_min(x,t,y):
+        return fun(x,t) - y
+    res_lsq = least_squares(fun_min,x0['lsq'],args=(sDay.t,sDay.stat))#loss='soft_l1',f_scale=0.1,
+    x0['lsq'] = [x for x in res_lsq[0]]
+    predS['lsq'] = fun(res_lsq[0],predS.t) # fun(res_robust.x,t_test)
+    sDay['resid'] = sDay['y'] - fun(res_lsq[0],sDay.t)/x0['hist_adj'] - lm.predict(sDay)
+    rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
+    x0['res'][1] = rSquare.sum()
+    x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
+    predS['pred'] = (predS['lsq'] + lm.predict(predS))*predS['hist']*x0['hist_adj']
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     predS = predS.drop(predS.index[0])
     return predS, x0
 
@@ -214,7 +246,11 @@ def bestArima(sDay,nAhead,x0,hWeek):
     return par
 
 def serArma(sDay,nAhead,x0,hWeek):
+<<<<<<< HEAD
     predS, x0 = getHistory(sDay,nAhead,x0,hWeek)
+=======
+    predS, lm = getHistory(sDay,nAhead,x0,hWeek)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     dta = sDay['y']
     dta.index = [pd.datetime.strptime(str(x)[0:10],'%Y-%m-%d') for x in dta.index]
     sDay.index = dta.index
@@ -233,7 +269,11 @@ def serArma(sDay,nAhead,x0,hWeek):
     predS['hist'] = sp.interpolate.interp1d(t_line1,hWeek.y,kind="cubic")(predS['t'])
     predS['hist'] = predS['hist']/predS['hist'].mean()
     predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
+<<<<<<< HEAD
     predS['trend'] = ser_poly(x0['poly'],predS.t)
+=======
+    predS['trend'] = lm.predict(predS)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     predS['y'] = sDay['y']
     predS['lsq'] = 0
     ##predS['pred'] = (predS['pred']*predS['hist']+predS['trend'])
@@ -287,7 +327,13 @@ def serHolt(sDay,nAhead,x0,hWeek):
     predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
     predS['hist'] = predS['hist']/predS['hist'].mean()
     predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
+<<<<<<< HEAD
     predS['trend'] = ser_poly(x0['poly'],predS.t)
+=======
+    lmFor = 'e_av ~ 1 + t + I(t**2) + I(t**3) + I(t**4) + I(t**5)'
+    lm = smf.ols(formula=lmFor,data=sDay).fit()
+    predS['trend'] = lm.predict(predS)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     predS['lsq'] = 0
     predS['y'] = sDay['y']
     sDay['resid'] = sDay['y'] - predS['pred'][0:sDay.shape[0]]
@@ -298,7 +344,11 @@ def serHolt(sDay,nAhead,x0,hWeek):
     
 from scipy.optimize import curve_fit
 def serAuto(sDay,nAhead,x0,hWeek):
+<<<<<<< HEAD
     predS, x0 = getHistory(sDay,nAhead,x0,hWeek)
+=======
+    predS, lm = getHistory(sDay,nAhead,x0,hWeek)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     todayD = datetime.datetime.today()
     todayD = todayD.replace(hour=0,minute=0,second=0,microsecond=0)
     dta = pd.DataFrame({'y':sDay.y})
@@ -309,11 +359,26 @@ def serAuto(sDay,nAhead,x0,hWeek):
     phase['csum'] = phase['y'].cumsum()/phase['y'].sum()
     phaseN = phase.index[0] - todayD.weekday()
     r,q,p = sm.tsa.acf(sDay['y'].tail(phaseN+int(x0['obs_time'])).squeeze(),qstat=True)
+<<<<<<< HEAD
     popt, pcov = curve_fit(ser_exp,np.array(range(0,6)),r[0:6]-min(r),p0=(x0['decay'][0]))
     X = np.array(range(0,r.size,7))
     popt1, pcov1 = curve_fit(ser_exp,X,r[X],p0=(x0['decay'][0]))
     autD = pd.DataFrame({'r':r,'exp':ser_exp(range(0,r.size),popt),'exp1':ser_exp(range(0,r.size),popt1)})    
     x0['decay'] = [x for x in popt]
+=======
+    def fit_fun(x,decay):
+        return np.exp(-decay*x)
+    popt, pcov = curve_fit(fit_fun,np.array(range(0,6)),r[0:6]-min(r),p0=(x0['decay'][0]))
+    X = np.array(range(0,r.size,7))
+    popt1, pcov1 = curve_fit(fit_fun,X,r[X],p0=(x0['decay'][0]))
+    autD = pd.DataFrame({'r':r,'exp':fit_fun(range(0,r.size),popt),'exp1':fit_fun(range(0,r.size),popt1)})    
+    x0['decay'] = [x for x in popt]
+    # predS = pd.DataFrame(index=[todayD + datetime.timedelta(days=x) for x in range(-sDay.shape[0],nAhead)])
+    # predS['t'] = [float(calendar.timegm(x.utctimetuple()))/1000000. for x in predS.index]
+    # predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
+    # predS['pred'] = 0
+    # predS['trend'] = lm.predict(predS)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     wN = 0
     sY = np.random.normal(phase['y'].head(1),dta.y.std())
     for i in predS.index:
@@ -322,6 +387,7 @@ def serAuto(sDay,nAhead,x0,hWeek):
         if(wN == 0):
             sY = np.random.normal(phase['y'].head(1),dta.y.std()/2)
         sY = sY*(1+predS['hist'][i]*x0['hist_adj'])
+<<<<<<< HEAD
         predS.loc[i,'pred'] = sY*ser_exp(float(wN),popt)
 
     predS['pred'] = serSmooth(predS['pred'],16,5)
@@ -329,6 +395,21 @@ def serAuto(sDay,nAhead,x0,hWeek):
     freqP = x0['freq']
     res_lsq = least_squares(ser_fun_min,x0['lsq'],args=(sDay['t'],sDay['resid'],x0['freq']))
     predS['lsq'] = ser_sin(res_lsq[0],predS['t'],x0['freq']) # fun(res_robust.x,t_test)
+=======
+        predS.loc[i,'pred'] = sY*fit_fun(float(wN),popt)
+
+    # predS['pred1'] = predS['pred']
+    predS['pred'] = serSmooth(predS['pred'],16,5)
+    sDay['resid'] = sDay['y'] - predS['pred'][0:sDay.shape[0]]
+    # sDay['resid1'] = sDay['resid']
+    freqP = x0['freq']
+    def fun(x,t):
+        return x[0] + x[1] * np.sin(freqP[0]*t + x[2])*(1 + x[3]*np.sin(freqP[1]*t + x[4]))    
+    def fun_min(x,t,y):
+        return fun(x,t) - y
+    res_lsq = least_squares(fun_min,x0['lsq'],args=(sDay['t'],sDay['resid']))
+    predS['lsq'] = fun(res_lsq[0],predS['t']) # fun(res_robust.x,t_test)
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
     x0['lsq'][0:res_lsq[0].size] = res_lsq[0]
     predS['pred2'] = predS['pred']
     predS['pred'] = predS['pred'] + predS['lsq']
@@ -432,6 +513,7 @@ def corS(x,y):
         x2 += (x[i]-xM)**2
         y2 += (y[i]-yM)**2
     return (xy)/np.sqrt(x2*y2)
+<<<<<<< HEAD
 
 def corM(M):
     colL = [x for x in M.columns]
@@ -452,6 +534,28 @@ def autCorM(M):
         acM[i] = r
     return acM
 
+=======
+
+def corM(M):
+    colL = [x for x in M.columns]
+    N = len(colL)
+    cM = np.zeros((N,N))
+    for i in range(N):
+        cM[i,i] = 1.;
+        for j in range(i+1,N):
+            cM[i,j] = corS(webH[colL[i]],webH[colL[j]])
+            cM[j,i] = corS(webH[colL[i]],webH[colL[j]])
+    return cM
+
+def autCorM(M):
+    colL = [x for x in M.columns]
+    acM = pd.DataFrame()
+    for i in colL:
+        r,q,p = sm.tsa.acf(M[i],qstat=True)
+        acM[i] = r
+    return acM
+
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 def pautCorM(M):
     colL = [x for x in M.columns]
     acM = pd.DataFrame()
@@ -471,11 +575,21 @@ def xcorM(M,L):
 def decayM(M):
     colL = [x for x in M.columns]
     acM = pd.DataFrame()
+<<<<<<< HEAD
     for i in colL:
         r = M[i]
         X = np.array(range(0,r.size,7))
         popt, pcov = curve_fit(ser_exp,np.array(range(0,6)),r[0:6]-min(r),p0=(1))
         popt1, pcov1 = curve_fit(ser_exp,np.array(range(0,r.size,7)),r[X],p0=(1))
+=======
+    def fit_fun(x,decay):
+        return np.exp(-decay*x)
+    for i in colL:
+        r = M[i]
+        X = np.array(range(0,r.size,7))
+        popt, pcov = curve_fit(fit_fun,np.array(range(0,6)),r[0:6]-min(r),p0=(1))
+        popt1, pcov1 = curve_fit(fit_fun,np.array(range(0,r.size,7)),r[X],p0=(1))
+>>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
         acM[i] = np.array([popt[0],pcov[0][0],popt1[0],pcov1[0][0]])
     return acM
 
