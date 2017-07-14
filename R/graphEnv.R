@@ -92,22 +92,16 @@ theme_new <- theme_update(
 RadarTheme <- theme(
     panel.background=element_blank(),
     plot.title= element_text(size=13,face=c("bold","italic")),
-<<<<<<< HEAD
-                                        #plot.margin = unit(c(.5, .5, .5, .5), "cm"),
-=======
-    #plot.margin = unit(c(.5, .5, .5, .5), "cm"),
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
+    plot.margin = unit(c(20,-20,20,-20), "pt"),
+    ## plot.margin = margin=margin(t=-10,unit="pt")),
     text=element_text(family="Open Sans"),aspect.ratio=1,
     legend.position="none",
     legend.title=element_blank(),legend.direction="horizontal",
-    ## strip.text.x = element_text(size=rel(0.8)),
-    axis.text.x = element_text(size=8,face ="bold",angle=0,hjust=1),
+    axis.text.x = element_text(size=7,face="bold",angle=0,vjust=1,hjust=1,margin=margin(t=-40,r=-40,unit="pt")),#
     axis.ticks.y = element_blank(),
     axis.text.y = element_blank(),
     ## axis.line.x=element_line(size=0.5),
     panel.grid.major=element_line(size=0.3,linetype = 2,colour="grey"))
-<<<<<<< HEAD
-=======
 
 coord_radar <- function(theta="x",start=0,direction=1){
     theta <- match.arg(theta, c("x", "y"))
@@ -142,7 +136,6 @@ overlapTheme <- theme(
         legend.background = element_rect(fill=alpha('white',0.3)),
         legend.position ="right"
     )
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 
 coord_radar <- function(theta="x",start=0,direction=1){
     theta <- match.arg(theta, c("x", "y"))
@@ -327,7 +320,6 @@ comprss <- function(tx) {
                         c(1, 1e3, 1e6, 1e9, 1e12) )
     paste(round( as.numeric(gsub("\\,","",tx))/10^(3*(div-1)), 2),
           c("","K","M","B","T")[div] )}
-<<<<<<< HEAD
 
 
 df2l <- function(tD){
@@ -384,8 +376,6 @@ toInt <- function(col,alpha){
     return(str)
 }
 
-=======
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 
 
 ## Sys.setenv("HADOOP_CMD"="/usr/hdp/2.3.2.0-2950/hadoop/bin/yarn")

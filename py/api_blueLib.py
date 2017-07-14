@@ -8,8 +8,10 @@ import base64
 import json
 import random
 import unicodedata
+import os
+#import logging
 
-key_file = '../../credenza/bluekai.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/bluekai.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
@@ -61,7 +63,7 @@ def doRequest(url, method, data):
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cJ))
         u = opener.open(request)
         rawData = u.read()
-        print "\nResponse Code: 200"
+        print "-- 200 --"
         ##print "\nAPI Response:\n" + rawData + "\n"
         return rawData
     except urllib2.HTTPError, e:

@@ -10,18 +10,11 @@ library("tm")
 ##"","date","camp","aud","source","format","imps","OrderExtId","Size"
 
 
-<<<<<<< HEAD:R/report/audienceUsage.R
 ## source('src/R/load/audienceUsageLoad2016.R')
 ## source('src/R/load/audienceUsageLoad2017.R')
 fs <- NULL
 fs <- rbind(fs,read.csv(gzfile('log/bkOrder2016.csv.gz'),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile('log/bkOrder2017.csv.gz'),stringsAsFactor=F))
-=======
-## source('src/R/audienceUsageLoad2016.R')
-## source('src/R/audienceUsageLoad2017.R')
-fs <- read.csv('log/bkOrder2016.csv',stringsAsFactor=F)
-fs <- rbind(fs,read.csv('log/bkOrder2017.csv',stringsAsFactor=F))
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 advL <- unique(fs$camp)
 fs1 <- read.csv("raw/bkBrroll.csv",stringsAsFactor=F)
 fs1$Day <- as.Date(fs1$Day,format="%m/%d/%y")
@@ -194,10 +187,6 @@ dev.off()
 ##table(fs$date)
 ##-----------------------------time-ev--------------------------------
 keyD <- ddply(fs,.(date,aud,source),summarise,imps=sum(imps,na.rm=T))
-<<<<<<< HEAD:R/report/audienceUsage.R
-=======
-write.csv(keyD,"raw/audSourceEv.csv")
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 
 melted <- keyD
 melted$week = format(melted$date,"%y-%m")
@@ -290,13 +279,7 @@ if(FALSE){
     fs4 = fs[grepl("VODAFONE",fs$camp) | grepl("Vodafone",fs$camp),]
     fs4 = fs4[grep("vodafone",fs4$source),]
     clipB = ddply(fs4,.(week,camp),summarise,imps=sum(imps))##storno
-<<<<<<< HEAD:R/report/audienceUsage.R
-
     clipB <- ddply(fs,.(source,aud),summarise,imps=sum(imps))
-
-=======
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
-    
     con <- pipe("xclip -selection clipboard -i", open="w")
     write.csv(clipB,con,row.names=F)
     close(con)
@@ -433,17 +416,10 @@ grid.arrange(pie[[1]],pie[[2]],ncol=2)
 dev.off()
 
 
-<<<<<<< HEAD:R/report/audienceUsage.R
 melted <- ddply(keyF,.(client),summarise,imps=sum(imps,na.rm=T),price=sum(price,na.rm=T))
 melted$aud <- paste(substring(tryTolower(melted$client),1,12),"_",sep="")
 melted = melted[order(melted$imps),]
 melted[melted$imps < quantile(melted$imps,.25),"aud"] = "rest"
-=======
-melted <- ddply(keyF,.(client),summarise,imps=sum(imps),price=sum(price))
-melted$aud <- paste(substring(tryTolower(melted$client),1,12),"_",sep="")
-melted = melted[order(melted$imps),]
-melted[melted$imps < quantile(melted$imps,.5),"aud"] = "rest"
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 melted <- ddply(melted,.(aud),summarise,imps=sum(imps),price=sum(price))
 melted$price[is.na(melted$price)] = 0
 melted$percentage <- melted$price/sum(melted$price,na.rm=T)
@@ -461,8 +437,6 @@ if(!sum(melted$val)/nrow(melted)>1000000){
 }
 melted$label = factor(melted$label,levels=melted$label[rev(order(melted$imps))])
 melted = melted[rev(order(melted$imps)),]
-<<<<<<< HEAD:R/report/audienceUsage.R
-=======
 
 
 pClient <- ggplot(melted, aes(x=label,y=imps,fill=var,label=percent(percentage))) +
@@ -525,11 +499,7 @@ write.csv(esCl,"raw/pricePerClient.csv")
 gs <- read.csv("raw/priceDataPlanningTemplate.csv",stringsAsFactor=F)
 gs$FlightTotalSales <- 0
 head(gs)
-<<<<<<< HEAD:R/report/audienceUsage.R
 gs$pack <- "no-target"
-=======
-gs$pack <- "tot"
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 gs[grepl("DATA PLANNING",gs$FlightDescription),"pack"] <- "target"
 gs$Size[grepl("APP",gs$Size)] <- "APP"
 gs$Size[gs$Size %in% c("OVERLAYER","LEADERBOARD","Mobile","PROMOBOX","Mobile Splash Page","SKYSCRAPER")] = "Rest"
@@ -547,11 +517,7 @@ gs$ctr[is.nan(gs$ctr)] = 0
 gs$ctr[is.na(gs$ctr)] = 0
 gs$ctr[gs$ctr==Inf] = 0
 
-<<<<<<< HEAD:R/report/audienceUsage.R
 gsD <- ddply(gs[gs$Size %in% c("RECTANGLE","Preroll","Masthead","Skin"),],.(FlightDescription,Size,pack),summarise,imps=sum(Imps,na.rm=T),click=sum(Click,na.rm=T),price=sum(FlightTotalSales,na.rm=T))
-=======
-gsD <- ddply(gs[gs$Size %in% c("RECTANGLE","Preroll","Masthead","Skin"),],.(Data,Size,pack),summarise,imps=sum(Imps,na.rm=T),click=sum(Click,na.rm=T),price=sum(FlightTotalSales,na.rm=T))
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 gsD$cpm <- gsD$price/gsD$imps*1000
 gsD$ctr <- gsD$click/gsD$imps*100
 write.csv(gsD,"raw/priceDataPlanningDec.csv")
@@ -595,11 +561,7 @@ p3 <- ggplot(esD,aes(x=pack,y=cpm,color=Formato)) +
 
 
 jpeg("intertino/fig/audPerformance.jpg",width=pngWidth,height=pngHeight)
-<<<<<<< HEAD:R/report/audienceUsage.R
 grid.arrange(p1,p3,ncol=2)
-=======
-grid.arrange(p1,p3,ncol=3)
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 dev.off()
 
 gs$Imps = as.numeric(gs$Imps)
@@ -619,11 +581,7 @@ gs1 = gs1[gs1$ctr < lim[2],]##code alte
 es1 <- es[!is.na(match(es$Cliente,advL)),]##perimetro con/senza target
 #es1 <- es1[!grepl("PROCTER",es1$Cliente),]
 es1 = es1[es1$Formato %in% c("Masthead","Pre-Roll Video","Rectangle","Skin"),]
-<<<<<<< HEAD:R/report/audienceUsage.R
 esC = ddply(es1,.(Cliente,Formato,pack),summarise,imps=sum(imps,na.rm=T),price=sum(Valore.Netto,na.rm=T))
-=======
-esC = ddply(es1,.(Cliente,Formato,pack),summarise,imps=sum(imps),price=sum(Valore.Netto))
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 esC$cpm = esC$price/esC$imps*1000
 #esC[esC$cpm>1000,]
 lim = quantile(esC$cpm,c(0.02,0.95))
@@ -633,7 +591,6 @@ esC = esC[esC$cpm < lim[2],]
 ## weighted.mean(esC$cpm,esC$imps)
 ## weighted.mean(gs1$cpm,gs1$Imps)
 gs1 = gs[gs$Size %in% c("Rectangle","Preroll","Skin","Masthead"),]
-<<<<<<< HEAD:R/report/audienceUsage.R
 gsM <- ddply(gs1,.(Size,pack),summarise,cpm=weighted.mean(cpm,Imps,na.rm=T),ctr=weighted.mean(ctr,Imps,na.rm=T))
 gsM$cpm_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$cpm, gs.sub$Imps))$V1
 gsM$ctr_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$ctr, gs.sub$Imps))$V1
@@ -673,21 +630,6 @@ ls1$count = 1
 lsD1$cpm_sd = ddply(ls1,.(size),function(x) weighted.sd(x$cpm,x$count))$V1
 lsD1$source = "sistema"
 lsD <- rbind(lsD,lsD1)
-=======
-gsM <- ddply(gs1,.(Size,pack),summarise,cpm=weighted.mean(cpm,Imps),ctr=weighted.mean(ctr,Imps))
-gsM$cpm_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$cpm, gs.sub$Imps))$V1
-gsM$ctr_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$ctr, gs.sub$Imps))$V1
-gsM$cpm_sd = gsM$cpm_sd/rep(gsM$cpm[seq(1,nrow(gsM),2)+1],each=2)
-gsM$ctr_sd = gsM$ctr_sd/rep(gsM$ctr[seq(1,nrow(gsM),2)+1],each=2)
-gsM$cpm = gsM$cpm/rep(gsM$cpm[seq(1,nrow(gsM),2)+1],each=2)
-gsM$ctr = gsM$ctr/rep(gsM$ctr[seq(1,nrow(gsM),2)+1],each=2)
-
-esM <- ddply(esC,.(Formato,pack),summarise,cpm=weighted.mean(cpm,imps))
-esM$cpm_sd = ddply(esC, .(Formato,pack),function(esC.sub) weighted.sd(esC.sub$cpm,esC.sub$imps))$V1
-esM$cpm_sd = esM$cpm_sd/rep(esM$cpm[seq(1,nrow(esM),2)+1],each=2)
-esM$cpm = esM$cpm/rep(esM$cpm[seq(1,nrow(esM),2)+1],each=2)
-
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 
 gLabel = c("pack","ratio",paste("ctr@ad-server"),"ctr")
 p1 <- ggplot(gsM,aes(color=Size,x=pack,y=ctr)) +
@@ -734,7 +676,6 @@ p6 <- ggplot(brD,aes(x=source,color=size,y=ctr)) +
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
 
 jpeg("intertino/fig/audPerformanceBar.jpg",width=pngWidth,height=pngHeight)
-<<<<<<< HEAD:R/report/audienceUsage.R
 grid.arrange(p3,p4,p5,ncol=3)
 dev.off()
 jpeg("intertino/fig/audPerformanceBar1.jpg",width=pngWidth,height=pngHeight)
@@ -745,21 +686,6 @@ dev.off()
 ## esD$bin[esD$pack == "target"] <- TRUE
 ## t.test(esD$cpm ~ esD$bin)
 ## boxplot(esD$cpm ~ esD$bin)
-=======
-grid.arrange(p1,p3,ncol=2)
-dev.off()
-
-con <- pipe("xclip -selection clipboard -i", open="w")
-write.table(gsM,con,row.names=F,col.names=F,sep=",")
-close(con)
-
-
-
-esD$bin <- FALSE
-esD$bin[esD$pack == "target"] <- TRUE
-t.test(esD$cpm ~ esD$bin)
-boxplot(esD$cpm ~ esD$bin)
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
 
 
 

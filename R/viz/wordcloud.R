@@ -151,10 +151,6 @@ write(toJSON(list(links=distL)),"intertino/data/networkSkillLink.json")
 ##-------------------------------radar-plot------------------------------
 
 fs <- read.csv("train/skills.csv",stringsAsFactor=F)
-<<<<<<< HEAD
-head(fs)
-=======
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6
 colnames(fs) <- c("X","variable","value","label")
 melted <- fs
 melted = melted[order(melted$X,melted$variable),]
