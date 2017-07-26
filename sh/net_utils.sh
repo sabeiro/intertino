@@ -13,6 +13,7 @@ case $1 in
 	proc) #process on port
 		lsof -i :$port
 		nstat -tln | grep $port
+		netstat -ntpl | grep $port
 		sudo netstat -tulpn | grep -i listen 
 	;;
 	ip) #network spec

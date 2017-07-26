@@ -13,6 +13,8 @@ rng = np.random.RandomState(seed)
 
 dSet = pd.read_csv(os.environ['LAV_DIR']+"/log/sociodemo.csv.gz", compression='gzip',header=0, sep=',', quotechar='"')
 print '-----------splitting and removing tails------------------'
+
+##----------------------------feature selection---------------------------
 ##dSet_y = dSet['gender'].map(str)# + ' ' + dSet['age_range'].map(str)
 dSet_y = dSet.ix[:,range(1,3)]
 dSet_x = dSet.ix[:,range(3,dSet.shape[1])]
@@ -21,8 +23,6 @@ Nmin, Nmax = 25,75
 dSum_r = dSet_x.sum(axis=1).fillna(0)
 lim_r = np.percentile(dSum_r,[Nmin,Nmax])
 rowSel = dSum_r[(dSum_r > lim_r[0]) & (dSum_r < lim_r[1])]
-# dSet_x = pd.DataFrame(dSet_x,index=rowSel.index)
-# dSet_y = pd.DataFrame(dSet_y,index=rowSel.index)
 dSet_x = dSet_x.iloc[rowSel.index]
 dSet_y = dSet_y.iloc[rowSel.index]
 dSum_c = dSet_x.sum(axis=0).fillna(0)

@@ -33,7 +33,7 @@ def waitRep(token,query,headers):
     counter = 1
     stat = 404
     while stat not in [200,401,500]:
-        rep = requests.post(url,data=json.dumps(query,separators=(',', ':')),headers=headers)
+        rep = requests.post(url,data=json.dumps(query,separators=(',',':')),headers=headers)
         stat = int(rep.status_code)
         time.sleep(6)
         counter += 1
@@ -44,7 +44,7 @@ def waitRep(token,query,headers):
     
 def formRep(zipped):
     content = gzip.GzipFile(fileobj=StringIO.StringIO(zipped)).read()
-    cr = csv.reader(content.splitlines(), delimiter=',')
+    cr = csv.reader(content.splitlines(),delimiter=',')
     cr_list = list(cr)
     campL = []
     for row in cr_list:

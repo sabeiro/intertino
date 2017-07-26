@@ -42,8 +42,6 @@ if(FALSE){
     cs$Volume = cs$Second.Segment.Population
     cs = cs[cs$Index > 5,]
 }
-if(TRUE){
-}
 
 ##-------------------------------blob-plot------------------------------
 loadAff <- function(fName){
@@ -148,7 +146,7 @@ bar <- ggplot(melted) +
     ## coord_polar("y",start=0) +
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
 bar
-ggsave(plot=bar,filename="fig/audOverlapAffinity.jpg", height=gHeight, width=gWidth)
+ggsave(plot=bar,filename="fig/audOverlapAffinity.jpg",height=gHeight,width=gWidth)
 
 
 ##-------------------------------radar-plot------------------------------
@@ -184,8 +182,8 @@ for(i in 0:10){
     }
     ## grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
     ##svg("intertino/fig/skillRadar.svg")
-    ##jpeg(paste("fig/overlap/audOverlapRadar",i,".jpg",sep=""),width=pngWidth,height=pngHeight)
-    grid.text(refIds[i], vp = viewport(layout.pos.row = 1, layout.pos.col = 1:3))
+    jpeg(paste("fig/overlap/audOverlapRadar",i,".jpg",sep=""),width=pngWidth,height=pngHeight)
+    ##grid.text(refIds[i], vp = viewport(layout.pos.row = 1, layout.pos.col = 1:3))
     grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3,top=textGrob(refIds[i+1],gp=gpar(fontsize=20,font=3)))
     dev.off()
 }

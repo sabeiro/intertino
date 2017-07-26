@@ -126,7 +126,7 @@ adLayer['imps'] = adLayer.imps.apply(lambda x: float(x))
 # buff.close()
 # clipboard.copy(output)
 
-
+#channel
 query = {"token":token,
     "request":{
         "reportId":"MD",
@@ -151,7 +151,7 @@ for d in range(0,len(tappi)):
     default = int(adType[d*3+1][2]) - int(adPass[d][1])
     paid = int(adType[d*3+2][2])
     tapp = int(tappi[d][1])
-    dLine = (tappi[d][0],weekD[d],paid,default,autoP,tapp,default+autoP+tapp,paid+default+autoP,tappi[len(tappi)-1][0])
+    dLine = (tappi[d][0],weekD[d],paid,default,autoP,tapp,default+autoP+tapp,paid+default+autoP+tapp,tappi[len(tappi)-1][0])
     videoL.append(dLine)
 
 videoD = pd.DataFrame(videoL)
@@ -179,7 +179,7 @@ repTxt = dot.wrMatrix(videoD)
 repTxt += dot.wrBuffer(videoDW)
 repTxt += 'perc invenduto' + str(videoDW['Invenduto']/videoDW['Totale inventory']) + "\n"
 repTxt += 'live: ' + str(adLive.groupby([1]).sum()) + "\n"
-repTxt += 'altri editori: ' + str(videoD['Totale inventory'].sum() - adLive[2].sum())
+repTxt += 'altri editori: ' + str(videoD['Totale inventory'].sum() - adLive[2].sum() - pushNr - inreadNr) + "\n"
 repTxt += 'push: ' + str(pushNr) + ' inpage: ' + str(inreadNr) + ' inread: ' + str(inpageNr)
 repTxt += dot.wrBuffer(adWeek.sort_values('imps',ascending=False))
 #repTxt += adLive[1]

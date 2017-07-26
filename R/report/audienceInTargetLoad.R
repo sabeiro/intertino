@@ -32,6 +32,7 @@ if(FALSE){
 if(TRUE){
     fs <- read.csv('raw/audCompAll.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
     fs1 <- read.csv('raw/audCompAll3.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
+    fs1 <- fs1[fs1$Campaign.Name=="post z",]
     fs <- rbind(fs,fs1)
     fs = fs[fs$Platform.Device %in% c("Computer","Mobile","Digital (C/M)"),]
     fs$Unique.Audience = fs$Unique.Audience %>% gsub(",","",.) %>% as.numeric(.)

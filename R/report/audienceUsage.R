@@ -77,13 +77,13 @@ es$month <- format(es$date,"%y-%m")
 set <- grepl("DATA PLANNING",es$Pacchetto)
 formL <- c("FloorAd","Half Page","INTERSTITIAL","Intro","Ipad Display","iPhone","Leaderboard","Masthead","Mobile Display","Minisito","Overlayer","Pre-Roll Video","PromoBox","Rectangle","Rectangle Exp-Video","Skin","Splash Page","SPLASH PAGE","Strip")
 formL <- c("Masthead","Pre-Roll Video","Rectangle","Skin")
-
 es <- es[es$Formato %in% formL,]
+
 if(FALSE){
     set <- grepl("DATA PLANNING",es$Pacchetto)
-    ddply(es[set,],.(month),summarise,imps=sum(Quantità.Ordine),price=sum(Valore.Netto))
+    ddply(es[set,],.(month),summarise,imps=sum(Quantita.Ordine),price=sum(Valore.Netto))
     efs <- merge(fs,es[set,],by.x="OrderExtId",by.y="Numero.Contratto",all=T)
-    efsD <- ddply(efs,.(OrderExtId,camp),summarize,imps1=sum(imps.x,na.rm=T),imps2=sum(Quantità.Ordine,na.rm=T))
+    efsD <- ddply(efs,.(OrderExtId,camp),summarize,imps1=sum(imps.x,na.rm=T),imps2=sum(Quantita.Ordine,na.rm=T))
     setFs = is.na(match(unique(fs$OrderExtId),unique(es[set,"Numero.Contratto"])))
     unique(fs$OrderExtId)[setFs]
     sum(setFs)
@@ -92,12 +92,12 @@ if(FALSE){
 ##as.Date(es$Data.Caricamento.Contratto,format="%d/%m/%Y")
 ##es <- es[es$date > as.Date("2016-01-01"),]
 es <- es[order(es$date),]
-es$Quantità.Ordine <- es$Quantità.Ordine
-esOrder <- ddply(es,.(Numero.Contratto),summarise,price=sum(Valore.Netto),quant=sum(Quantità.Ordine),client=head(Cliente,1))
-esClient <- ddply(es,.(Cliente),summarise,price=sum(Valore.Netto),quant=sum(Quantità.Ordine))
+es$Quantita.Ordine <- es$Quantita.Ordine
+esOrder <- ddply(es,.(Numero.Contratto),summarise,price=sum(Valore.Netto),quant=sum(Quantita.Ordine),client=head(Cliente,1))
+esClient <- ddply(es,.(Cliente),summarise,price=sum(Valore.Netto),quant=sum(Quantita.Ordine))
 es$week <- format(es$date,format="%y-%m")
-esWeek <- ddply(es,.(week),summarise,price=sum(Valore.Netto),quant=sum(Quantità.Ordine))
-esWeekData <- ddply(es[grepl("DATA PLANNING",es$Pacchetto),],.(week),summarise,price=sum(Valore.Netto),quant=sum(Quantità.Ordine))
+esWeek <- ddply(es,.(week),summarise,price=sum(Valore.Netto),quant=sum(Quantita.Ordine))
+esWeekData <- ddply(es[grepl("DATA PLANNING",es$Pacchetto),],.(week),summarise,price=sum(Valore.Netto),quant=sum(Quantita.Ordine))
 esWeek <- merge(esWeek,esWeekData,by="week",all=T)
 esWeek[is.na(esWeek)] <- 0
 colnames(esWeek) <- c("week","price_tot","quant_tot","price_target","quant_target")
@@ -274,7 +274,7 @@ if(FALSE){
     clipB = clipB[sort(clipB$week),]
     clipB <- keyF##audience-camp
     clipB <- esWeek##target rev
-    clipB <- ddply(es,.(Cliente,Formato),summarise,imps=sum(Quantità.Gratis+Quantità.Ordine),price=sum(Valore.Netto))
+    clipB <- ddply(es,.(Cliente,Formato),summarise,imps=sum(Quantita.Gratis+Quantita.Ordine),price=sum(Valore.Netto))
     clipB <- ddply(fs2,.(source),summarise,imps=sum(imps))##dfp
     fs4 = fs[grepl("VODAFONE",fs$camp) | grepl("Vodafone",fs$camp),]
     fs4 = fs4[grep("vodafone",fs4$source),]
@@ -415,7 +415,6 @@ svg("intertino/fig/audienceUsageSource.svg",width=pngWidth,height=pngHeight)
 grid.arrange(pie[[1]],pie[[2]],ncol=2)
 dev.off()
 
-
 melted <- ddply(keyF,.(client),summarise,imps=sum(imps,na.rm=T),price=sum(price,na.rm=T))
 melted$aud <- paste(substring(tryTolower(melted$client),1,12),"_",sep="")
 melted = melted[order(melted$imps),]
@@ -437,28 +436,6 @@ if(!sum(melted$val)/nrow(melted)>1000000){
 }
 melted$label = factor(melted$label,levels=melted$label[rev(order(melted$imps))])
 melted = melted[rev(order(melted$imps)),]
-
-
-pClient <- ggplot(melted, aes(x=label,y=imps,fill=var,label=percent(percentage))) +
-    geom_bar(width=1,stat="identity") +
-    geom_text(aes(x=label,y=imps/2,label=percent(percentage)),size=2) +
-    geom_text(aes(x=label,y=imps/2+.02*max(imps),label=valL),size=2) +
-    theme(
-        panel.border = element_blank(),
-        text = element_text(size = gFontSize),
-        legend.position="none"
-    ) +
-    scale_fill_manual(values=c(gCol1,gCol1)) +
-    scale_y_continuous(breaks=seq(0,20000000,2000000),labels=paste(seq(0,20,2),"M")) +
-#    coord_polar("y",start=0) + 
-    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
-pClient
-
-
-fName <- paste("intertino/fig/audienceUsageSource4.jpg",sep="")
-ggsave(file=fName, plot=pClient, width=gWidth, height=gHeight)
->>>>>>> f9f50ee839761edf34147f3b7185aae925f6ddd6:R/report/audienceUsage.R
-
 
 gLabel = c("advertiser","impression",paste("advertiser's spent"),"")
 pClient <- ggplot(melted, aes(x=label,y=imps,fill=var,label=percent(percentage))) +
@@ -490,11 +467,6 @@ ggsave(file=fName, plot=pClient, width=gWidth, height=gHeight)
 ## grid.draw(g)
 
 ##---------------------------------------cpm-ctr----------------------------
-
-
-esCl <- ddply(es,.(Cliente,Formato),summarise,imps=sum(Quantità.Gratis+Quantità.Ordine),price=sum(Valore.Netto))
-esCl$cpm <- esCl$price/esCl$imps*1000
-write.csv(esCl,"raw/pricePerClient.csv")
 ##Size,FlightDescription,Data,FlightTotalSales,Imps,Click,Ctr %,Action,Registration,Smart Passback
 gs <- read.csv("raw/priceDataPlanningTemplate.csv",stringsAsFactor=F)
 gs$FlightTotalSales <- 0
@@ -522,48 +494,6 @@ gsD$cpm <- gsD$price/gsD$imps*1000
 gsD$ctr <- gsD$click/gsD$imps*100
 write.csv(gsD,"raw/priceDataPlanningDec.csv")
 
-es$pack <- "tot"
-es[grepl("DATA PLANNING",es$Pacchetto),"pack"] <- "target"
-es$imps = es$Quantità.Ordine+es$Quantità.Gratis
-es$cpm = es$Valore.Netto/es$imps*1000
-es$cpm[is.nan(es$cpm)] = 0
-es$cpm[is.na(es$cpm)] = 0
-es$cpm[es$cpm==Inf] = 0
-es1 <- es[!is.na(match(es$Cliente,advL)),]
-esD <- ddply(es1[es1$Formato %in% c("Masthead","Pre-Roll Video","Rectangle","Skin"),],.(date,Formato,pack),summarise,imps=sum(Quantità.Ordine,na.rm=T),price=sum(Valore.Netto,na.rm=T))
-esD$cpm <- esD$price/esD$imps*1000
-esD$cpm[is.nan(esD$cpm)] <- 0
-esD$cpm[esD$cpm==Inf] <- 0
-
-gLabel = c("pack","ctr",paste("ctr@ad-server"),"ctr")
-p1 <- ggplot(gsD,aes(x=pack,y=ctr,color=Size)) +
-    geom_boxplot(show.legend=F) + 
-    geom_jitter(height = 0,alpha=0.3,show.legend=F) +
-    theme(strip.background = element_rect(fill=gCol1[8])) + 
-    scale_y_log10() + 
-    facet_grid(Size ~ . ,scales="free") +
-    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
-gLabel = c("pack","cpm",paste("cpm@ad-server"),"cpm")
-p2 <- ggplot(gsD,aes(x=pack,y=cpm,color=Size)) +
-    geom_boxplot(show.legend=F) + 
-    geom_jitter(height = 0,alpha=0.3,show.legend=F) +
-    theme(strip.background = element_rect(fill=gCol1[8])) + 
-    facet_grid(Size ~ . ,scales="free") +
-    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
-gLabel = c("pack","cpm",paste("cpm@gestionale"),"cpm")
-p3 <- ggplot(esD,aes(x=pack,y=cpm,color=Formato)) +
-    geom_boxplot(show.legend=F) + 
-    geom_jitter(height = 0,alpha=0.3,show.legend=F) +
-    theme(strip.background = element_rect(fill=gCol1[8])) + 
-    facet_grid(Formato ~ . ,scales="free") +
-    scale_y_continuous(limits=quantile(esD$cpm,c(0.2,0.8),na.rm=T)) + 
-    labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
-
-
-jpeg("intertino/fig/audPerformance.jpg",width=pngWidth,height=pngHeight)
-grid.arrange(p1,p3,ncol=2)
-dev.off()
-
 gs$Imps = as.numeric(gs$Imps)
 gs$cpm = as.numeric(gs$cpm)
 gs$ctr = as.numeric(gs$ctr)
@@ -578,14 +508,6 @@ lim = quantile(gs1$cpm,c(0.02,0.98))
 gs1 = gs1[gs1$cpm < lim[2],]##code alte
 lim = quantile(gs1$ctr,c(0.02,0.98))
 gs1 = gs1[gs1$ctr < lim[2],]##code alte
-es1 <- es[!is.na(match(es$Cliente,advL)),]##perimetro con/senza target
-#es1 <- es1[!grepl("PROCTER",es1$Cliente),]
-es1 = es1[es1$Formato %in% c("Masthead","Pre-Roll Video","Rectangle","Skin"),]
-esC = ddply(es1,.(Cliente,Formato,pack),summarise,imps=sum(imps,na.rm=T),price=sum(Valore.Netto,na.rm=T))
-esC$cpm = esC$price/esC$imps*1000
-#esC[esC$cpm>1000,]
-lim = quantile(esC$cpm,c(0.02,0.95))
-esC = esC[esC$cpm < lim[2],]
 ## ggplot(esC,aes(x=cpm)) + geom_density() + xlim(c(0,50))
 ## ggplot(gs,aes(x=cpm)) + geom_density() + xlim(c(0,50))
 ## weighted.mean(esC$cpm,esC$imps)
@@ -599,12 +521,43 @@ gsM$ctr_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$ctr, gs
 ## gsM$cpm = gsM$cpm/rep(gsM$cpm[seq(1,nrow(gsM),2)+1],each=2)
 ## gsM$ctr = gsM$ctr/rep(gsM$ctr[seq(1,nrow(gsM),2)+1],each=2)
 
+es <- NULL
+es <- rbind(es,read.csv("raw/storicoERP2016.csv",stringsAsFactor=F))
+es <- rbind(es,read.csv("raw/storicoERP2017.csv",stringsAsFactor=F))
+set <-  grepl("GOOGLE",es$Cliente) | grepl("PUBMATIC",es$Cliente) #| grepl("SPONSORED",es$Formato) #| grepl("AUDIENCE ADS",es$Formato)
+es <- es[!set,]
+es$date <- as.Date(es$Data.Prenotazione,format="%Y-%m-%d")
+es$month <- format(es$date,"%y-%m")
+es$pack <- "tot"
+es[grepl("DATA PLANNING",es$Pacchetto),"pack"] <- "target"
+es[grepl("GEMINI",es$Pacchetto),"pack"] <- "target"
+es$imps = es$Quantita.Ordine+es$Quantita.Gratis
+es$cpm = es$Valore.Netto/es$imps*1000
+es$cpm[is.nan(es$cpm)] = 0
+es$cpm[is.na(es$cpm)] = 0
+es$cpm[es$cpm==Inf] = 0
+es1 <- es#[!is.na(match(es$Cliente,advL)),]##perimetro con/senza target
+es1[es1$Formato == "Spot Video","Formato"] = "Pre-Roll Video"
+es1[grepl("NATIVE",es1$Pacchetto),"Formato"] = "native"
+es1 = es1[es1$Formato %in% c("Masthead","Pre-Roll Video","Rectangle","Skin"),]
+esC = ddply(es1,.(Cliente,Formato,pack),summarise,imps=sum(imps,na.rm=T),price=sum(Valore.Netto,na.rm=T))
+esC$cpm = esC$price/esC$imps*1000
+esC$cpm[is.na(esC$cpm)] = 0
+#esC[esC$cpm>1000,]
+lim = quantile(esC$cpm,c(0.02,0.95))
+esC = esC[esC$cpm > lim[1] & esC$cpm < lim[2],]
 esM <- ddply(esC,.(Formato,pack),summarise,cpm=weighted.mean(cpm,imps))
+esM = esM[!is.na(esM$Formato),]
 esM$cpm_sd = ddply(esC, .(Formato,pack),function(esC.sub) weighted.sd(esC.sub$cpm,esC.sub$imps))$V1
+esC[esC$Formato=="Pre-Roll Video" & esC$pack == "target",]
 ## esM$cpm_sd = esM$cpm_sd/rep(esM$cpm[seq(1,nrow(esM),2)+1],each=2)
 ## esM$cpm = esM$cpm/rep(esM$cpm[seq(1,nrow(esM),2)+1],each=2)
+## esCl <- ddply(es,.(Cliente,Formato),summarise,imps=sum(Quantita.Gratis+Quantita.Ordine),price=sum(Valore.Netto))
+## esCl$cpm <- esCl$price/esCl$imps*1000
+## write.csv(esCl,"raw/pricePerClient.csv")
 
 br <- read.csv("raw/bkBrrollAud.csv",stringsAsFactor=F)
+br <- br[!grepl("AAP",br$Campaign.Name),]
 br$source <- "yahoo"
 br[grepl("Mediamond",br$aud),"source"] <- "mediamond"
 br[grepl("Banzai",br$aud),"source"] <- "banzai"
@@ -612,29 +565,33 @@ br[grepl("(empty)",br$aud),"source"] <- "no-target"
 br[br$aud=="","source"] <- "no-target"
 br$cpm = br$spent/br$imps*1000
 br$cpm[is.na(br$cpm)] = 0
-br$ctr = br$click/br$imps
-brD <- ddply(br,.(source,size),summarise,ctr=sum(click,na.rm=T)/sum(imps,na.rm=T),cpm=sum(spent,na.rm=T)/sum(imps,na.rm=T)*1000)
+br$ctr = br$click/br$imps*100
+brD <- ddply(br,.(source,size),summarise,ctr=sum(click,na.rm=T)/sum(imps,na.rm=T)*100,cpm=sum(spent,na.rm=T)/sum(imps,na.rm=T)*1000)
 brD$cpm_sd = ddply(br,.(source,size),function(x) weighted.sd(x$cpm,x$imps))$V1
 brD$ctr_sd = ddply(br,.(source,size),function(x) weighted.sd(x$ctr,x$imps))$V1
 brD = brD[!brD$size=="",]
+brD$size = factor(brD$size,levels=c("masthead","preroll","rectangle","leaderboard"))
 
 ls <- read.csv("raw/listinoDataPlanning.csv")
-ls$cpm = ls$CPM.LORDO.C.A. %>% gsub("[[:alpha:]]","",.) %>% gsub("€ ","",.) %>% as.numeric()
+ls$cpm = ls$CPM.NET.NET %>% gsub("[[:alpha:]]","",.) %>% gsub("€ ","",.) %>% as.numeric()
 lsD <- ddply(ls,.(size),summarise,cpm=mean(cpm,na.rm=T))
 lsD$cpm_sd = ddply(ls, .(size),function(x) weighted.sd(x$cpm,1:4))$V1
 lsD$source = "target"
+lsD = lsD[!lsD$size == "native",]
 ls1 <- read.csv("raw/listinoDisplay.csv")
-ls1$cpm = ls1$CPM.LORDO.C.A. %>% gsub("[[:alpha:]]","",.) %>% gsub("€ ","",.) %>% as.numeric()
+ls1$cpm = ls1$CPM.NET.NET %>% gsub("[[:alpha:]]","",.) %>% gsub("€ ","",.) %>% as.numeric()
 lsD1 <- ddply(ls1,.(size),summarise,cpm=mean(cpm,na.rm=T))
 ls1$count = 1
 lsD1$cpm_sd = ddply(ls1,.(size),function(x) weighted.sd(x$cpm,x$count))$V1
 lsD1$source = "sistema"
 lsD <- rbind(lsD,lsD1)
+lsD = lsD[!lsD$size=="overlayer",]
 
 gLabel = c("pack","ratio",paste("ctr@ad-server"),"ctr")
 p1 <- ggplot(gsM,aes(color=Size,x=pack,y=ctr)) +
     geom_bar(aes(fill=Size,group=1),stat="identity",show.legend=F,size=2,alpha=0.3) + 
     geom_errorbar(aes(ymin=ctr-ctr_sd,ymax=ctr+ctr_sd),show.legend=F,width=.2,size=2) + 
+    geom_text(aes(label=round(ctr,2)),size=6,color="#000000") + 
     theme(strip.background = element_rect(fill=gCol1[8])) + 
     facet_grid(Size ~ . ,scales="free") +
     ##scale_y_continuous(labels=percent) + 
@@ -643,20 +600,25 @@ gLabel = c("pack","ratio",paste("cpm@ad-server"),"cpm")
 p2 <- ggplot(gsM,aes(x=pack,y=cpm,color=Size)) +
     geom_bar(aes(fill=Size,group=1),stat="identity",show.legend=F,size=2,alpha=0.3) + 
     geom_errorbar(aes(ymin=cpm-cpm_sd,ymax=cpm+cpm_sd),show.legend=F,width=.2,size=2) + 
+    geom_text(aes(label=round(cpm,2)),size=6,color="#000000") + 
     theme(strip.background = element_rect(fill=gCol1[8])) + 
     facet_grid(Size ~ . ,scales="free") +
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
 gLabel = c("pack","ratio",paste("cpm@gestionale"),"cpm")
 p3 <- ggplot(esM,aes(x=pack,color=Formato,y=cpm)) +
+    ## geom_boxplot(show.legend=F) + 
+    ## geom_jitter(height = 0,alpha=0.3,show.legend=F) +
     geom_bar(aes(fill=Formato,group=1),stat="identity",show.legend=F,alpha=0.3,size=2) + 
-    geom_errorbar(aes(ymin=cpm-cpm_sd,ymax=cpm+cpm_sd),show.legend=F,width=.2,size=2) + 
-    facet_grid(Formato ~ . ,scales="free") +
+    geom_errorbar(aes(ymin=cpm-cpm_sd,ymax=cpm+cpm_sd),show.legend=F,width=.2,size=2) +
+    geom_text(aes(label=round(cpm,2)),size=6,color="#000000") + 
+facet_grid(Formato ~ . ,scales="free") +
     theme(strip.background = element_rect(fill=gCol1[8])) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
 gLabel = c("pack","ratio",paste("cpm@listino"),"cpm")
 p4 <- ggplot(lsD,aes(x=source,color=size,y=cpm)) +
     geom_bar(aes(fill=size,group=1),stat="identity",show.legend=F,alpha=0.3,size=2) + 
     geom_errorbar(aes(ymin=cpm-cpm_sd,ymax=cpm+cpm_sd),show.legend=F,width=.2,size=2) + 
+    geom_text(aes(label=round(cpm,2)),size=6,color="#000000") + 
     facet_grid(size ~ . ,scales="free") +
     theme(strip.background = element_rect(fill=gCol1[8])) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
@@ -664,6 +626,7 @@ gLabel = c("pack","ratio",paste("cpm@brightroll"),"cpm")
 p5 <- ggplot(brD,aes(x=source,color=size,y=cpm)) +
     geom_bar(aes(fill=size,group=1),stat="identity",show.legend=F,alpha=0.3,size=2) + 
     geom_errorbar(aes(ymin=cpm-cpm_sd,ymax=cpm+cpm_sd),show.legend=F,width=.2,size=2) + 
+    geom_text(aes(label=round(cpm,2)),size=6,color="#000000") + 
     facet_grid(size ~ . ,scales="free") +
     theme(strip.background = element_rect(fill=gCol1[8])) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
@@ -671,6 +634,7 @@ gLabel = c("pack","ratio",paste("ctr@brightroll"),"cpm")
 p6 <- ggplot(brD,aes(x=source,color=size,y=ctr)) +
     geom_bar(aes(fill=size,group=1),stat="identity",show.legend=F,alpha=0.3,size=2) + 
     geom_errorbar(aes(ymin=ctr-ctr_sd,ymax=ctr+ctr_sd),show.legend=F,width=.2,size=2) + 
+    geom_text(aes(label=round(ctr,2)),size=6,color="#000000") + 
     facet_grid(size ~ . ,scales="free") +
     theme(strip.background = element_rect(fill=gCol1[8])) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])

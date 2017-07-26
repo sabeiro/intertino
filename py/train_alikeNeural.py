@@ -48,6 +48,23 @@ Nent = y_train.shape[0]
 Nneu = x_train.shape[1]
 Ncat = y_train.shape[1]
 
+##neu -> cat
+##exit -> 1 (M/F)
+##3 layer
+##hidden 30 neu
+##optimizer stochastic gradient descent 
+##dropout 15%
+##hidden tanh exit sigmoid
+##loss binary_crossentropy
+
+##svm
+##bagging classifier
+##n estim 10
+##max feat 1/10
+##kernel lin
+##deg 3
+##C 1
+
 model = Sequential()
 model.add(Dense(Nneu,input_dim=Nneu,activation='relu'))
 keras.layers.core.Dropout(rate=0.2)
