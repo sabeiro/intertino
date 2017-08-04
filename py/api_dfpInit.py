@@ -13,12 +13,12 @@ key_file2 = os.environ['LAV_DIR'] + '/credenza/dfp-intertino.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)
-cred2 = []
+    cred2 = []
 with open(key_file2) as f:
     cred2 = json.load(f)
-DEFAULT_CLIENT_ID = cred2['client_id']
-DEFAULT_CLIENT_SECRET = cred2['client_secret']
-##cred2['refresh_token']
+    DEFAULT_CLIENT_ID = cred2['client_id']
+    DEFAULT_CLIENT_SECRET = cred2['client_secret']
+    ##cred2['refresh_token']
 
 flow = client.OAuth2WebServerFlow(client_id=cred2['client_id'],client_secret=cred2['client_secret'],scope=oauth2.GetAPIScope('adwords'),user_agent='Test',redirect_uri=cred2['redirect_uri'])
 auth_uri = flow.step1_get_authorize_url()
@@ -43,14 +43,14 @@ parser.add_argument('--additional_scopes', default=None,
 
 
 def main(client_id, client_secret, scopes):
-  """Retrieve and display the access and refresh token."""
-  flow = client.OAuth2WebServerFlow(
-      client_id=client_id,
-      client_secret=client_secret,
-      scope=scopes,
-      user_agent='Ads Python Client Library',
-      redirect_uri=cred2['redirect_uri'])
-#      redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+    """Retrieve and display the access and refresh token."""
+    flow = client.OAuth2WebServerFlow(
+        client_id=client_id,
+        client_secret=client_secret,
+        scope=scopes,
+        user_agent='Ads Python Client Library',
+        redirect_uri=cred2['redirect_uri'])
+    #      redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
   authorize_url = flow.step1_get_authorize_url()
 
@@ -60,24 +60,24 @@ def main(client_id, client_secret, scopes):
   code = raw_input('Code: ').strip()
 
   try:
-    credential = flow.step2_exchange(code)
+      credential = flow.step2_exchange(code)
   except client.FlowExchangeError, e:
-    print 'Authentication has failed: %s' % e
-    sys.exit(1)
+      print 'Authentication has failed: %s' % e
+      sys.exit(1)
   else:
-    print ('OAuth2 authorization successful!\n\n'
-           'Your access token is:\n %s\n\nYour refresh token is:\n %s'
-           % (credential.access_token, credential.refresh_token))
+      print ('OAuth2 authorization successful!\n\n'
+             'Your access token is:\n %s\n\nYour refresh token is:\n %s'
+             % (credential.access_token, credential.refresh_token))
 
 
 if __name__ == '__main__':
-  args = parser.parse_args()
-  configured_scopes = [SCOPE]
+    args = parser.parse_args()
+    configured_scopes = [SCOPE]
   if not (any([args.client_id, DEFAULT_CLIENT_ID]) and
           any([args.client_secret, DEFAULT_CLIENT_SECRET])):
     raise AttributeError('No client_id or client_secret specified.')
   if args.additional_scopes:
-    configured_scopes.extend(args.additional_scopes.replace(' ', '').split(','))
-  main(args.client_id, args.client_secret, configured_scopes)
+      configured_scopes.extend(args.additional_scopes.replace(' ', '').split(','))
+      main(args.client_id, args.client_secret, configured_scopes)
 
 

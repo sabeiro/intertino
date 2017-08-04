@@ -19,6 +19,9 @@ print '-----------splitting and removing tails------------------'
 dSet_y = dSet.ix[:,range(1,3)]
 dSet_x = dSet.ix[:,range(3,dSet.shape[1])]
 del dSet
+# rank_x = dSet_x.rank()
+# corr_x = dSet_x.corr('kendall')
+
 Nmin, Nmax = 25,75
 dSum_r = dSet_x.sum(axis=1).fillna(0)
 lim_r = np.percentile(dSum_r,[Nmin,Nmax])

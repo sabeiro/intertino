@@ -97,16 +97,16 @@ sourceL <- unique(fs$source)
 meltTarget <- NULL
 reachTarget <- NULL
 sour = "none"
-sour <- sourceL[1]
+sour <- sourceL[8]
 for(sour in c(sourceL[!grepl("i-t",sourceL)],"all","none")){
     inTarget <- NULL
     tReach <- NULL
-    d <- devL[2]
+    d <- devL[1]
     for(d in devL){
         print(d)
         set <- TRUE
         if (sour=="all"){
-            set <- grepl(d,uniT$Platform) & (uniT$source %in% c("vodafone s-d","zalando s-d","first s-d","banzai"))
+            set <- grepl(d,uniT$Platform) & (uniT$source %in% c("vodafone s-d","zalando s-d","first s-d"))
         } else if (sour=="none"){
             set <- grepl(d,uniT$Platform) 
         } else {

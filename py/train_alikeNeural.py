@@ -20,6 +20,9 @@ import pylab
 import random
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
+from sklearn.externals import joblib
+from keras.models import model_from_json
+import h5py
 
 seed = 128
 rng = np.random.RandomState(seed)
@@ -30,32 +33,50 @@ dSet_y = pd.read_csv(os.environ['LAV_DIR']+"/log/socio_y.csv.gz", compression='g
 dSet_y = dSet_y.ix[:,[1]]
 dSet_y = pd.get_dummies(dSet_y)
 dSet_y = dSet_y.ix[:,[0]]##M
+
+# X_train = X_train.astype(theano.config.floatX) 
+# X_test = X_test.astype(theano.config.floatX)
 # dSet_y.loc[dSet_y['gender'] == 'M',['gender']] = 1
 # dSet_y.loc[dSet_y['gender'] == 'F',['gender']] = 0
 
 N = dSet_y.shape[0]
 shuffleL = random.sample(range(N),N)
 
-partS = [0,int(N*.8),int(N*.9),N]
+partS = [0,int(N*.9),N,N]
 y_train = np.asarray(dSet_y.iloc[shuffleL[partS[0]:partS[1]]],dtype=np.int32)
 y_test = np.asarray(dSet_y.iloc[shuffleL[partS[1]:partS[2]]],dtype=np.int32)
-y_valid = np.asarray(dSet_y.iloc[shuffleL[partS[2]:partS[3]]],dtype=np.int32)
+# y_valid = np.asarray(dSet_y.iloc[shuffleL[partS[2]:partS[3]]],dtype=np.int32)
 x_train = np.asarray(dSet_x.iloc[shuffleL[partS[0]:partS[1]]],dtype=np.int32)
 x_test = np.asarray(dSet_x.iloc[shuffleL[partS[1]:partS[2]]],dtype=np.int32)
-x_valid = np.asarray(dSet_x.iloc[shuffleL[partS[2]:partS[3]]],dtype=np.int32)
+# x_valid = np.asarray(dSet_x.iloc[shuffleL[partS[2]:partS[3]]],dtype=np.int32)
 
 Nent = y_train.shape[0]
 Nneu = x_train.shape[1]
 Ncat = y_train.shape[1]
 
-##neu -> cat
-##exit -> 1 (M/F)
-##3 layer
-##hidden 30 neu
-##optimizer stochastic gradient descent 
-##dropout 15%
-##hidden tanh exit sigmoid
-##loss binary_crossentropy
+model = Sequential()
+model.add(Dense(input_dim=Nneu,output_dim=Nneu,activation='tanh',init="uniform"))
+keras.layers.core.Dropout(rate=0.15)
+model.add(Dense(input_dim=Nneu,output_dim=Nneu,activation='tanh',init="uniform"))
+keras.layers.core.Dropout(rate=0.15)
+model.add(Dense(input_dim=Nneu,output_dim=Ncat,activation='sigmoid',init="uniform"))
+#model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
+sgd = keras.optimizers.SGD(lr=0.001,decay=1e-7,momentum=.9)
+#model.compile(loss='mean_squared_error',optimizer=sgd,metrics=['accuracy'])
+model.compile(loss='binary_crossentropy',optimizer='sgd',metrics=['accuracy'])
+model.fit(x_train,y_train,epochs=25,batch_size=128,validation_data=(x_test,y_test))
+
+fName = os.environ['LAV_DIR']+"/train/"+'lookAlikeNeural'+str(0)
+model_json = model.to_json()
+with open(fName+".json", "w") as json_file:
+    json_file.write(model_json)
+model.save_weights(fName+".h5")
+
+##predictions = model.predict(X)
+
+
+
+
 
 ##svm
 ##bagging classifier
@@ -65,18 +86,7 @@ Ncat = y_train.shape[1]
 ##deg 3
 ##C 1
 
-model = Sequential()
-model.add(Dense(Nneu,input_dim=Nneu,activation='relu'))
-keras.layers.core.Dropout(rate=0.2)
-model.add(Dense(50,input_dim=50,activation='softmax'))
-# keras.layers.core.Dropout(rate=0.2)
-# model.add(Dense(50,input_dim=Nneu,activation='softmax'))
-keras.layers.core.Dropout(rate=0.2)
-model.add(Dense(Ncat,input_dim=50,activation='softmax'))
-#model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
-#model.compile(loss='mean_squared_error',optimizer="adam",metrics=['accuracy'])
-model.compile(loss='mean_squared_error',optimizer="sgd",metrics=['accuracy'])
-model.fit(x_train,y_train,epochs=5,batch_size=128,validation_data=(x_test,y_test))
+
 
 pred = model.predict_classes(x_valid)
 print pred

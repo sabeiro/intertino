@@ -10,8 +10,9 @@ import matplotlib.pyplot as plt
 from sklearn.externals import joblib
 from sklearn.grid_search import GridSearchCV 
 
-seed = 128
-rng = np.random.RandomState(seed)
+# seed = 128
+# rng = np.random.RandomState(seed)
+# random.seed(seed)
 dSet_x = pd.read_csv(os.environ['LAV_DIR']+"/log/socio_x.csv.gz",compression='gzip',sep=',',quotechar='"',index_col=0)
 dSet_x.fillna(0,inplace=True)
 dSet_y = pd.read_csv(os.environ['LAV_DIR']+"/log/socio_y.csv.gz",compression='gzip',sep=',', quotechar='"')
@@ -30,6 +31,8 @@ x_train = np.asarray(dSet_x.iloc[shuffleL[partS[0]:partS[1]]],dtype=np.int32)
 x_test = np.asarray(dSet_x.iloc[shuffleL[partS[1]:partS[2]]],dtype=np.int32)
 joblib.dump(x_test,os.environ['LAV_DIR']+"/train/"+'x_test'+'.pkl',compress=1)
 joblib.dump(y_test,os.environ['LAV_DIR']+"/train/"+'y_test'+'.pkl',compress=1)
+colN = pd.DataFrame(dSet_x.columns)
+colN.to_csv(os.environ['LAV_DIR']+"/train/"+'x_test_col'+'.csv')
 
 import sklearn as sk
 import sklearn.ensemble
@@ -55,6 +58,8 @@ classifiers = [
     ,sk.ensemble.RandomForestClassifier(n_estimators=100,criterion='gini',n_jobs=12,max_depth=15,max_features='auto',min_samples_split=2,random_state=None)
     ##decision tree
     ,sk.tree.DecisionTreeClassifier(criterion="gini",random_state=100,max_depth=10,min_samples_leaf=5)
+    ##extra tree
+    ,sk.ensemble.ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',max_depth=None, max_features='auto', max_leaf_nodes=None,min_impurity_split=1e-07, min_samples_leaf=1,min_samples_split=2,min_weight_fraction_leaf=0.0,n_estimators=250,n_jobs=1,oob_score=False,random_state=0,verbose=0,warm_start=False)
     ##dummy variables
     ,sk.dummy.DummyClassifier(strategy='stratified',random_state=10)
     ##logistic regression

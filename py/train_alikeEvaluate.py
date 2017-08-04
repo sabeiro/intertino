@@ -18,7 +18,10 @@ x_test = joblib.load(os.environ['LAV_DIR']+"/train/"+'x_test'+'.pkl')
 y_test = joblib.load(os.environ['LAV_DIR']+"/train/"+'y_test'+'.pkl')
 
 modL = pd.read_csv(os.environ['LAV_DIR']+"train/modelSelection.csv")
+colN = pd.read_csv(os.environ['LAV_DIR']+"/train/"+'x_test_col'+'.csv')['0']
 model = dict()
+impL = pd.DataFrame(index=colN)
+
 plt.clf()
 plt.plot([0, 1],[0, 1],'k--',label="model | auc  fsc  acc")
 for index, row in modL.iterrows():
@@ -35,19 +38,26 @@ for index, row in modL.iterrows():
     acc = skm.accuracy_score(y_test,model[index].predict(x_test))
     ##cv_score = cross_validation.cross_val_score(model[i],x_train,y_train.ravel(),cv=5,scoring='roc_auc')
     plt.plot(fpr,tpr,label='%s | %0.2f %0.2f %0.2f ' % (row['model'],roc_auc,fsc,acc))
-    
+    rf = model[index]
+    if not hasattr(rf,'feature_importances_'):
+        continue
+    importances = pd.DataFrame({'feature':colN,'importance':np.round(rf.feature_importances_,3)})
+    importances = importances.sort_values('importance',ascending=False).set_index('feature')
+    impL[row['model']] = importances
+    ##importances.plot.bar()
+
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.0])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver operating characteristic')
 plt.legend(loc="lower right",prop={'size':12})#,'family':'monospace'})
+plt.savefig(os.environ['LAV_DIR']+'intertino/fig/modelPerformaces.jpg')
 plt.show()
-    
-# importances = pd.DataFrame({'feature':dSet_x.columns,'importance':np.round(rf.feature_importances_,3)})
-# importances = importances.sort_values('importance',ascending=False).set_index('feature')
-# print importances
-# importances.plot.bar()
+
+impL['sum'] = impL.sum(axis=1)
+impL = impL.sort_values(['sum'],ascending=[False])
+impL.to_csv(os.environ['LAV_DIR']+"/train/"+'feature_sel'+'.csv')
 
 y_prob = model[5].predict_proba(x_test)[:,1]
 y_pred = np.asarray([x for x in y_prob],dtype=np.float32)
@@ -71,3 +81,4 @@ plt.ylabel('accuracy')
 plt.title("male classification")
 plt.legend()
 plt.show()
+

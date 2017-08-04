@@ -59,17 +59,18 @@ loadAff <- function(fName){
     cs$affinity = cs$AND/cs$second
     breakN = as.vector(unique(c(0,quantile(cs$AND,rev(seq(1,15))/15,na.rm=T))))
     breakN = breakN[order(breakN)]
-    breakN = seq(0,10)/10
-    cs$Index <- as.numeric(cut(cs$affinity,breaks=breakN,labels=1:(length(breakN)-1)))
     cs$OR = cs$OR/max(cs$OR)
     cs$AND = cs$AND/max(cs$AND)
+    cs <- cs[!(cs$AND>=1.0 | cs$AND<=0.0),]
+    breakN = seq(0,10)/10*max(cs$affinity)
+    cs$Index <- as.numeric(cut(cs$affinity,breaks=breakN,labels=1:(length(breakN)-1)))
     cs = cs[rev(order(cs$affinity)),]
     cs1 <- ddply(cs,.(Index),summarise,grpSum=sum(affinity,na.rm=T))
     cs <- merge(cs,cs1)
     cs
 }
-
-cs = loadAff("raw/audReachOverlap.csv")
+fName="raw/audReachOverlap0.csv"
+cs = loadAff(fName)
 
 lim <- quantile(cs$posL,probs=c(.35,.65))
 lim <- quantile(cs$posL,probs=c(.15,.95))
@@ -88,16 +89,16 @@ pie <- ggplot(melted) +
     ##    geom_bar(aes(x=Index,y=percent,fill=Category.Name),width = 1,stat="identity") +
     geom_point(aes(x=Index,y=posL,color=group,size=AND),stat="identity",alpha=.7) +
     geom_point(aes(x=Index,y=posL,color=group,size=OR),stat="identity",alpha=0.3) +
-    geom_text(aes(x=Index,y=posL,angle=angle,label=name),size=2) + 
+    geom_text(aes(x=Index,y=posL,angle=angle,label=name),size=4) + 
     scale_color_manual(values=c(brewer.pal(11,'Spectral'),brewer.pal(11,'RdBu'),gCol1)) +
     blankTheme +
     theme(legend.position="right") + 
-    scale_size(range = c(0, 20),guide=FALSE) +
+    scale_size(range = c(0, 40),guide=FALSE) +
     coord_polar("y",start=0) + 
     labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],fill=gLabel[4])
 pie
-ggsave(plot=pie,filename="fig/audOverlap.svg", height=gHeight, width=gWidth)
-ggsave(plot=pie,filename="fig/audOverlap.jpg", height=gHeight, width=gWidth)
+ggsave(plot=pie,filename="fig/audOverlap.svg", height=2*gHeight, width=2*gWidth)
+ggsave(plot=pie,filename="fig/audOverlap.jpg", height=2*gHeight, width=2*gWidth)
 
 ##-------------------------------bar-plot------------------------------
 
@@ -113,7 +114,7 @@ gLabel = c("","",paste(""),"")
 for(chPoly in unique(melted$group)){
     melted1 = melted[melted$group==chPoly,]
     polyP[[chPoly]] = ggplot(melted1) + 
-        geom_bar(aes(x=name,y=AND,fill=group),width = 1,stat="identity") +
+        geom_bar(aes(x=name,y=affinity,fill=group),width = 1,stat="identity") +
         theme(
             ## panel.border = element_blank(),
             axis.text.y = element_blank(),
@@ -126,11 +127,11 @@ for(chPoly in unique(melted$group)){
     polyP[[chPoly]]$color = gCol1[nCol]
     nCol = nCol + 1
 }
-grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=4)
+grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
 
-                                        #svg("fig/audOverlapBar.svg")
-jpeg("fig/audOverlapBarTab.jpg",width=pngWidth,height=pngHeight)
-grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=4)
+##svg("fig/audOverlapBar.svg")
+jpeg("fig/audOverlapBarTab.jpg",width=2*pngWidth,height=2*pngHeight)
+grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
 dev.off()
 
 melted <- cs[set,]
@@ -152,6 +153,8 @@ ggsave(plot=bar,filename="fig/audOverlapAffinity.jpg",height=gHeight,width=gWidt
 ##-------------------------------radar-plot------------------------------
 
 refIds = c("mediaset","Radio","Reality","Talent","temptation island","video viewers","donnamoderna","isola","mediaset.it","segreto","uomini e donne")
+refIds = c("Viaggi")
+i=0
 for(i in 0:10){
     print(refIds[i+1])
     cs <- loadAff(paste("fig/overlap/audReachOverlap",i,".csv",sep=""))
@@ -170,7 +173,7 @@ for(i in 0:10){
         melted1 = melted[melted$variable==chPoly,]
         polyP[[chPoly]] = ggplot(melted1,aes(x=X,y=value,group=variable)) + 
             geom_polygon(aes(color=variable,fill=variable),alpha=0.4,size=1) +
-            geom_polygon(aes(y=value2,fill=variable),alpha=0.4,size=1) +
+            ## geom_polygon(aes(y=value2,fill=variable),alpha=0.4,size=1) +
             RadarTheme +
             theme(axis.text.x=element_text(angle=0, hjust=1)) + 
             coord_radar() +
@@ -184,6 +187,9 @@ for(i in 0:10){
     ##svg("intertino/fig/skillRadar.svg")
     jpeg(paste("fig/overlap/audOverlapRadar",i,".jpg",sep=""),width=pngWidth,height=pngHeight)
     ##grid.text(refIds[i], vp = viewport(layout.pos.row = 1, layout.pos.col = 1:3))
+    grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3,top=textGrob(refIds[i+1],gp=gpar(fontsize=20,font=3)))
+    dev.off()
+    svg("intertino/fig/skillRadar.svg")
     grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3,top=textGrob(refIds[i+1],gp=gpar(fontsize=20,font=3)))
     dev.off()
 }

@@ -135,6 +135,12 @@ for i in range(0,len(sectL)):
 
 adWeek = adSect.groupby(["data","group"]).sum().unstack()
 
+input = [('11013331', 'KAT'), ('9085267', 'NOT'), ('5238761', 'ETH'), ('5349618', 'ETH'), ('11788544', 'NOT'), ('962142', 'ETH'), ('7795297', 'ETH'), ('7341464', 'ETH'), ('9843236', 'KAT'), ('5594916', 'ETH'), ('1550003', 'ETH')]
+from collections import defaultdict
+res = defaultdict(list)
+for v, k in input: res[k].append(v)
+
+
 ##------------------------load-----------------------------------
 
 ##from pandasql import sqldf

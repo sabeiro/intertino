@@ -37,7 +37,8 @@ def waitRep(token,query,headers):
         stat = int(rep.status_code)
         time.sleep(6)
         counter += 1
-        if(counter > 100):
+        if(counter > 60*4):
+            print 'timeout'
             break
         print(rep.status_code,rep.reason,counter)
     return rep

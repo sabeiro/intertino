@@ -19,6 +19,7 @@ newUrl = bk.signatureInputBuilder(uDom+uPath+uServ,'GET', None)
 audL = json.loads(bk.doRequest(newUrl,'GET', None))
 refId = 218194
 refIds = [[150471,"an mediaset"],[184175,"an Radio"],[218858,"an Reality"],[218859,"an Talent"],[133151,"an temptation island"],[132704,"an video viewers"],[128286,"brand donnamoderna"],[125940,"brand isola"],[218194,"brand mediaset.it"],[125936,"brand segreto"],[125937,"brand uomini e donne"]]
+refIds = [[128192,"viaggi"]]
 
 def singReq(q,audId,audName):
     print audName
@@ -52,7 +53,7 @@ for i in range(len(refIds)):
     for j,aud in enumerate(audL['audiences']):
         if any([x in aud['name'] for x in ["obsolete","pub","s-d","mm01"]]):
             continue
-        print "========== completed ("+str(i)+"): " + "%0.2f" % (j/float(len(audL['audiences']))) + " =========="
+        print "========== completed ("+str(i)+"): " + "%0.0f" % (100*j/float(len(audL['audiences']))) + " =========="
         singReq(q,aud['id'],aud['name'])
     audState = pd.DataFrame(aReach)
     audState.name = audState.name.str.encode('utf-8')

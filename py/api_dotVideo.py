@@ -12,6 +12,7 @@ import os
 print '-----------------------api-dot-video------------------------------'
 
 token = dot.getToken()
+dataQ = ["2017-07-24","2017-07-30"]
 dataQ = [(datetime.date.today() - datetime.timedelta(days=7)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
 headers = {"Column-Names":"Date|FlightDescription|FlightID|Imps"}
@@ -166,14 +167,14 @@ for i in range(0,len(sectL)):
     idxA = adSect['section'].str.contains(str(sectL['canale'][i]))
     adSect['group'][idxA] = str(sectL['cluster'][i])
 
-adWeek = adSect.groupby(["group"]).sum()
-sectImps = adSect.groupby(["section"]).sum()
-sectImps = sectImps.sort_values('imps',ascending=False)
-
 pushNr = adSect['imps'][adSect['section'].str.contains("PUSH")].sum()
 inreadNr = adSect['imps'][adSect['section'].str.contains("INREAD")].sum()
 inpageNr = adSect['imps'][adSect['section'].str.contains("INPAGE")].sum()
-
+adWeek = adSect.groupby(["group"]).sum()
+sectImps = adSect.groupby(["section"]).sum()
+sectImps = sectImps.sort_values('imps',ascending=False)
+setId = (sectImps.index.str.contains("PUSH")) | (sectImps.index.str.contains("INREAD")) | (sectImps.index.str.contains("INPAGE"))
+sectImps = sectImps[~setId]
 
 repTxt = dot.wrMatrix(videoD)
 repTxt += dot.wrBuffer(videoDW)

@@ -23,7 +23,7 @@ melted$source <- as.character(melted$source)
 ##melted <- melted[melted$source %in% c("zalando s-d"),]
 ##melted <- melted[!melted$source %in% c("banzai"),]
 
-melted$source <- factor(melted$source,levels=c("all","none","first s-d","zalando s-d","zalando beha","vodafone s-d","banzai","exaudi","l-a kx"))
+melted$source <- factor(melted$source,levels=c("all","none","first s-d","zalando s-d","zalando beha","vodafone s-d","banzai","banzai c","exaudi","l-a kx"))
 ##melted <- melted[melted$source %in% c("all","none","first s-d","zalando s-d","vodafone s-d","zalando beha"),]
 
 gLabel = c("device","segment",paste("reach in target",""),"percentuale")
@@ -89,6 +89,7 @@ melted1 <- melted1[!is.na(melted1$source),]
 melted1 <- melted1[!is.na(melted1$value),]
 ## melted1 <- melted1[melted1$source %in% c("all","benchmark","exaudi","first s-d","none","vodafone s-d","zalando s-d"),]
 melted1$value = as.numeric(melted1$value)
+melted1$device = factor(melted1$device,levels=c("Digital","Computer","Mobile"))
 gLabel = c("device","segment",paste("reach in target",""),"percentuale")
 p1 <- ggplot(melted1,aes(x=device,y=target,group=target)) +
     #geom_tile(aes(fill=value,color=accuracy),size=0.5) +
@@ -147,7 +148,6 @@ if(FALSE){
     sour = unique(fs$source)
 }
 uniT = fs
-
 
 devL <- c("Digital","Computer","Mobile")
 sourceL <- unique(fs$source)

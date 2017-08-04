@@ -15,11 +15,13 @@ library("tm")
 fs <- NULL
 fs <- rbind(fs,read.csv(gzfile('log/bkOrder2016.csv.gz'),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile('log/bkOrder2017.csv.gz'),stringsAsFactor=F))
+fs <- rbind(fs,read.csv('log/bkOrder2017.csv',stringsAsFactor=F))
 advL <- unique(fs$camp)
 fs1 <- read.csv("raw/bkBrroll.csv",stringsAsFactor=F)
 fs1$Day <- as.Date(fs1$Day,format="%m/%d/%y")
-fs1 <- fs1[,c("Day","Campaign.Name","Targeted.Audience.Name","Impressions")]
-colnames(fs1) <- c("date","camp","aud","imps")
+fs1$OrderExtId = fs1$Campaign.Name %>% gsub(".*_","",.)
+fs1 <- fs1[,c("Day","Campaign.Name","Targeted.Audience.Name","Impressions","OrderExtId")]
+colnames(fs1) <- c("date","camp","aud","imps","OrderExtId")
 fs1 = fs1[grepl("Mediamond",fs1$aud) | grepl("Banzai",fs1$aud),]
 #fs1$aud <- fs1$aud %>% gsub("IT_Mediamond_","",.) %>% gsub("IT_Banzai_","",.)
 fs1$source <- fs1$aud
@@ -51,7 +53,9 @@ fs2[grepl(" z",fs2$aud),"source"] = "zalando s/d"
 fs2$imps = as.numeric(fs2$Total.targeted.impressions)
 
 fs$date = as.Date(fs$date)
-fs <- rbind(fs[,-1],fs1)
+colnames(fs)
+fs <- fs[,colnames(fs1)]
+fs <- rbind(fs,fs1)
 fs = fs[order(fs$date),]
 fs$week <- format(fs$date,format="%y-%m")
 
@@ -109,6 +113,7 @@ esWeek$perc_price = esWeek$price_target / esWeek$price_tot
 ## esWeek$av.price.target <- esWeek$price_target/esWeek$quant_target
 print("spent on target")
 print(esWeek)
+
 
 esWeek = esWeek[1:17,]
 
