@@ -12,16 +12,9 @@ cred = {}
 with open(os.environ['LAV_DIR']+"/credenza/aws_env.json") as f:
     cred = json.load(f)
 cred = cred['rti']
-baseUrl = "s3://dl-bluekai-prod/"
-folderUrl = "dl_rti/dl_bk_user_segment/UTC/daily/y=2017/m=01/d=30/"
-fileUrl = "part-r-00062.parquet"
-datasetF = "s3://dl-bluekai-prod/dl_rti/dl_bk_user_synthesis_ls/date=20170430/"
-bucketN = "dl-bluekai-prod/dl_rti/dl_bk_user_synthesis_ls/date=20170430/"
-bucketN = "dl-bluekai-prod/dl_rti/dl_bk_user_segment/UTC/daily/y=2017/m=01/d=20/"
-bucketN = "dl-bluekai-prod"
 
 conn = boto.connect_s3(cred['AWS_ACCESS_KEY_ID'],cred['AWS_SECRET_ACCESS_KEY'])#,cred['AWS_DEFAULT_REGION'])
-bucket = conn.get_bucket(bucketN)
+bucket = conn.get_bucket(cred['bucketN'])
 folders = bucket.list("","/")
 for folder in folders:
     print folder.name
