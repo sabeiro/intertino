@@ -114,8 +114,7 @@ esWeek$perc_price = esWeek$price_target / esWeek$price_tot
 print("spent on target")
 print(esWeek)
 
-
-esWeek = esWeek[1:17,]
+## esWeek = esWeek[1:17,]
 
 con <- pipe("xclip -selection clipboard -i", open="w")
 write.table(esWeek,con,row.names=F,sep=",")
