@@ -8,9 +8,7 @@ library('jsonlite')
 library('rjson')
 library('RJSONIO')
 library('httr')
-library(dplyr)
-library(plotly)
-library(grid)
+
 
 cred <- fromJSON('credenza/dotandmedia.json')
 token <- POST("http://api.dashboard.ad.dotandad.com:9190/api/v1/token",body=paste('{"username":"',cred[[1]],'","password":"',cred[[2]],'"}',sep="") )
@@ -37,7 +35,7 @@ colnames(idConv) = c("name","id","code","type","active")
 campD = rbind(campD,idConv[,colnames(campD)])
 
 ##fs <- read.csv("log/bkKeyOrder.csv",stringsAsFactor=F)
-fileL = c("log/bkOrder17-01.csv.gz","log/bkOrder17-02.csv.gz","log/bkOrder17-03.csv.gz","log/bkOrder17-04.csv.gz","log/bkOrder17-05.csv.gz","log/bkOrder17-06.csv.gz","log/bkOrder17-07.csv.gz")
+fileL = c("log/bkOrder17-01.csv.gz","log/bkOrder17-02.csv.gz","log/bkOrder17-03.csv.gz","log/bkOrder17-04.csv.gz","log/bkOrder17-05.csv.gz","log/bkOrder17-06.csv.gz","log/bkOrder17-07.csv.gz","log/bkOrder17-08.csv.gz")
 fsT <- NULL
 for(i in fileL){
     print(i)

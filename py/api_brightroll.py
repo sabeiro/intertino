@@ -23,7 +23,7 @@ today = time.strftime("%Y-%m-%d")
 dataQ = [(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
 sData = {"params": {},"version": "1.1","method": "getConnectionTest"}
-key_file = os.environ['LAV_DIR'] + '/credenza/brightroll2.json'
+key_file = os.environ['LAV_DIR'] + '/credenza/brightroll.json'
 cred = []
 with open(key_file) as f:
     cred = json.load(f)

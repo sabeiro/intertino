@@ -182,11 +182,11 @@ repTxt += 'perc invenduto' + str(videoDW['Invenduto']/videoDW['Totale inventory'
 repTxt += 'live: ' + str(adLive.groupby([1]).sum()) + "\n"
 repTxt += 'altri editori: ' + str(videoD['Totale inventory'].sum() - adLive[2].sum() - pushNr - inreadNr) + "\n"
 repTxt += 'push: ' + str(pushNr) + ' inpage: ' + str(inreadNr) + ' inread: ' + str(inpageNr)
-repTxt += dot.wrBuffer(adWeek.sort_values('imps',ascending=False))
+#repTxt += dot.wrBuffer(adWeek.sort_values('imps',ascending=False))
 #repTxt += adLive[1]
 repTxt += dot.wrBuffer(sectImps[0:6])
-repTxt += 'top 5 quote' + dot.wrBuffer(sectImps[0:6].sum()/sectImps.sum())
-repTxt += 'ratio section: ' + str(sectImps.head(5)['imps'].sum()*100/sectImps['imps'].sum())
+repTxt += 'top 5 quote ' + dot.wrBuffer(sectImps[0:6].sum()/sectImps.sum()*100.) + '%'
+repTxt += 'ratio section: ' + str(sectImps.head(5)['imps'].sum()*100/sectImps['imps'].sum()) + '\n'
 
 layersW = pd.DataFrame(layers)
 layersW.columns = ['date','layer','type','imps']

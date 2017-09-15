@@ -27,14 +27,15 @@ predM <- ddply(ps,.(date),summarise,imps=sum(imps))
 dbGetQuery(con,"DROP TABLE inventory_prediction")
 dbWriteTable(con,"inventory_prediction",ddply(ps,.(date,month),summarise,imps=sum(imps)))#*0.23) )
 
-##gs <- read.csv("raw/inventoryCaricate.csv",stringsAsFactor=F)
-gs <- read.csv("raw/storicoERP2016.csv",stringsAsFactor=F)
+gs <- NULL
+gs <- rbind(gs,read.csv("raw/storicoERP2016.csv",stringsAsFactor=F))
 gs <- rbind(gs,read.csv("raw/storicoERP2017.csv",stringsAsFactor=F))
-gs <- gs[gs$Formato=="Pre-Roll Video",]
+gs <- gs[gs$Formato=="Pre-Roll Video" | gs$Formato=="Spot Video" ,]
 gs$date <- as.Date(gs$Data.Prenotazione)
 gs$week <- format(gs$date,format="%y-%W")
 gs$month <- format(gs$date,format="%y-%m")
-gsW <- ddply(gs,.(month),summarise,day=head(date,n=1),imps=sum(Quantità.Ordine)/1000000*7/30,week=head(week,1))
+gs$Quantita.Ordine = as.numeric(gs$Quantita.Ordine)
+gsW <- ddply(gs,.(month),summarise,day=head(date,n=1),imps=sum(Quantita.Ordine)/1000000*7/30,week=head(week,1))
 gsW$day <- as.Date(paste(substring(as.character(gsW$day),1,8),"15",sep=""))
 ## dbGetQuery(con,"DROP TABLE inventory_erp")
 ## dbWriteTable(con,"inventory_erp",gs)

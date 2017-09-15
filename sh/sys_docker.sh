@@ -21,6 +21,9 @@ case $1 in
 	save)
 		docker save $imgName > $srcDir/docker/$imgName.tar
 	;;
+	exec)
+		docker exec -it $imgName /bin/bash
+	;;
 	push)
 		docker login
 		docker push $imgName

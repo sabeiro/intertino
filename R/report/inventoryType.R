@@ -1,8 +1,6 @@
 #!/usr/bin/env Rscript
 setwd('~/lav/media/')
 source('src/R/graphEnv.R')
-library(shiny)
-library(plotly)
 
 
 fs1 <- read.csv('raw/inventoryWeekPartner.csv',encoding="UTF-8",fill=TRUE,sep=",",quote='"',header=TRUE,stringsAsFactors=FALSE)##
@@ -31,84 +29,84 @@ sum(sSum)
 ##setInternet2(T)
 ##fs <- read.csv('http://dashboard.ad.dotandad.com/downloadFullReportExcel.jsp?p=448d78ad-fbe3-42e5-a6ae-84e9f2a7d238_9220')
 
-fs <- read.csv('raw/inventoryWeek.csv',encoding="UTF-8",fill=TRUE,sep=",",quote='"',header=TRUE,stringsAsFactors=FALSE)##
-fList <- list.files(path=".")
+## fs <- read.csv('raw/inventoryWeek.csv',encoding="UTF-8",fill=TRUE,sep=",",quote='"',header=TRUE,stringsAsFactors=FALSE)##
+## fList <- list.files(path=".")
 
-sectId <-  grepl('XAXIS',fs$Section) | grepl('RTB',fs$Section) | grepl('PUBMATIC',fs$Section) | grepl('STICKY',fs$Section)
-fs <- fs[!sectId,]
-tapIdx <- grepl('Tapp',fs$FlightDescription) | grepl('TAPP',fs$FlightDescription) |  grepl('tapp',fs$FlightDescription)
-tapDat <- ddply(fs[tapIdx,],.(Data),summarise,Tappi=sum(Imps,na.rm=TRUE))
-fs <- fs[!tapIdx,]
-tapDat$Tappi[tapDat$Tappi==NULL] <- 0
-filterDat <- ddply(fs,.(Data,AdvertiserType),summarise,Imps=sum(Imps,na.rm=TRUE))
-filterDat <- as.data.frame.matrix(xtabs(formula="Imps~.",data=filterDat))
-filterDat$Tappi <- if(any(tapIdx)){tapDat$Tappi}else{rep(0,7)}
-filterDat$Invenduto <- filterDat$Autopromo + filterDat$Default + filterDat$Tappi
-filterDat$Totale <- filterDat$Invenduto + filterDat$Paganti
-filterDat$Data <- as.Date(rownames(filterDat))
-filterDat$day <- rev(c("Sunday","Saturday","Friday","Thursday","Wednesday","Tuesday","Monday"))
-filterDat <- filterDat[,c("Data","day","Paganti","Default","Autopromo","Tappi","Invenduto","Totale")]
+## sectId <-  grepl('XAXIS',fs$Section) | grepl('RTB',fs$Section) | grepl('PUBMATIC',fs$Section) | grepl('STICKY',fs$Section)
+## fs <- fs[!sectId,]
+## tapIdx <- grepl('Tapp',fs$FlightDescription) | grepl('TAPP',fs$FlightDescription) |  grepl('tapp',fs$FlightDescription)
+## tapDat <- ddply(fs[tapIdx,],.(Data),summarise,Tappi=sum(Imps,na.rm=TRUE))
+## fs <- fs[!tapIdx,]
+## tapDat$Tappi[tapDat$Tappi==NULL] <- 0
+## filterDat <- ddply(fs,.(Data,AdvertiserType),summarise,Imps=sum(Imps,na.rm=TRUE))
+## filterDat <- as.data.frame.matrix(xtabs(formula="Imps~.",data=filterDat))
+## filterDat$Tappi <- if(any(tapIdx)){tapDat$Tappi}else{rep(0,7)}
+## filterDat$Invenduto <- filterDat$Autopromo + filterDat$Default + filterDat$Tappi
+## filterDat$Totale <- filterDat$Invenduto + filterDat$Paganti
+## filterDat$Data <- as.Date(rownames(filterDat))
+## filterDat$day <- rev(c("Sunday","Saturday","Friday","Thursday","Wednesday","Tuesday","Monday"))
+## filterDat <- filterDat[,c("Data","day","Paganti","Default","Autopromo","Tappi","Invenduto","Totale")]
 
-filterDat <- merge(filterDat,partnerDat,by="Data")
-filterDat <- filterDat[rev(order(filterDat$Data)),]
-filterDat$InvendutoPerc <- percent(filterDat$Invenduto.x/filterDat$Totale) 
-filterDat$PartnerPerc <- percent(filterDat$TotalePartner/filterDat$Totale)
+## filterDat <- merge(filterDat,partnerDat,by="Data")
+## filterDat <- filterDat[rev(order(filterDat$Data)),]
+## filterDat$InvendutoPerc <- percent(filterDat$Invenduto.x/filterDat$Totale) 
+## filterDat$PartnerPerc <- percent(filterDat$TotalePartner/filterDat$Totale)
 
-filterWeek <- filterDat[1,]
-filterWeek[,3:11] <- colSums(filterDat[,3:11])
-## filterWeek$InvendutoPerc <-  percent(filterWeek$Invenduto.x/filterWeek$Totale) 
-## filterWeek$PartnerPerc <- percent(filterWeek$TotalePartner/filterWeek$Totale)
+## filterWeek <- filterDat[1,]
+## filterWeek[,3:11] <- colSums(filterDat[,3:11])
+## ## filterWeek$InvendutoPerc <-  percent(filterWeek$Invenduto.x/filterWeek$Totale) 
+## ## filterWeek$PartnerPerc <- percent(filterWeek$TotalePartner/filterWeek$Totale)
 
-filterDat
-filterWeek
+## filterDat
+## filterWeek
 
-con <- pipe("xclip -selection clipboard -i", open="w")
-write.table(filterDat,con,row.names=F,col.names=F,sep=",")
-close(con)
-con <- pipe("xclip -selection clipboard -i", open="w")
-write.table(filterWeek,con,row.names=F,col.names=F,sep=",")
-close(con)
+## con <- pipe("xclip -selection clipboard -i", open="w")
+## write.table(filterDat,con,row.names=F,col.names=F,sep=",")
+## close(con)
+## con <- pipe("xclip -selection clipboard -i", open="w")
+## write.table(filterWeek,con,row.names=F,col.names=F,sep=",")
+## close(con)
 
-vSection <- read.csv("raw/inventoryVideoSection.csv",stringsAsFactor=F)
-fs$cluster <- "rest"
-fs$Section = tryTolower(fs$Section)
-for(i in 1:length(vSection$canale)){##assign ch
-    fs[grepl(vSection[i,"canale"],fs$Section),"cluster"] <- vSection[i,"cluster"]
-}
-fsSect = ddply(fs,.(cluster),summarise,imps=sum(Imps))
-con <- pipe("xclip -selection clipboard -i", open="w")
-write.table(fsSect,con,row.names=F,col.names=F,sep=",")
-close(con)
-fsSect = ddply(fs,.(Data,cluster),summarise,imps=sum(Imps))
-fsSect = as.data.frame.matrix(xtabs("imps ~ Data + cluster",data=fsSect))
-fsSect$data = row.names(fsSect)
+## vSection <- read.csv("raw/inventoryVideoSection.csv",stringsAsFactor=F)
+## fs$cluster <- "rest"
+## fs$Section = tryTolower(fs$Section)
+## for(i in 1:length(vSection$canale)){##assign ch
+##     fs[grepl(vSection[i,"canale"],fs$Section),"cluster"] <- vSection[i,"cluster"]
+## }
+## fsSect = ddply(fs,.(cluster),summarise,imps=sum(Imps))
+## con <- pipe("xclip -selection clipboard -i", open="w")
+## write.table(fsSect,con,row.names=F,col.names=F,sep=",")
+## close(con)
+## fsSect = ddply(fs,.(Data,cluster),summarise,imps=sum(Imps))
+## fsSect = as.data.frame.matrix(xtabs("imps ~ Data + cluster",data=fsSect))
+## fsSect$data = row.names(fsSect)
 
-if(FALSE){
-    library('RMySQL')
-    source('credenza/intertino.R')
-    con <- dbConnect(MySQL(),user=db_usr,password=db_pass,dbname=db_db,host=db_host)
-    on.exit(dbDisconnect(con))
-    dbWriteTable(con,value=fsSect,name="inventory_video_section",row.names=FALSE,append=TRUE,overwrite=FALSE);
-    dbDisconnect(con)
-}
-
-
-
-cSum <- colSums(filterDat[,3:11])
-cSum[1]+cSum[2]+cSum[3]+cSum[4]
-(cSum[2]+cSum[3]+cSum[4])/(cSum[1]+cSum[2]+cSum[3]+cSum[4])
-sum(filterDat$Paganti.y)/sum(filterDat$Paganti.x)
+## if(FALSE){
+##     library('RMySQL')
+##     source('credenza/intertino.R')
+##     con <- dbConnect(MySQL(),user=db_usr,password=db_pass,dbname=db_db,host=db_host)
+##     on.exit(dbDisconnect(con))
+##     dbWriteTable(con,value=fsSect,name="inventory_video_section",row.names=FALSE,append=TRUE,overwrite=FALSE);
+##     dbDisconnect(con)
+## }
 
 
-sum(fs[grepl('RTB',fs$Section),"Imps"],na.rm=TRUE)
-progShare <- sum(fs[sectId,"Imps"],na.rm=TRUE)
-dirShare <- sum(fs[!sectId,"Imps"],na.rm=TRUE)
-progShare/dirShare
-sSum <- sapply(names(table(fs$Section)),function(x) sum(fs[fs$Section==x,"Imps"]))
-sSum <- sSum[order(-sSum)]
-sum(sSum[c(1:5)])/sum(sSum)
-sSum[c(1:5)]
 
-sum(sSum)/(cSum[1]+cSum[2]+cSum[3]+cSum[4]+cSum[5])
+## cSum <- colSums(filterDat[,3:11])
+## cSum[1]+cSum[2]+cSum[3]+cSum[4]
+## (cSum[2]+cSum[3]+cSum[4])/(cSum[1]+cSum[2]+cSum[3]+cSum[4])
+## sum(filterDat$Paganti.y)/sum(filterDat$Paganti.x)
+
+
+## sum(fs[grepl('RTB',fs$Section),"Imps"],na.rm=TRUE)
+## progShare <- sum(fs[sectId,"Imps"],na.rm=TRUE)
+## dirShare <- sum(fs[!sectId,"Imps"],na.rm=TRUE)
+## progShare/dirShare
+## sSum <- sapply(names(table(fs$Section)),function(x) sum(fs[fs$Section==x,"Imps"]))
+## sSum <- sSum[order(-sSum)]
+## sum(sSum[c(1:5)])/sum(sSum)
+## sSum[c(1:5)]
+
+## sum(sSum)/(cSum[1]+cSum[2]+cSum[3]+cSum[4]+cSum[5])
 
 

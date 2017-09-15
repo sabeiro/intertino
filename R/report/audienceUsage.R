@@ -112,7 +112,8 @@ esWeek$perc_price = esWeek$price_target / esWeek$price_tot
 ## esWeek$av.price.tot <- esWeek$price_tot/esWeek$quant_tot
 ## esWeek$av.price.target <- esWeek$price_target/esWeek$quant_target
 print("spent on target")
-print(esWeek)
+data.frame(week=esWeek$week,p_tot=esWeek$price_tot/1000000,p_target=esWeek$price_target/1000000,q_tot=esWeek$quant_tot/100000000,q_target=esWeek$quant_target/1000000) 
+
 
 ## esWeek = esWeek[1:17,]
 
@@ -528,6 +529,8 @@ gsM$ctr_sd = ddply(gs1, .(Size,pack),function(gs.sub) weighted.sd(gs.sub$ctr, gs
 es <- NULL
 es <- rbind(es,read.csv("raw/storicoERP2016.csv",stringsAsFactor=F))
 es <- rbind(es,read.csv("raw/storicoERP2017.csv",stringsAsFactor=F))
+es$Quantita.Ordine = as.numeric(es$Quantita.Ordine)
+es$Quantita.Gratis = as.numeric(es$Quantita.Gratis)
 set <-  grepl("GOOGLE",es$Cliente) | grepl("PUBMATIC",es$Cliente) #| grepl("SPONSORED",es$Formato) #| grepl("AUDIENCE ADS",es$Formato)
 es <- es[!set,]
 es$date <- as.Date(es$Data.Prenotazione,format="%Y-%m-%d")
@@ -560,7 +563,16 @@ esC[esC$Formato=="Pre-Roll Video" & esC$pack == "target",]
 ## esCl$cpm <- esCl$price/esCl$imps*1000
 ## write.csv(esCl,"raw/pricePerClient.csv")
 
+ds <- read.csv("/home/sabeiro/Downloads/tmp.csv")
+str(ds)
+
+         
+
 br <- read.csv("raw/bkBrrollAud.csv",stringsAsFactor=F)
+head(br)
+## br$spent = br$Advertiser.Spending
+## br$imps = br$Impressions
+## br$click = br$Clicks
 br <- br[!grepl("AAP",br$Campaign.Name),]
 br$source <- "yahoo"
 br[grepl("Mediamond",br$aud),"source"] <- "mediamond"

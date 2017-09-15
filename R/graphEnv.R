@@ -1,5 +1,5 @@
-Sys.setlocale(category = "LC_ALL", locale = "English_United States.1252")
-Sys.setenv(LANG = "en_US.UTF-8")
+## Sys.setlocale(category = "LC_ALL", locale = "English_United States.1252")
+## Sys.setenv(LANG = "en_US.UTF-8")
 ##Sys.setlocale('LC_ALL', 'UTF-8');
 options(stringsAsFactors=FALSE)
 
@@ -15,7 +15,7 @@ library(magrittr)
 library(ggplot2)
 library(stringi)
 library(RColorBrewer)
-                                        #library("textcat")
+##library("textcat")
 require(grDevices) # for colours
 library(gtable)
 library(grid)
@@ -23,7 +23,6 @@ library(gridExtra)
 library(scales)
 library(stringi)
 require(stats)
-                                        #library(gtools)
 
 gCol = c("#000066","#DCDCDC","#FFb915")
 gCol = c("#000033","#FFb915","#AAAAAA")
@@ -125,17 +124,17 @@ facetTheme <- theme(strip.text.x = element_text(size=12, angle=0),
                     strip.background = element_rect(colour="#FFFFFF", fill="#FFFFFF"))
 
 overlapTheme <- theme(
-        axis.text.x = element_text(angle = 30, hjust = 1),
-        text = element_text(size = gFontSize),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        legend.justification=c(0,0),
-        legend.position=c(.5,.73),
-        legend.background = element_rect(fill=alpha('white',0.3)),
-        legend.position ="right"
-    )
+    axis.text.x = element_text(angle = 30, hjust = 1),
+    text = element_text(size = gFontSize),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    legend.justification=c(0,0),
+##    legend.position=c(.5,.73),
+    legend.background = element_rect(fill=alpha('white',0.3)),
+    legend.position ="right"
+)
 
 coord_radar <- function(theta="x",start=0,direction=1){
     theta <- match.arg(theta, c("x", "y"))
@@ -166,7 +165,7 @@ overlapTheme <- theme(
     panel.border = element_blank(),
     panel.background = element_blank(),
     legend.justification=c(0,0),
-    legend.position=c(.5,.73),
+    ## legend.position=c(.5,.73),
     legend.background = element_rect(fill=alpha('white',0.3)),
     legend.position ="right"
 )
@@ -176,10 +175,8 @@ blankTheme <- theme(
     text = element_text(size = gFontSize),
     axis.ticks = element_blank(),
     axis.text.x = element_blank(),
-    axis.line = element_blank(), 
-    axis.text.x = element_blank(), 
     axis.text.y = element_blank(),
-    axis.ticks = element_blank(), 
+    axis.line = element_blank(), 
     axis.title.x = element_blank(), 
     axis.title.y = element_blank(), 
     ## axis.ticks.margin = unit(c(0,0,0,0), "lines"), 

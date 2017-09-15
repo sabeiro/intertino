@@ -9,6 +9,7 @@ import random
 import matplotlib.pyplot as plt
 from sklearn.externals import joblib
 from sklearn.grid_search import GridSearchCV 
+import sklearn.metrics as skm
 
 # seed = 128
 # rng = np.random.RandomState(seed)
@@ -16,11 +17,16 @@ from sklearn.grid_search import GridSearchCV
 dSet_x = pd.read_csv(os.environ['LAV_DIR']+"/log/socio_x.csv.gz",compression='gzip',sep=',',quotechar='"',index_col=0)
 dSet_x.fillna(0,inplace=True)
 dSet_y = pd.read_csv(os.environ['LAV_DIR']+"/log/socio_y.csv.gz",compression='gzip',sep=',', quotechar='"')
-dSet_y = dSet_y.ix[:,[1]]
-dSet_y = pd.get_dummies(dSet_y)
-dSet_y = dSet_y.ix[:,[0]]##M
+if False: ##M
+    dSet_y = dSet_y.ix[:,[1]]
+    dSet_y = pd.get_dummies(dSet_y)
+    dSet_y = dSet_y.ix[:,[0]]##M
 # dSet_y.loc[dSet_y['gender'] == 'M',['gender']] = 1
 # dSet_y.loc[dSet_y['gender'] == 'F',['gender']] = 0
+if True: ##18-34
+    dSet_y = dSet_y.ix[:,[2]]
+    dSet_y = pd.get_dummies(dSet_y)
+    dSet_y = dSet_y.ix[:,0] + dSet_y.ix[:,2]##18-34
 
 N = dSet_y.shape[0]
 shuffleL = random.sample(range(N),N)
@@ -116,29 +122,29 @@ if False: ##single trial
 
 
 
-    
-print 'grid grad boost'
-param_test1 = {'n_estimators':range(20,81,10)}
-param_test2 = {'max_depth':range(5,16,2), 'min_samples_split':range(200,1001,200)}
-param_test3 = {'min_samples_split':range(1000,2100,200),'min_samples_leaf':range(30,71,10)}
-param_test4 = {'max_features':range(7,20,2)}
-param_test5 = {'subsample':[0.6,0.7,0.75,0.8,0.85,0.9]}
-gsearch1 = GridSearchCV(
-    estimator=sk.ensemble.GradientBoostingClassifier(learning_rate=0.1,min_samples_split=500,min_samples_leaf=50,max_depth=8,max_features='sqrt',subsample=0.8,random_state=10)
-    ,param_grid=param_test1,scoring='roc_auc',n_jobs=4,iid=False,cv=5)
-# model = gsearch1.fit(x_train,y_train.ravel())
-# joblib.dump(model,os.environ['LAV_DIR']+"/train/"+'lookAlike'+str(5)+'.pkl',compress=1)
+if False:    
+    print 'grid grad boost'
+    param_test1 = {'n_estimators':range(20,81,10)}
+    param_test2 = {'max_depth':range(5,16,2), 'min_samples_split':range(200,1001,200)}
+    param_test3 = {'min_samples_split':range(1000,2100,200),'min_samples_leaf':range(30,71,10)}
+    param_test4 = {'max_features':range(7,20,2)}
+    param_test5 = {'subsample':[0.6,0.7,0.75,0.8,0.85,0.9]}
+    gsearch1 = GridSearchCV(
+        estimator=sk.ensemble.GradientBoostingClassifier(learning_rate=0.1,min_samples_split=500,min_samples_leaf=50,max_depth=8,max_features='sqrt',subsample=0.8,random_state=10)
+        ,param_grid=param_test1,scoring='roc_auc',n_jobs=4,iid=False,cv=5)
+    # model = gsearch1.fit(x_train,y_train.ravel())
+    # joblib.dump(model,os.environ['LAV_DIR']+"/train/"+'lookAlike'+str(5)+'.pkl',compress=1)
 
     
-skm.cross_val_score(clf,x_train,y_train,scoring='neg_log_loss')
-print "Confusion matrix " , skm.confusion_matrix(y_test,model.predict(x_test))
-
-from sklearn.metrics import fbeta_score, make_scorer
-ftwo_scorer = make_scorer(fbeta_score,beta=2)
-grid = GridSearchCV(sk.svm.LinearSVC(),param_grid={'C':[1,10]},scoring=ftwo_scorer)
-def my_custom_loss_func(ground_truth,predictions):
-    diff = np.abs(ground_truth - predictions).max()
-    return np.log(1 + diff)
-score = make_scorer(my_custom_loss_func,greater_is_better=True)
-print score(model,x_train,y_train.ravel())
+    skm.cross_val_score(clf,x_train,y_train,scoring='neg_log_loss')
+    print "Confusion matrix " , skm.confusion_matrix(y_test,model.predict(x_test))
+    
+    from sklearn.metrics import fbeta_score, make_scorer
+    ftwo_scorer = make_scorer(fbeta_score,beta=2)
+    grid = GridSearchCV(sk.svm.LinearSVC(),param_grid={'C':[1,10]},scoring=ftwo_scorer)
+    def my_custom_loss_func(ground_truth,predictions):
+        diff = np.abs(ground_truth - predictions).max()
+        return np.log(1 + diff)
+    score = make_scorer(my_custom_loss_func,greater_is_better=True)
+    print score(model,x_train,y_train.ravel())
 

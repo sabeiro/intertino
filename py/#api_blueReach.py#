@@ -24,7 +24,7 @@ aCamp = []
 aud = audL['audiences'][15]
 
 def singReq(q,audId,audName):
-    if any([x in audName for x in ["obsolete","pub","s-d","g-o"]]):
+    if any([x in audName for x in ["obsolete","pub","s-d"]]):
         return
     print audName
     newUrl = bk.signatureInputBuilder(uDom+uPath+uServ+'/'+str(audId),'GET', None)
@@ -42,6 +42,8 @@ def singReq(q,audId,audName):
     time.sleep(0.5)
     aReach.append(aLine)
     q.put(aLine)
+
+
 
 
 concurrent = 20
