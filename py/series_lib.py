@@ -80,7 +80,7 @@ def serTestStat(timeseries):
 
 ##------------------------------functions------------------------------
 def ser_poly(p,x):
-    return p[0] + p[1]*x + p[2]*x**2 + p[3]*x**3 + p[4]*x**4 + p[5]*x**5
+    return p[0] + p[1]*x + p[2]*x**2 + p[3]*x**3 + p[4]*x**4 #+ p[5]*x**5
 
 def ser_residuals(p,data):
     x,y = data
@@ -164,19 +164,29 @@ def getHistory(sDay,nAhead,x0,hWeek):
     nFit = sDay.shape[0] if int(x0['obs_time']) <= 14 else int(x0['obs_time'])
     sDay['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(sDay['t'])
     histNorm = sDay['hist'].mean()
-    sDay['hist'] = ( (sDay['hist']-sDay['hist'].min())/(sDay['hist'].max()-sDay['hist'].min()) + 1.)*x0['hist_adj']
-    fitD = np.array([sDay.t.tail(nFit),sDay.e_av.tail(nFit)])
+    sDay['hist'] = ( (sDay['hist']-sDay['hist'].min())/(sDay['hist'].max()-sDay['hist'].min()) + .5)*x0['hist_adj']
+    fitD = np.array([sDay.t.tail(nFit),sDay.y.tail(nFit)])
     fitobj = kmpfit.Fitter(residuals=ser_residuals,data=fitD)
     fitobj.fit(params0=x0['poly'])
     x0['poly'] = fitobj.params
     sDay['stat'] = (sDay['y']-ser_poly(x0['poly'],sDay.t))
+    sDay['stat'].ix[0:(sDay.shape[0]-nFit)] = sDay['stat'][sDay.shape[0]-nFit]
     t_test = np.linspace(sDay['t'][0],sDay['t'][sDay.shape[0]-1]+sDay.t[nAhead]-sDay.t[0],nLin)
     predS = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     predS['y'] = sDay.y
     predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
-    predS['hist'] = ( (predS['hist']-predS['hist'].min())/(predS['hist'].max()-predS['hist'].min()) + 1.)*x0['hist_adj']
+    predS['hist'] = ( (predS['hist']-predS['hist'].min())/(predS['hist'].max()-predS['hist'].min())*x0['hist_adj'] + .5)
     predS['trend'] = ser_poly(x0['poly'],predS['t'])
+    predS['trend'].ix[0:(sDay.shape[0]-nFit)] = predS['trend'][sDay.shape[0]-nFit]
     predS['pred'] = 0
+    predS['lsq'] = 0
+    # plt.plot(sDay.t,sDay.y,'-',label='series')
+    # plt.plot(sDay.t,sDay['hist'],'-',label='hist')
+    # plt.plot(hWeek.t,hWeek.y,label='week')
+    # plt.plot(sDay.t,sDay['stat'],'-',label='stat')
+    # plt.plot(predS.t,predS['trend'],'-',label='fit')
+    # plt.legend()
+    # plt.show()
     return predS, x0
 
 
@@ -188,12 +198,12 @@ def serLsq(sDay,nAhead,x0,hWeek):
     res_lsq = least_squares(ser_fun_min,x0['lsq'],args=(sDay.t,sDay.stat,x0['freq']))#loss='soft_l1',f_scale=0.1,
     x0['lsq'] = [x for x in res_lsq[0]]
     predS['lsq'] = ser_sin(res_lsq[0],predS.t,x0['freq']) #fun(res_robust.x,t_test)
-    sDay['resid'] = sDay['y'] - ser_sin(res_lsq[0],sDay.t,x0['freq'])/x0['hist_adj'] - ser_poly(x0['poly'],sDay['t'])# lm.predict(sDay)
+    sDay['resid'] = sDay['y'] - ser_sin(res_lsq[0],sDay.t,x0['freq'])/sDay['hist'] - ser_poly(x0['poly'],sDay['t'])# lm.predict(sDay)
     rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
     x0['res'][1] = rSquare.sum()
     x0['res'][2] = rSquare.sum()/sDay['y'].tail(x0['res'][0]).sum()
     #predS['pred'] = (predS['lsq'] + lm.predict(predS))*predS['hist']*x0['hist_adj']
-    predS['pred'] = (predS['lsq'] + ser_poly(x0['poly'],predS['t']))*predS['hist']*x0['hist_adj']
+    predS['pred'] = ser_sin(res_lsq[0],predS.t,x0['freq'])*sDay['hist'] + ser_poly(x0['poly'],predS['t'])
     predS = predS.drop(predS.index[0])
     return predS, x0
 
@@ -226,17 +236,18 @@ def serArma(sDay,nAhead,x0,hWeek):
     result = sm.tsa.ARIMA(dta,(x0['arma'][0],x0['arma'][1],x0['arma'][2])).fit(trend="c",method='css-mle',exog=sExog)
     predT = [str(dta.index[0])[0:10],str(dta.index[len(dta)-1])[0:10]]
     histS = pd.DataFrame({'pred':result.predict(start=predT[0],end=predT[1])})
-    predT = [str(dta.index[0])[0:10],str(dta.index[len(dta)-1]+datetime.timedelta(days=nAhead))[0:10]]    
-    predS = pd.DataFrame({'pred':result.predict(start=predT[0],end=predT[1])})
-    predS.index = [dta.index[0]+datetime.timedelta(days=x) for x in range(0,len(dta)+nAhead)]
-    predS['t'] = [float(calendar.timegm(x.utctimetuple()))/1000000 for x in predS.index]
-    predS['hist'] = sp.interpolate.interp1d(t_line1,hWeek.y,kind="cubic")(predS['t'])
-    predS['hist'] = predS['hist']/predS['hist'].mean()
-    predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
+    #predT = [str(dta.index[0])[0:10],str(dta.index[len(dta)-1]+datetime.timedelta(days=nAhead))[0:10]]
+    predS = predS[0:(len(dta)-1)]
+    predS['pred'] = result.predict(start=predT[0],end=predT[1])
+    # predS = pd.DataFrame({'pred':result.predict(start=predT[0],end=predT[1])})
+    # predS.index = [dta.index[0]+datetime.timedelta(days=x) for x in range(0,len(dta)+nAhead)]
+    # predS['t'] = [float(calendar.timegm(x.utctimetuple()))/1000000 for x in predS.index]
+    # predS['hist'] = sp.interpolate.interp1d(t_line1,hWeek.y,kind="cubic")(predS['t'])
+    # predS['hist'] = predS['hist']/predS['hist'].mean()
+    # predS['pred'] = predS['pred']*predS['hist']
     predS['trend'] = ser_poly(x0['poly'],predS.t)
     predS['y'] = sDay['y']
-    predS['lsq'] = 0
-    ##predS['pred'] = (predS['pred']*predS['hist']+predS['trend'])
+    predS['pred'] = (predS['pred']*predS['hist']+predS['trend'])
     x0['response'] = [x for x in result.params]
     sDay['resid'] = sDay['y'] - predS['pred'][0:sDay.shape[0]]
     rSquare = (sDay['resid'].tail(x0['res'][0]) - sDay['resid'].tail(x0['res'][0]).mean())**2
@@ -282,12 +293,13 @@ def serHolt(sDay,nAhead,x0,hWeek):
     x0['holt'] = [x0['holt'][0],alpha,beta,gamma,rmse]
     nLin = sDay.shape[0] + nAhead
     t_test = np.linspace(sDay['t'][0],sDay['t'][sDay.shape[0]-1]+sDay.t[nAhead]-sDay.t[0],nLin)
-    predS = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
+    #predS = pd.DataFrame({'t':t_test},index=[sDay.index[0]+datetime.timedelta(days=x) for x in range(nLin)])
     predS['pred'] = Yht
-    predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
-    predS['hist'] = predS['hist']/predS['hist'].mean()
-    predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
-    predS['trend'] = ser_poly(x0['poly'],predS.t)
+    # predS['hist'] = sp.interpolate.interp1d(hWeek.t,hWeek.y,kind="cubic")(predS['t'])
+    # predS['hist'] = predS['hist']/predS['hist'].mean()
+    # predS['pred'] = predS['pred']*predS['hist']*x0['hist_adj']
+    # predS['trend'] = ser_poly(x0['poly'],predS.t)
+    # predS['trend'].ix[0:(sDay.shape[0]-nFit)] = predS['trend'][sDay.shape[0]-nFit]
     predS['lsq'] = 0
     predS['y'] = sDay['y']
     sDay['resid'] = sDay['y'] - predS['pred'][0:sDay.shape[0]]

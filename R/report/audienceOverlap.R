@@ -178,7 +178,7 @@ for(i in 0:10){
             theme(axis.text.x=element_text(angle=0, hjust=1)) + 
             coord_radar() +
             scale_y_continuous(limits=c(0,1.)) +
-            guides(fill = guide_legend(keywidth = rel(1.3), keyheight = rel(1.3))) + 
+            guides(fill=guide_legend(keywidth=rel(1.3),keyheight=rel(1.3))) + 
             labs(x=gLabel[1],y=gLabel[2],title=chPoly,color=gLabel[4],fill=gLabel[5])
         polyP[[chPoly]]$color = gCol1[nCol]
         nCol = nCol + 1

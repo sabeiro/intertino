@@ -1,17 +1,13 @@
 #!/usr/bin/env Rscript
 setwd('~/lav/media/')
 source('src/R/graphEnv.R')
-library('corrplot') #package corrplot
 library('svglite')
 require(stats)
-require(dplyr)
 library(grid)
-library(sqldf)
 library('rjson')
 library('jsonlite')
 library('RJSONIO')
 library(RCurl)
-
 
 fs <- read.csv("raw/audReach.csv",stringsAsFactor=F)
 ## fs <- read.csv("raw/audienceReachElab.csv")
@@ -26,11 +22,13 @@ for(i in 1:length(fs1$target)){
     }
 }
 fs = fs[!grepl("analisi",fs$group),]
-fs$name <- fs$name %>% gsub("s-d ","",.) %>% gsub("i-t ","",.) %>% gsub("i-b ","",.) %>% gsub("pub ","",.) %>% gsub("I-t ","",.) %>% gsub("I-b ","",.) %>% gsub("g-o ","",.) %>% gsub("an ","",.)
+fs$name <- fs$name %>% gsub("s-d ","",.) %>% gsub("[iI]-t ","",.) %>% gsub("[iI]-b ","",.) %>% gsub("pub ","",.) %>% gsub("g-o ","",.) %>% gsub("an ","",.) %>% gsub("brand","",.)
+fs$dmp = "bk"
 fs2 <- read.csv("raw/audReachBanzai.csv",stringsAsFactor=F)
 fs2$reach = as.numeric(gsub("[[:punct:]]","",fs2$Devices))/1000
 fs2$group = fs2$Type
 fs2$name = fs2$Label
+fs2$dmp = "kx"
 fs1 <- read.csv("raw/audClusterMapBanzai.csv",stringsAsFactor=F)
 for(i in 1:length(fs1$target)){
     set <-  match(fs2$name,fs1$target[i])
@@ -38,15 +36,18 @@ for(i in 1:length(fs1$target)){
         fs2[!is.na(set),"group"] = fs1$cluster[i]
     }
 }
-fs2$name <- fs2$name %>% gsub("Travel ","",.) %>% gsub("eCommerce ","",.) %>% gsub("Studenti ","",.) %>% gsub("Cooking ","",.) %>% gsub("Età ","",.) 
+fs2$name <- fs2$name %>% gsub("Travel ","",.) %>% gsub("eCommerce ","",.) %>% gsub("Studenti ","",.) %>% gsub("Cooking ","",.) %>% gsub("Età ","",.)
 
-fs = rbind(fs[,c("name","reach","group")],fs2[,c("name","reach","group")])
+fs = rbind(fs[,c("name","reach","group","dmp")],fs2[,c("name","reach","group","dmp")])
 fs = fs[order(fs$group),]
-fs$label = paste(fs$name,round(ifelse(fs$reach > 100,fs$reach/1000,fs$reach),1),ifelse(fs$reach > 1000,"M","k")  )
+fs$label = paste("",round(ifelse(fs$reach > 100,fs$reach/1000,fs$reach),1),ifelse(fs$reach > 100,"M","k")  )
 ##melted <- fs[fs$group=="i-t",]
 ##melted <- melt(fs[grepl("SOCIODEMO",fs$Tier),-1],id="Segmento")
 view = c(16,9)
 view = c(view,sqrt(view[1]^2+view[2]^2))
+grpSel <- c("abbigliamento","acquisti","animali","benessere","brand","casa","cucina","cultura","eventi","finanza","genitori","geo","istruzione","lifestyle","media","motori","socio-demo","sport","tech","viaggi")
+fs = fs[fs$group %in% grpSel,]
+
 grpL <- ddply(fs,.(group),summarise,n=length(reach),size=sum(reach))
 grpL$img = paste("fig/ico_",grpL$group,".svg",sep="")
 grpL$size = view[3]*grpL$size/sum(grpL$size)
@@ -64,52 +65,48 @@ melted <- merge(fs,grpL,by="group",all=T)
 melted$x = melted$x + (melted$size/2 - runif(nrow(melted),0,melted$size))*4
 melted$y = (melted[,c("group","n")] %>% group_by(group) %>% mutate_each(funs(cumsum(.)/.)))[2]
 melted <- melted[order(melted$group,melted$name),]
+melted1 <- melted
 
-i=
-for(i in 1:nrow(grpL)){
-    melted1 = melted[melted$group==grpL$group[i],]
-    melted1$x = runif(nrow(melted1),0,melted1$size)/2
-    melted1$y = runif(nrow(melted1),0,melted1$size)/2
+plotBubble <- function(i,melted1){
+    melted1$x = runif(nrow(melted1),0,1.)#runif(nrow(melted1),0,melted1$size)/2
+    melted1$y = runif(nrow(melted1),0,1.)#runif(nrow(melted1),0,melted1$size)/2
     grpL1 = grpL[grpL$group==grpL$group[i],]
-    gLabel = c("","",paste(""),"margin")
-    xAv = mean(melted1$x) + mean(melted1$x)/2
-    yAv = mean(melted1$y) + mean(melted1$y)/2
+    gLabel = c(NULL,NULL,NULL,NULL)
+    xAv = .5#mean(melted1$x) + mean(melted1$x)/2
+    yAv = .5#mean(melted1$y) + mean(melted1$y)/2
     p <- ggplot(melted1,aes(x=x,y=y,color=color)) +
         geom_point(aes(size=reach),alpha=0.4) +
         ##    geom_point(aes(size=imps),alpha=0.4) +
         geom_text(aes(label=name),hjust=1,size=3) +
-        geom_text(aes(label=paste(round(reach),"k")),hjust=1,vjust=-0.5,size=4) +
-        geom_text(data=grpL1,aes(x=xAv,y=yAv,label=group),hjust=1,size=25) +
+        geom_text(aes(label=label),hjust=1,vjust=-0.5,size=4) +
+        geom_text(data=grpL1,aes(x=xAv,y=yAv,label=group),hjust=1,size=15) +
         ##scale_size_area() +
         scale_size(range = c(0,20)) +
-        scale_color_manual(values=melted1$color) +
-        xlim(0,max(melted1$x)*1.2) +
-        ylim(0,max(melted1$y)*1.2) +
+        ## scale_color_manual(values=melted1$color) +
+        xlim(-.1,1.1) +
+        ylim(-.1,1.1) +
         ##ylim(-2,2) +
-        theme(
-            legend.position="none",
-            ##axis.text.x = element_text(angle = 30,margin=margin(-10,0,0,0)),
-            panel.background = element_blank(),
-            panel.border = element_blank(), 
-            panel.grid.major = element_blank(), 
-            panel.grid.minor = element_blank(), 
-            panel.margin = unit(c(0,0,0,0), "lines"), 
-            axis.ticks = element_blank(), axis.text.x = element_blank(),
-            axis.text.y = element_blank(),
-            axis.line = element_blank(), 
-            axis.text.x = element_blank(), 
-            axis.text.y = element_blank(),
-            axis.ticks = element_blank(), 
-            axis.title.x = element_blank(), 
-            axis.title.y = element_blank(), 
-            axis.ticks.margin = unit(c(0,0,0,0), "lines"), 
-            plot.background =  element_blank(), 
-            plot.margin = unit(c(0,0,0,0), "lines")
-        ) +
+        blankTheme +
         labs(x=gLabel[1],y=gLabel[2],title=gLabel[3],color=gLabel[4])
     p
-    ggsave(paste("fig/audienceComposition",i,".svg",sep=""),width=gWidth,height=gHeight)
 }
+
+i <- 2
+polyP = list()
+for(i in 1:nrow(grpL)){
+    print(grpL[i,"group"])
+    melted1 = melted[melted$group==grpL$group[i],]
+    polyP[[i]] = plotBubble(i,melted1)
+    polyP[[i]]$color = gCol1[i]
+}
+
+svg("intertino/fig/audCompRaw.svg",width=2*gWidth,height=2*gHeight)
+grid.arrange(grobs=lapply(polyP,function(p,i){p + scale_color_manual(values=p$color) +  scale_fill_manual(values=p$color)}),ncol=3)
+#            ,top=textGrob(refIds[i+1],gp=gpar(fontsize=20,font=3))
+dev.off()
+
+
+
 
 circL = list()
 normF = view[3]/sum(fs$reach)

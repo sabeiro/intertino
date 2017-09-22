@@ -66,10 +66,10 @@ function readIt(body){
     for(var c=0;c<tabD[1].length;c++){
 	colN.push(tabD[1][c].text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""));
     }
-    var sqlCont = "CREATE TABLE IF NOT EXISTS `inventory_tv_audience` (`date` text, `tot` double DEFAULT NULL, `fascia7` double DEFAULT NULL, `fascia9` double DEFAULT NULL, `fascia12` double DEFAULT NULL, `fascia15` double DEFAULT NULL, `fascia18` double DEFAULT NULL, `fascia20` double DEFAULT NULL, `fascia22` double DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+    var sqlCont = "CREATE TABLE IF NOT EXISTS `inventory_tv_audience` (`date` date, `tot` double DEFAULT NULL, `fascia7` double DEFAULT NULL, `fascia9` double DEFAULT NULL, `fascia12` double DEFAULT NULL, `fascia15` double DEFAULT NULL, `fascia18` double DEFAULT NULL, `fascia20` double DEFAULT NULL, `fascia22` double DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
     var sqlCont = "INSERT INTO `inventory_tv_audience` (`date`,`tot`,`fascia7`,`fascia9`,`fascia12`,`fascia15`,`fascia18`,`fascia20`,`fascia22`) VALUES "
     today = new Date();
-    sqlCont += "('"+today.getFullYear()+'-'+zeroPad(today.getMonth()+1,2)+'-'+zeroPad(today.getDate()+1,2)+"',";
+    sqlCont += "('"+today.getFullYear()+'-'+zeroPad(today.getMonth()+1,2)+'-'+zeroPad(today.getDate(),2)+"',";
     for(var c=2;c<tabD[7].length;c++){
 	sqlCont += tabD[7][c].text().replace(/[%\\.]/g,"") + '000,';
     }

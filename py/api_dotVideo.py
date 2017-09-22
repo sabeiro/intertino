@@ -12,7 +12,7 @@ import os
 print '-----------------------api-dot-video------------------------------'
 
 token = dot.getToken()
-dataQ = ["2017-07-24","2017-07-30"]
+dataQ = ["2017-09-11","2017-09-17"]
 dataQ = [(datetime.date.today() - datetime.timedelta(days=7)).strftime("%Y-%m-%d"),(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")]
 
 headers = {"Column-Names":"Date|FlightDescription|FlightID|Imps"}
@@ -176,11 +176,25 @@ sectImps = sectImps.sort_values('imps',ascending=False)
 setId = (sectImps.index.str.contains("PUSH")) | (sectImps.index.str.contains("INREAD")) | (sectImps.index.str.contains("INPAGE"))
 sectImps = sectImps[~setId]
 
+layersW = pd.DataFrame(layers)
+layersW.columns = ['date','layer','type','imps']
+layersW['imps'] = layersW['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
+layersW['imps'] = pd.to_numeric(layersW['imps'])
+layersW['ratio'] = layersW['imps']/layersW['imps'].sum()*100
+idL = [x != "3"  for x in layersW.layer]##inread player block
+pixInread = layersW[map(lambda x: not x,idL)]['imps'].sum()
+layersW = layersW[idL]
+layersWT =  layersW.groupby(['type']).sum()
+layersWT['ratio'] = layersWT['imps']/layersWT['imps'].sum()*100
+layersW =  layersW.groupby(['layer','type']).sum()
+layersW['ratio'] = layersW['imps']/layersW['imps'].sum()*100
+##layersW['perc'] = layersW['imps']/layersW['imps'].sum()*100
+
 repTxt = dot.wrMatrix(videoD)
 repTxt += dot.wrBuffer(videoDW)
 repTxt += 'perc invenduto' + str(videoDW['Invenduto']/videoDW['Totale inventory']) + "\n"
 repTxt += 'live: ' + str(adLive.groupby([1]).sum()) + "\n"
-repTxt += 'altri editori: ' + str(videoD['Totale inventory'].sum() - adLive[2].sum() - pushNr - inreadNr) + "\n"
+repTxt += 'altri editori: ' + str(videoD['Totale inventory'].sum() - adLive[2].sum() - inreadNr - pushNr) + "\n"
 repTxt += 'push: ' + str(pushNr) + ' inpage: ' + str(inreadNr) + ' inread: ' + str(inpageNr)
 #repTxt += dot.wrBuffer(adWeek.sort_values('imps',ascending=False))
 #repTxt += adLive[1]
@@ -188,13 +202,7 @@ repTxt += dot.wrBuffer(sectImps[0:6])
 repTxt += 'top 5 quote ' + dot.wrBuffer(sectImps[0:6].sum()/sectImps.sum()*100.) + '%'
 repTxt += 'ratio section: ' + str(sectImps.head(5)['imps'].sum()*100/sectImps['imps'].sum()) + '\n'
 
-layersW = pd.DataFrame(layers)
-layersW.columns = ['date','layer','type','imps']
-layersW['imps'] = layersW['imps'].apply(lambda x: pd.to_numeric(x,errors="ignore"))
-layersW['imps'] = pd.to_numeric(layersW['imps'])
-layersW =  layersW.groupby(['layer','type']).sum()
-layersW['ratio'] = layersW['imps']/layersW['imps'].sum()*100
-##layersW['perc'] = layersW['imps']/layersW['imps'].sum()*100
+repTxt += dot.wrBuffer(layersWT)
 repTxt += dot.wrBuffer(layersW)
 
 repFile = '/var/www/webdav/report_dot/' + 'camp' + dataQ[0] + 'Dot' + '.txt'
@@ -209,3 +217,11 @@ f.close()
 #Action,AdDescription,AdExtID,AdId,AdQuota,AdSizeRefId,AdTemplateDescription,AdTemplateExtID,AdType,AdvertiserID,AdvertiserName,AdvertiserType,AdWeight,Area,Ctr,FlightStartDate,DeviceType,FlightAbsoluteEndDate,FlightCapDescription,FlightCapExtID,FlightDescription,FlightEndDate,FlightExtId,FlightID,FlightLayer,FlightPrice,FlightTotalSales,ImpsGoal,Keyword,MccDescription,MediapointId,MediapointTAG,Netspeed,NL7Description,Click,Imps,OrderDescription,OrderExtId,OrderId,Position,UserProfiles,Publisher,Registration,Section,Site,Size,SmartPassback
 
 print '---api-dot--video-te-se-qe-te-ve-be-ne-------------'
+
+
+
+
+
+
+
+        

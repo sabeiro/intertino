@@ -8,8 +8,6 @@ import api_blueLib as bk
 import datetime
 import re
 
-urlPush = 'services.bluekai.com/Services/WS/Campaign?bkuid=ebfff347706bc9a0e5232723d135036bab2bb669dc5967923435e3eedcba9bec&bksig=IUF%2BDS46APwdJCVxJR6aI4iNvFZQlmAiNIR%2FL7muyW4%3D'
-urlGet = 'services.bluekai.com/Services/WS/Campaign?bkuid=750191b6ae4af549a35fffae8dd27930500f6b5ec43569b72b741680f92ab26f&bksig=mYryT6VXQYSb3pTwzxfp6%2BE%2BpKrvr9t8r5VpKYeaVR4%3D'
 print '----------------read-campaign/audience-status---------------------'
 Url = 'http://services.bluekai.com/Services/WS/SegmentInventory?countries=ALL'
 uDom = 'http://services.bluekai.com'

@@ -15,7 +15,7 @@ library("tm")
 fs <- NULL
 fs <- rbind(fs,read.csv(gzfile('log/bkOrder2016.csv.gz'),stringsAsFactor=F))
 fs <- rbind(fs,read.csv(gzfile('log/bkOrder2017.csv.gz'),stringsAsFactor=F))
-fs <- rbind(fs,read.csv('log/bkOrder2017.csv',stringsAsFactor=F))
+#fs <- rbind(fs,read.csv('log/bkOrder2017.csv',stringsAsFactor=F))
 advL <- unique(fs$camp)
 fs1 <- read.csv("raw/bkBrroll.csv",stringsAsFactor=F)
 fs1$Day <- as.Date(fs1$Day,format="%m/%d/%y")

@@ -23,10 +23,13 @@ audL = json.loads(bk.doRequest(newUrl,'GET', None))
 aCamp = []
 aud = audL['audiences'][15]
 
+audName = "g-o"
+audId = 142110
+
 def singReq(q,audId,audName):
-    if any([x in audName for x in ["obsolete","pub","s-d","g-o"]]):
+    if any([x in audName for x in ["obsolete","pub","s-d"]]):
         return
-    print audName
+    print audName.encode('utf-8')
     newUrl = bk.signatureInputBuilder(uDom+uPath+uServ+'/'+str(audId),'GET', None)
     audComp = json.loads(bk.doRequest(newUrl,'GET', None))
     aCamp.append(json.dumps(audComp['campaigns']))
@@ -39,9 +42,8 @@ def singReq(q,audId,audName):
         sCat += str(cat['AND'][0]['cat']) + ', '
         sReach += str(cat['AND'][0]['reach']) + ', '
     aLine = {'name':audName,'id':audId,'reach':resp['reach'],'camp':json.dumps(audComp['campaigns']),"cat":sCat,"catReach":sReach}
-    time.sleep(0.5)
     aReach.append(aLine)
-    q.put(aLine)
+#    q.put(aLine)
 
 
 concurrent = 20
@@ -49,6 +51,7 @@ q = mp.Queue()
 q = Queue(concurrent*2)
 aReach = []
 for aud in audL['audiences']:
+#    print aud['id'],aud['name']
     singReq(q,aud['id'],aud['name'])
 
 # thread_pool = []

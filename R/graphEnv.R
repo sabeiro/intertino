@@ -51,8 +51,9 @@ gCol1[6] <- "#4F9F2F"
 gCol1[7] <- "#367528"
 gCol1[8] <- "#ABDDA4"
 gCol1[13] <- "#B2183B"
-gCol1[17] <- gCol1[16]
-gCol1[16] <- "#D7B7A7"
+gCol1[16] <- "#978747"
+gCol1[17] <- "#577787"
+gCol1[18] <- "#479737"
 ##pie(rep(1,length(gCol1)), col=gCol1)
 
 ##blu grigio senape corallo verde brillante fucsia
@@ -172,6 +173,9 @@ overlapTheme <- theme(
 
 blankTheme <- theme(
     panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
     text = element_text(size = gFontSize),
     axis.ticks = element_blank(),
     axis.text.x = element_blank(),
@@ -180,9 +184,7 @@ blankTheme <- theme(
     axis.title.x = element_blank(), 
     axis.title.y = element_blank(), 
     ## axis.ticks.margin = unit(c(0,0,0,0), "lines"), 
-    legend.position="none",
-    plot.background=element_blank(),
-    panel.background = element_blank()
+    legend.position="none"
 ) 
 
 calWeek <- function(date) {

@@ -30,27 +30,30 @@ if(FALSE){
     write.csv(uniT,paste("out/audComp","Nielsen",".csv",sep=""))
 }
 if(TRUE){
-    fs <- read.csv('raw/audCompAll.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
-    fs1 <- read.csv('raw/audCompAll3.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
-    fs1 <- fs1[fs1$Campaign.Name=="post z",]
-    fs <- rbind(fs,fs1)
+    ## fs <- read.csv('raw/audCompAll.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
+    ## fs1 <- read.csv('raw/audCompAll3.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
+    ## fs1 <- fs1[fs1$Campaign.Name=="post z",]
+    ## fs <- rbind(fs,fs1)
+    fs <- read.csv('raw/audienceNielsen2.csv',stringsAsFactor=FALSE)[,c("Campaign.Name","Demo.Segment","Placement","Platform.Device","Unique.Audience")]
     fs = fs[fs$Platform.Device %in% c("Computer","Mobile","Digital (C/M)"),]
     fs$Unique.Audience = fs$Unique.Audience %>% gsub(",","",.) %>% as.numeric(.)
     fs$Platform <- fs$Platform.Device
-    fs$Placement[fs$Placement=="test bk 1 dinamic"] <- "mediamond_plc0001"
+    ## fs$Placement[fs$Placement=="test bk 1 dinamic"] <- "mediamond_plc0001"
     #fs$Platform[fs$Platform=="Digital (C/M)"] <- "Total Digital"    
     ## fs <- fs[fs1$Country=="ITALY",]
     fs <- ddply(fs,.(Campaign.Name,Placement,Demo.Segment,Platform),summarise,unique=sum(Unique.Audience,na.rm=T))
-    fMap <- read.csv('raw/audCampList.csv',stringsAsFactor=FALSE)
+    fMap <- read.csv('raw/audCampListNie.csv',stringsAsFactor=FALSE)
     cMap <- ddply(fMap,.(source,camp),summarise,imps=1)
     fs$source = "rest"
     for(i in 1:nrow(cMap)){fs[fs$Campaign.Name == cMap$camp[i],"source"] <- cMap$source[i]}
-    cMap <- ddply(fMap,.(source,pc),summarise,name=head(name,1))
+    cMap <- ddply(fMap,.(source,pc,camp),summarise,name=head(name,1))
     fs$aud = "rest"
     for(i in 1:nrow(cMap)){
-        set <- fs$Placement == cMap$pc[i] & fs$source == cMap$source[i]
+        #set <- fs$Placement == cMap$pc[i] & fs$source == cMap$source[i]
+        set <- fs$Placement == cMap$pc[i] & fs$Campaign.Name == cMap$camp[i]
         fs[set,"aud"] <- cMap$name[i]
     }
+    table(fs$aud)
     fs$aud <- gsub("pub ","",fs$aud) %>% gsub("Pub ","",.)
     fs$source[grepl("beha",fs$aud)] = "zalando beha"
     fs1 <- read.csv('raw/audCompBanzai.csv',stringsAsFactor=FALSE)

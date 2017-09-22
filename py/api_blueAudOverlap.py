@@ -20,6 +20,8 @@ audL = json.loads(bk.doRequest(newUrl,'GET', None))
 refId = 218194
 refIds = [[150471,"an mediaset"],[184175,"an Radio"],[218858,"an Reality"],[218859,"an Talent"],[133151,"an temptation island"],[132704,"an video viewers"],[128286,"brand donnamoderna"],[125940,"brand isola"],[218194,"brand mediaset.it"],[125936,"brand segreto"],[125937,"brand uomini e donne"]]
 refIds = [[128192,"viaggi"]]
+refIds = [[240101,"brand Amici"],[240106,"brand AndroidWorld"],[240094,"brand Canale5"],[234426,"brand cherry"],[240088,"brand CherrySeason"],[240120,"brand Cookaround"],[128286,"brand donnamoderna"],[240111,"brand FarmacoECura"],[240107,"brand FilmTV"],[240077,"brand Focus"],[240118,"brand Giallozafferano"],[240091,"brand GrandeFratello"],[240076,"brand Grazia"],[240092,"brand Iene"],[125940,"brand isola"],[240090,"brand IsolaFamosi"],[240093,"brand Italia1"],[218194,"brand mediaset.it"],[240072,"brand Misya"],[240109,"brand MobileWorld"],[240108,"brand MyPersonalTrainer"],[240114,"brand MyPersonalTrainer2"],[240065,"brand Nostrofiglio"],[240073,"brand Panorama"],[240074,"brand Panoramaauto"],[240115,"brand PianetaDonna"],[240113,"brand PianetaMamma"],[125936,"brand segreto"],[240089,"brand Segreto"],[240116,"brand SmartWorld"],[240066,"brand Soldionline"],[240080,"brand Sorrisi"],[240075,"brand Starbene"],[240117,"brand Studenti.it"],[240067,"brand TemptationIsland"],[125937,"brand uomini e donne"],[240110,"brand ValoriNormali"],[240121,"brand Zingarate"]]
+
 
 def singReq(q,audId,audName):
     print audName
