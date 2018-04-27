@@ -143,11 +143,6 @@ with open("test.parquet") as fo:
 
 
 myfile = opener.open(baseUrl)
-
-aws s3 ls s3://krux-partners/client-banzai/krux-data/exports/ --profile user2
-aws s3 ls s3://dl-bluekai-prod --profile default
-aws s3 ls s3a://dl-bluekai-prod/dl_rti/dl_bk_user_synthesis_ls/
-
 k = Key(b)
 k.key = 'yourfile'
 k.set_contents_from_filename('yourfile.txt')
