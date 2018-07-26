@@ -13,7 +13,7 @@ It includes source code for:
 
 Reference
 ---------------
-Project page [dauvi](http://dauvi.org/)
+Project page [intertino](http://intertino.it/)
 
 Sources
 -------------
