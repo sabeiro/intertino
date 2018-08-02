@@ -39,9 +39,9 @@ class Markov(object):
 		for i in xrange(size):
 			gen_words.append(w1)
 			w1, w2 = w2, random.choice(self.cache[(w1, w2)])
-		gen_words.append(w2)
+		        gen_words.append(w2)
 		return ' '.join(gen_words)
-			
+	
 
 # Create an instance of the markov chain. By default, it uses MarkovChain.py's location to
 # store and load its database files to. You probably want to give it another location, like so:
@@ -49,9 +49,9 @@ mc = MarkovChain(os.environ['LAV_DIR'] + "/out/twitterUD.db")
 text_file = os.environ['LAV_DIR'] + '/out/twitterUD.csv'
 cred = []
 with open(text_file,'rb') as f:
-    rows = csv.reader(f, delimiter=',', quotechar='|')
+        rows = csv.reader(f, delimiter=',', quotechar='|')
     for row in rows:
-        cred = cred + row
+            cred = cred + row
 
 mc.generateDatabase('.'.join(cred))
 # To let the markov chain generate some text, execute
