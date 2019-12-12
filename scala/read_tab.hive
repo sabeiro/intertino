@@ -1,3 +1,0 @@
-insert overwrite local directory dirname
-  row format delimited fields terminated by ','
-  select * from tablename;

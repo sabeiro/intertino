@@ -1,0 +1,19 @@
+{
+  "name": "geomadi",
+  "version": "1.0.0",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sabeiro",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "latest": "^0.2.0",
+    "npm": "^6.4.1",
+    "websockets-streaming-audio": "^1.0.35"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": "webparser for geo enrichment"
+}
