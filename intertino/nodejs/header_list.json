@@ -1,0 +1,4 @@
+{
+    "header1":{"Accept":"application/json","Content-type":"application/x-www-form-urlencoded; charset=UTF-8","User_Agent":"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5"}
+    ,"header2":{"Accept":"text/html,application/xhtml+xm…plication/xml;q=0.9,*/*;q=0.8","Accept-Encoding":"gzip, deflate, br","Accept-Language":"en-GB,en;q=0.5","Connection":"keep-alive","Cookie":"NID=129=RWacKjvPMy8Mg8ltOY46D0…018-6-20-7; OGPC=422038528-1:","Host":"www.google.com","Upgrade-Insecure-Requests":1,"User-Agent":"Mozilla/5.0 (X11; Ubuntu; Linu…) Gecko/20100101 Firefox/60.0"}
+}
