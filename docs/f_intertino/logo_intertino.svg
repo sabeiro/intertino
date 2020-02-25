@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   width="213.39622"
+   height="63.484333"
+   viewBox="0 0 213.39622 63.484334"
+   sodipodi:docname="logo_intertino.svg">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1858"
+     inkscape:window-height="1016"
+     id="namedview4"
+     showgrid="false"
+     inkscape:zoom="3.4760001"
+     inkscape:cx="91.519715"
+     inkscape:cy="24.921647"
+     inkscape:window-x="1742"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-right="2"
+     fit-margin-bottom="2" />
+  <path
+     style="opacity:1;fill:none;fill-opacity:0.80760827;stroke:#3837ff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:transform-center-x="0.64990445"
+     inkscape:transform-center-y="-1.306831"
+     d="m 205.88236,43.992885 a 10.407268,23.103355 19.663445 0 1 -17.67769,14.177631 10.407268,23.103355 19.663445 0 1 0.68467,-27.752077 10.407268,23.103355 19.663445 0 1 17.67769,-14.177631 10.407268,23.103355 19.663445 0 1 -0.68467,27.752077 z"
+     id="path3338"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#3837ff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 188.13373,58.104697 142.7401,23.174368 c -2.50703,-1.761566 -2.34469,-7.50413 0.34064,-12.871854 2.68533,-5.3677238 6.16572,-7.4654946 9.23764,-6.6330797 l 52.87545,11.8178697"
+     id="path4140-6"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ccscc" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;fill-opacity:0.80760827;stroke:#3837ff;stroke-width:0.6054582;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:transform-center-x="0.42600886"
+     inkscape:transform-center-y="-1.1048209"
+     d="m 203.57114,43.260262 a 7.6753703,18.661719 18.722498 0 1 -13.24503,10.839355 7.6753703,18.661719 18.722498 0 1 1.41972,-22.790438 7.6753703,18.661719 18.722498 0 1 13.24503,-10.839355 7.6753703,18.661719 18.722498 0 1 -1.41972,22.790438 z"
+     id="path3338-7" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:33.97880936px;line-height:125%;font-family:Manjari;-inkscape-font-specification:Manjari;letter-spacing:0px;word-spacing:0px;fill:#3837ff;fill-opacity:1;stroke:none;stroke-width:0.84947026px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="0.0090541393"
+     y="61.086143"
+     id="text816"><tspan
+       sodipodi:role="line"
+       id="tspan814"
+       x="0.0090541393"
+       y="61.086143"
+       style="fill:#3837ff;fill-opacity:1;stroke-width:0.84947026px">INTERTINO</tspan></text>
+</svg>
