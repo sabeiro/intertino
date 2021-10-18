@@ -29,7 +29,6 @@ driver.quit()
 
 fs = pd.read_csv(baseDir + "gis/roda/cilac_geom.csv")
 
-
 def test_sel_webdriver_new_user(self):
     driver = self.driver
     HOST = "myhost.mycompany.com"

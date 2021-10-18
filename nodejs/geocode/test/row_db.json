@@ -1,0 +1,18 @@
+{
+  "time_stroke_onset": "2020-03-14 19:15:00",
+  "time_call": "2020-03-14 21:03:00",
+  "time_hospitalization": "2020-03-14 21:43:00",
+  "sex": "M",
+  "age": "67",
+  "thrombolisis": "yes",
+  "thrombectomy": "no",
+  "nihss_admission": "22",
+  "nihss_discharge": "15",
+  "mrs_before": "0",
+  "mrs_discharge": "4",
+  "covid_status": "positive",
+  "lat_unit": 45.554,
+  "lng_unit": 10.232,
+  "lat_call": 45.579,
+  "lng_call": 10.497
+}

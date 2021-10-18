@@ -1,0 +1,15 @@
+  "projects": {
+    "appOne": {
+      "name": "qr_scan",
+      "integrations": {},
+      "type": "angular",
+      "root": "qr_scan"
+    },
+    "appTwo": {
+      "name": "photo",
+      "integrations": {},
+      "type": "angular",
+      "root": "photo"
+    }
+  }
+}

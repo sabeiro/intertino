@@ -7,7 +7,7 @@ import geopandas as gpd
 import scipy as sp
 import matplotlib.pyplot as plt
 import pymongo
-import geomadi.multi_thread as m_t
+import mallink.multi_thread as m_t
 import shapely as sh
 from shapely import geometry
 from multiprocessing.dummy import Pool as ThreadPool

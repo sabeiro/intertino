@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.myawesomeapp">
+
+  <!-- 🚨 Keep only the permissions used in your app 🚨 -->
+
+  <uses-permission android:name="android.permission.CAMERA" />
+
+  <!-- … -->
+
+</manifest>

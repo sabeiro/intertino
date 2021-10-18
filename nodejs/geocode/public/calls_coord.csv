@@ -1,0 +1,3 @@
+time_call,time_hospitalization,lng_unit,lat_unit,lng_call,lat_call,unit_type,success
+2020-03-14 21:03:00,2020-03-14 21:43:00,10,45,10,45,CT,yes
+

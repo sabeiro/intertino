@@ -1,0 +1,16 @@
+[Unit]
+Description=Stroke cases databese ingestion
+
+[Service]
+ExecStart=/var/www/html/intertino/node/geocode/geocode.js
+Restart=always
+User=nobody
+# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
+Group=nogroup
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/www/html/intertino/node/geocode/
+
+[Install]
+WantedBy=multi-user.target
+

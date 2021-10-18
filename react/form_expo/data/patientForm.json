@@ -1,0 +1,36 @@
+{
+    "market":"my"
+    ,"version":"0.0.0"
+    ,"field":{"key":"","placeholder":"","fhir":"","active":true,"type":"text","values":[""]}
+    ,"fields":[
+	{"key":"last_name","placeholder":"last name","fhir":"","active":true,"type":"text","values":[""]
+	 ,"validators":{"presence":{"message":"is required"},"length":{"minimum":3},"required":true}
+	}
+	,{"key":"first_name","placeholder":"first name","fhir":"","active":true,"type":"text","values":[""]
+	  ,"validators":{"presence":{"message":"is required"},"length":{"minimum":3}}
+	 }
+	,{"key":"gender","placeholder":"gender","fhir":"","active":true,"type":"multiple","values":["male","female"]
+	 }
+	,{"key":"age_range","placeholder":"age range","fhir":"","active":true,"type":"multiple","values":["0-10","11-17","18-25","25-34","35-44","45-54","55-64","65-74"]
+	 }
+	,{"key":"address","placeholder":"address","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"city","placeholder":"city","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"country","placeholder":"country","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"doctor","placeholder":"doctor","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"date_of_entry","placeholder":"2020-06-06","fhir":"","active":true,"type":"date","values":[""]
+	 }
+	,{"key":"gdpr","placeholder":"gdpr","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"allergies","placeholder":"allergies","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"medication","placeholder":"medication","fhir":"","active":true,"type":"multiple","values":["medication1","medication2"]
+	 }
+	,{"key":"influenza_vaccine_date","placeholder":"influenza vaccine date","fhir":"","active":true,"type":"date","values":[""]
+	 }
+	,{"key":"medical_history","placeholder":"medical history","fhir":"","active":true,"type":"text","values":["asthma","bronchities"]
+	 }
+    ]}
