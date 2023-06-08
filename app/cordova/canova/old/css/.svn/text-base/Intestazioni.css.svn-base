@@ -1,0 +1,203 @@
+#header{
+    height: 150px;
+    #    position: fixed;
+    min-height: 80px;
+    #                  background-color: #FFFFFF;
+    z-index: 1;
+    top: 0;
+    bottom: auto;
+    padding: 0 1em .5em;
+    left: 0;
+    right: 0;
+}
+#pannello{
+    height: 80px;
+    position: fixed;
+    min-height: 80px;
+    #                  background-color: #FFFFFF;
+    z-index: 1;
+    top: 0;
+    bottom: auto;
+    padding: 0 1em .5em;
+    left: 0;
+    right: 0;
+}
+#footer         {
+    #    position: fixed;
+    background-color: #000;
+    z-index: 1;
+    top: auto;
+    bottom: 0;
+    min-height: 5ex;
+    padding: 0 1em .5em;
+    left: 0;
+    right: 0;
+    width: 100%;	
+    background:url(../images/SfondoFooter.png) repeat-x;
+    #background-repeat:no;
+    border:0px solid blue;
+    #    background:#91AF;
+    background:#cccc;
+    #opacity:0.3;
+    #filter:alpha(opacity=30); /* For IE8 and earlier */
+    padding:6px;
+    font-family:arial, sans-serif
+}
+#container{
+    text-align:left;
+    background:#fff;
+    background:rgba(255,255,255,0.5);
+    border:1px solid #ccc;
+    -webkit-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+    -moz-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+    -o-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+    box-shadow:rgba(0,0,0,0.2) 0px 0px 5px
+    #margin:0 auto 10px auto;
+    margin-left: auto;
+    margin-right: auto;
+    #opacity:0.6;
+    width:1200px
+} 
+#columnR         {
+    position: fixed;
+    #                  background-color: #FFFFFF;
+    z-index: 1;
+    top: 65;
+    bottom: 0;
+    min-height: 5ex;
+    padding: 0 1em .5em;
+    #    left: 0;
+    right: 0;
+    width: 200;
+    border:0px solid blue;
+    padding:6px;
+    font-family:arial, sans-serif
+    text-align:left;
+}
+#columnL         {
+    position: fixed;
+    #                  background-color: #FFFFFF;
+    z-index: 1;
+    top: 65pt;
+    bottom: 0;
+    min-height: 45ex;
+    padding: 0 1em .5em;
+    #    left: 0;
+    #    center:-400;
+    #    right: 0;
+    width: 200;
+    border:0px solid blue;
+    padding:6px;
+    font-family:arial, sans-serif;
+    text-align:right;
+    align:right;
+}
+news {
+    background-color: #bb9966;
+    color: #bb9966
+    padding-bottom: 10px;
+    color: black;
+    text-align:left;
+}
+.news_item {
+    padding: 2px 12px 3px 12px;
+    border-top: 0px solid white;
+    text-align:left;
+    text-size:18px;
+}
+.news_item a {
+    color: white !important;
+}
+.news_item a {
+    color: black !important;
+}
+.news_item:hover,.news_item:hover a {
+    background-color: #224466;
+}
+.news_title {
+    
+}
+
+.news_follower {
+    
+}
+#toTop {
+    display:none;
+    text-decoration:none;
+    position:fixed;
+    bottom:.75em;
+    #    right:.75em;
+    left:0px;
+    overflow:hidden;
+    width:43px;
+    height:43px;
+    border:none;
+    z-index:100;
+}
+#toTop a{
+    width: 108px;
+    display: block;
+    text-align: center;
+    font: 11px/100% Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #bbb;
+    /* transition */
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
+}
+#toTop a:hover {
+    color: #000;
+}
+#toTopHover {
+    display:block;
+    overflow:hidden;
+    float:left;
+}
+#toTop:active,#toTop:focus {
+    outline:none;
+}
+#back-top {
+    position: fixed;
+    bottom: 50px;
+    margin-left: 200px;
+    color:#ffff;
+}
+#back-top a {
+    width: 40px;
+    display: block;
+    text-align: center;
+    font: 11px/100% Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #bbbb;
+    /* transition */
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
+}
+#back-top a:hover {
+    color: #000;
+}
+/* arrow icon (span tag) */
+#back-top span {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin-bottom: 7px;
+    background-color: #ffff;
+    background-image: url(../../f/ToTop.png);
+    /* rounded corners */
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    /* transition */
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    transition: 1s;
+}
+#back-top a:hover span {
+    background-color: #ffff;
+}
+

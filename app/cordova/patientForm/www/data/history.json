@@ -1,0 +1,21 @@
+{
+    "market":"my"
+    ,"version":"my_0.0.0"
+    ,"field":{"key":"","placeholder":"","fhir":"","active":true,"type":"text","values":[""]}
+    ,"fields":[
+	{"key":"last_name","placeholder":"last name","fhir":"","active":true,"type":"text","values":[""]
+	 ,"validators":{"presence":{"message":"is required"},"length":{"minimum":3},"required":true}
+	}
+	,{"key":"first_name","placeholder":"first name","fhir":"","active":true,"type":"text","values":[""]
+	  ,"validators":{"presence":{"message":"is required"},"length":{"minimum":3}}
+	 }
+	,{"key":"number","placeholder":"number","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"facility","placeholder":"approved facility","fhir":"","active":true,"type":"multiple","values":["hospital","general practice","health clinic","other"]
+	 }
+	,{"key":"facility-name","placeholder":"facility name","fhir":"","active":true,"type":"text","values":[""]
+	 }
+	,{"key":"date","placeholder":"date","fhir":"","active":true,"type":"date","values":[""]
+	 }
+    ]
+}

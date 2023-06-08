@@ -1,0 +1,46 @@
+[
+  {
+    "name": "last name",
+    "value": "ciccio"
+  },
+  {
+    "name": "first name",
+    "value": "pasticcio"
+  },
+  {
+    "name": "gender",
+    "value": "male"
+  },
+  {
+    "name": "age range",
+    "value": "18-25"
+  },
+  {
+    "name": "address",
+    "value": ""
+  },
+  {
+    "name": "city",
+    "value": ""
+  },
+  {
+    "name": "country",
+    "value": ""
+  },
+  {
+    "name": "doctor",
+    "value": ""
+  },
+  {
+    "name": "allergies",
+    "value": ""
+  },
+  {
+    "name": "medication",
+    "value": "medication1"
+  },
+  {
+    "name": "medical history",
+    "value": ""
+  }
+]

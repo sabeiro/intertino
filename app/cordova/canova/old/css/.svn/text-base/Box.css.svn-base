@@ -1,0 +1,210 @@
+div.BoxLabel {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    color: ##8888cc;
+    line-height: normal;
+    text-shadow: 3px 3px 8px #708090;
+    text-align: center;
+    width:200;
+    /* filter: blur; */
+    filter:shadow(color=8888cc,Direction=45) 
+    glow(color=8888cc,strength=0);
+    /* filter:dropshadow(color=FF0000,OffX=5, OffY=-3, Positive=1); */
+    /* filter:glow(color=000000,strength=0); */
+    background-color: #ffff;
+    float:left;
+    -moz-box-shadow: inset 0 0 5px 5px #eee;
+    -webkit-box-shadow: inset 0 0 5px 5px#eee;
+    box-shadow: inset 0 0 5px 5px #eee;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+div.BoxFooter#a:link {
+    text-decoration: underline;
+    color: #000000;
+    #    color: #009999;
+}
+/* for the overlapping regions, maps */
+#textBox{
+    text-align:left;
+    background:#99f;
+    color:#304;
+    border:1px solid #ccc;
+    margin-right: auto;
+    margin-left: auto;
+    opacity:.9;
+    width:300px;
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333;
+} 
+#textBox:hover{
+    opacity:1;
+}
+#attivitaBox{
+    text-align:left;
+    background:#b9f;
+    color:#604;
+    border:1px solid #ccc;
+    margin-right: auto;
+    margin-left: auto;
+    opacity:1;
+    width:300px;
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333;
+} 
+#attivitaBox:hover{
+    opacity:1;
+}
+#imageBox{
+    position:relative;
+    text-align:left;
+    background:rgb(255,255,255);
+    border:0px solid #ccc;
+    margin: 0 auto; 
+    opacity:0.9;
+    #width:250px;
+    height:550px;
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333;
+    z-index:1;
+} 
+#imageBox:hover{
+    opacity:1;
+} 
+#imageBox img{
+    position:absolute;
+    top:0;
+    left:0;
+}
+#layerBox{
+    text-align:left;
+    position:relative;
+    background:#ffff;
+    border:0px solid #ccc;
+    margin-right: auto;
+    margin-left: auto;
+    opacity:0.9;
+    z-index:20;
+    width:400px;
+    height:500px;
+} 
+#layerBox:hover{
+    opacity:1;
+} 
+#commentTab{
+    align: center;
+    text-align:left;
+    background:#fff;
+    border:0px solid #ccc;
+    color:#41b;
+    -webkit-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+    -moz-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+    -o-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+    box-shadow:rgba(0,0,0,0.2) 0px 0px 5px
+    #margin:0 auto 10px auto;
+    margin-left: auto;
+    margin-right: auto;
+    #opacity:0.6;
+    #filter:alpha(opacity=60); /* For IE8 and earlier */
+    width:600px
+} 
+#dashBox{
+    text-align:left;
+    background:rgba(3,0,100,.8);
+    border:1px solid #ccc;
+    margin-right: auto;
+    margin-left: auto;
+    width:450px;
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333;
+} 
+#dashForm{
+    text-align:left;
+    #background:rgba(3,0,100,.8);
+    background:#ffff;
+    border:1px solid #ccc;
+    margin-right: auto;
+    margin-left: auto;
+    #width:450px;
+} 
+#dashForm:hover{
+    background:#aaa;
+    opacity:1;
+}
+#dashItem{
+    position:relative;
+    text-align:center;
+    background:rgba(3,0,100,.8);
+    color:#a52;
+    border:1px solid #ccc;
+    margin-right: auto;
+    margin-left: auto;
+    opacity:0.8;
+    width:120px;
+} 
+#dashItem:hover{
+    opacity:1;
+}
+#dragBox {
+    width:100px;
+    height:100px;
+    padding:10px;
+    border:1px solid #aaaaaa;
+}
+#schedaBox{
+    position:relative;
+    text-align:left;
+    background:rgb(255,255,255);
+    border:0px solid #ccc;
+    margin: 0 auto; 
+    opacity:0.9;
+    width:600px;
+#    height:500px;
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333;
+    z-index:1;
+}
+.fumettoBox{
+    tipSize:0;
+    position: "null";
+    #minWidth: "20px";
+    #padding: "5px";
+    #border: 'solid 4px #5baec0';
+    borderRadius: "6px";
+    border: "solid 1px #777";
+    boxShadow: "4px 4px 4px #555";
+    backgroundColor: '#666';
+    color: '#fff';
+    opacity: "0.85";
+    zIndex: "32767";
+    textAlign: "left"
+    #padding: '10px';
+    fontSize: '8px';
+    #lineHeight: '3';
+}
+.droppable {
+    width:50px;
+    height:50px;
+    float: left;
+    background-color: #DDD;
+    margin: 5px;
+}
+.draggable {
+    width:40px;
+    height:40px;
+    float: right;
+    background-color: #FC0;
+    margin: 5px;
+    cursor: pointer;
+}
+.dropped {
+    background-color: #FC0;
+}
+.somethingover {
+    background-color: #FCD;
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+	<name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<title>Patient Managment</title>
+	<link rel="stylesheet" href="js/jquery.mobile.min.css"/>
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>    
+	<script type="text/javascript" charset="utf-8">	</script>
+    </head>
+    <body>
+	<!-- Menu -->
+	<div data-role="page" id="homePage">
+	    <div data-theme="" data-role="header">
+		<h3>Patient Managment</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div><!-- header -->
+
+	    <div data-role="content">
+		<div id="log"></div>
+		<!-- <a id="btnInserisci" class="btnOnline" data-role="button" href="#scheda" data-icon="plus" data-iconpos="left">Inserisci online</a> -->
+		<a id="btnSalvatore" data-role="button" href="#salvatore" data-icon="plus" data-iconpos="left">Save offline</a>
+		<a id="btnRecuperatore" data-role="button" href="#lettore" data-icon="bars" data-iconpos="left">Read offline</a>
+		<a id="btnConnettore"  data-role="button" data-icon="plus" data-iconpos="left">Connection</a>
+		<a id="btnConsulta" class="btnAdmin" data-role="button" href="#elencoSchede" data-icon="bullets" data-iconpos="left" >Consult</a>
+		<a id="btnModifica" class="btnAdmin" data-role="button" href="#modifica" data-icon="edit" data-iconpos="left">Change field</a>
+		<a id="btnVariabili" class="btnAdmin" data-role="button" href="#aggiungi" data-icon="plus" data-iconpos="left">Edit field</a>
+		<a id="btnLogin" class="btnOnline" data-role="button" href="#login" data-icon="user" data-iconpos="left">Log In</a>
+		<a id="btnLogout" class="btnAdmin" data-role="button" href="#logout" data-icon="user" data-iconpos="left">Log Out</a>
+		<a  data-role="button" href="#about" data-icon="info" data-iconpos="left">Info</a>
+		<a id="btnExit" data-role="button" href="#" data-icon="power" data-iconpos="left">Exit</a>
+	    </div><!-- content -->
+
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient managment </h3>
+		<!-- <h3><a id="btnWeb" data-role="button" href="#">versione web</a></h3> -->
+	    </div><!-- footer -->
+	</div><!-- homepage-->
+	<div data-role="page" id="scheda">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Insert patient data</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div><!--header-->
+	    <div data-role="content">
+		<div id="selettore">charging...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnSalva" data-role="button" href="#">Save</a>
+		</div>
+	    </div><!--content-->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient management</h3>
+	    </div><!-- footer -->
+	</div><!-- scheda-->
+	<div data-role="page" id="salvatore">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Insert patient data</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div><!-- header -->
+	    <div data-role="content">
+		<div id="selettoreOffline">charging...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnSalvatoreOffline" data-role="button" href="#">Save</a>
+		</div>
+	    </div><!-- content-->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient managment</h3>
+	    </div>
+	</div><!--salvatore-->
+	<div data-role="page" id="elencoSchede">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Records</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div><!-- header -->
+	    <div data-role="content">
+		<div id="selettore1">charging...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnScarica" data-role="button" href="#">Download .csv</a>
+		</div>
+		<div id="filore"></div>
+		<div data-role="fieldcontain">
+		    <a id="btnFiltra" data-role="button" href="#">Filter</a>
+		</div>
+		<div id="visore"></div>
+	    </div><!-- content -->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Tap on the line to erase</h3>
+		<!-- <h3>Patient managment </h3> -->
+	    </div><!-- footer -->
+	</div><!-- elencoSchede -->
+	<div data-role="page" id="lettore">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Records</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div><!-- header -->
+	    <div data-role="content">
+		<div id="listIt"></div>
+		<div id="liElencoSchede">empty</div>
+		<br><br>
+		<a id="btnAggiornatore" class="btnOnline" data-role="button" href="#" data-icon="arrow-u" data-iconpos="left">No data</a>
+		<a id="btnResettore" data-role="button" href="#" data-icon="delete" data-iconpos="left">Delete from list</a>
+		<a id="btnRinfrescatore" data-role="button" href="#" data-icon="plus" data-iconpos="left">Add record</a>
+	    </div><!-- content -->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<!-- <h3>Patient managment </h3> -->
+		<h3> Press on record to delete</h3>
+	    </div><!-- footer -->
+	</div><!-- lettore -->
+	<!-- Modifica -->
+	<div data-role="page" id="modifica">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Edit data</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div id="selettore2">charging...</div>
+		<a id="btnSeleziona" data-role="button" href="#">Select</a>
+		<div id="selezionatore"></div>
+		<a id="btnCambia" data-role="button" href="#">Change</a>
+		<a id="btnElimina" data-role="button" href="#">Erase</a>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient managment 	</h3>
+	    </div>
+	</div>
+	<!-- Aggiungi       -->
+	<div data-role="page" id="aggiungi">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Add variables</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div data-role="fieldcontain">
+		    <div id="creatore"></div>
+		    <a id="btnAggiungi" data-role="button" href="#">Add</a>
+		</div>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient managment </h3>
+	    </div>
+	</div>
+	<!-- Login -->
+	<div data-role="page" id="login">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Log in</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div id="selettore4">charging...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnControlla" data-role="button" href="#">Check</a>
+		</div>
+		<a id="btnListore"  data-role="button" data-icon="plus" data-iconpos="left">Update offline</a>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient managment </h3>
+	    </div>
+	</div>
+	<!-- LogOut -->
+	<div data-role="page" id="logout">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Log out</h3>
+		<img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div data-role="fieldcontain">
+		    <a id="btnLogOut" data-role="button" href="#">Log Out</a>
+		</div>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Patient managment </h3>
+	    </div>
+	</div>
+	<!-- Info -->
+	<div data-dom-cache="false" data-role="page" id="about">
+	    <div data-role="header" data-theme="b">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h1>About</h1></div>
+	    <img width="100px" src="img/logoQuae.png" class="ui-btn-right">
+	    <div data-role="content" id="aboutContent">
+		App for ingestion of patient data.<br>
+		First connect and download the templates. <br>
+		Successively you can work offline and insert the patient data. To delete a record hold on that record. <br>
+		Information for the operators can be found once logged.<br>
+		In online mode you can retrieve the records. <br>
+		The administrator can read historical data and edit the operator information.<br>
+		<div id="connType"></div>
+	    </div> 
+	    <div data-role="footer" data-theme="b" data-position="fixed" >
+		<h4>dauvi.org</h4>
+	    </div>
+	</div>
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/scheda.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
+

@@ -1,0 +1,8 @@
+JQUERY4U = JQUERY4U || {};
+ 
+JQUERY4U.SETTINGS =
+{
+    "siteName": "JQUERY4U",
+    "domainName": "http://www.jquery4u.com",
+    "description": "#1 jQuery Blog for your Daily News, Plugins, Tuts/Tips &amp; Code Snippets."
+}

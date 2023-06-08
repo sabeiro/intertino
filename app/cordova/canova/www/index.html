@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+	<name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<title>Canova Managment</title>
+	<link rel="stylesheet" href="js/jquery.mobile.min.css"/>
+	<link rel="stylesheet" type="text/css" href="js/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>    
+	<script type="text/javascript" charset="utf-8">	</script>
+    </head>
+    <body>
+	<!-- Menu -->
+	<div data-role="page" id="homePage">
+	    <div data-theme="" data-role="header">
+		<h3>Canova Managment</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div><!-- header -->
+
+	    <div data-role="content">
+		<div id="log"></div>
+		<!-- <a id="btnInserisci" class="btnOnline" data-role="button" href="#scheda" data-icon="plus" data-iconpos="left">Inserisci online</a> -->
+		<a id="btnSalvatore" data-role="button" href="#salvatore" data-icon="plus" data-iconpos="left">Salva offline</a>
+		<a id="btnRecuperatore" data-role="button" href="#lettore" data-icon="bars" data-iconpos="left">Leggi dati offline</a>
+		<a id="btnConnettore"  data-role="button" data-icon="plus" data-iconpos="left">Connessione</a>
+		<a id="btnConsulta" class="btnAdmin" data-role="button" href="#elencoSchede" data-icon="bullets" data-iconpos="left">Consulta</a>
+		<a id="btnModifica" class="btnAdmin" data-role="button" href="#modifica" data-icon="edit" data-iconpos="left">Modifica campo </a>
+		<a id="btnVariabili" class="btnAdmin" data-role="button" href="#aggiungi" data-icon="plus" data-iconpos="left">Aggiungi campo</a>
+		<a id="btnLogin" class="btnOnline" data-role="button" href="#login" data-icon="user" data-iconpos="left">Log In</a>
+		<a id="btnLogout" class="btnAdmin" data-role="button" href="#logout" data-icon="user" data-iconpos="left">Log Out</a>
+		<a  data-role="button" href="#about" data-icon="info" data-iconpos="left">Info</a>
+		<a id="btnExit" data-role="button" href="#" data-icon="power" data-iconpos="left">Esci</a>
+	    </div><!-- content -->
+
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova managment </h3>
+		<!-- <h3><a id="btnWeb" data-role="button" href="#">versione web</a></h3> -->
+	    </div><!-- footer -->
+	</div><!-- homepage-->
+	<div data-role="page" id="scheda">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Inserisci pulizia</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div><!--header-->
+	    <div data-role="content">
+		<div id="selettore">caricante...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnSalva" data-role="button" href="#">Salva</a>
+		</div>
+	    </div><!--content-->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova management</h3>
+	    </div><!-- footer -->
+	</div><!-- scheda-->
+	<div data-role="page" id="salvatore">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Inserisci pulizia</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div><!-- header -->
+	    <div data-role="content">
+		<div id="selettoreOffline">caricante...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnSalvatoreOffline" data-role="button" href="#">Salva</a>
+		</div>
+	    </div><!-- content-->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova managment </h3>
+	    </div>
+	</div><!--salvatore-->
+	<div data-role="page" id="elencoSchede">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Schede</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div><!-- header -->
+	    <div data-role="content">
+		<div id="selettore1">caricante...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnScarica" data-role="button" href="#">Scarica .csv</a>
+		</div>
+		<div id="filore"></div>
+		<div data-role="fieldcontain">
+		    <a id="btnFiltra" data-role="button" href="#">Filtra</a>
+		</div>
+		<div id="visore"></div>
+	    </div><!-- content -->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Premi sulla riga per cancellare</h3>
+		<!-- <h3>Canova managment </h3> -->
+	    </div><!-- footer -->
+	</div><!-- elencoSchede -->
+	<div data-role="page" id="lettore">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Schede</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div><!-- header -->
+	    <div data-role="content">
+		<div id="listIt"></div>
+		<div id="liElencoSchede">vuoto</div>
+		<br><br>
+		<a id="btnAggiornatore" class="btnOnline" data-role="button" href="#" data-icon="arrow-u" data-iconpos="left">Nessun dato</a>
+		<a id="btnResettore" data-role="button" href="#" data-icon="delete" data-iconpos="left">Cancella dalla lista</a>
+		<a id="btnRinfrescatore" data-role="button" href="#" data-icon="plus" data-iconpos="left">Aggiorna record</a>
+	    </div><!-- content -->
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<!-- <h3>Canova managment </h3> -->
+		<h3> Premi su record per cancellare</h3>
+	    </div><!-- footer -->
+	</div><!-- lettore -->
+	<!-- Modifica -->
+	<div data-role="page" id="modifica">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Modifica dati</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div id="selettore2">caricante...</div>
+		<a id="btnSeleziona" data-role="button" href="#">Seleziona</a>
+		<div id="selezionatore"></div>
+		<a id="btnCambia" data-role="button" href="#">Cambia</a>
+		<a id="btnElimina" data-role="button" href="#">Elimina</a>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova managment 	</h3>
+	    </div>
+	</div>
+	<!-- Aggiungi       -->
+	<div data-role="page" id="aggiungi">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Aggiungi variabili</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div data-role="fieldcontain">
+		    <div id="creatore"></div>
+		    <a id="btnAggiungi" data-role="button" href="#">Aggiungi</a>
+		</div>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova managment </h3>
+	    </div>
+	</div>
+	<!-- Login -->
+	<div data-role="page" id="login">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Log in</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div id="selettore4">caricante...</div>
+		<div data-role="fieldcontain">
+		    <a id="btnControlla" data-role="button" href="#">Controlla</a>
+		</div>
+		<a id="btnListore"  data-role="button" data-icon="plus" data-iconpos="left">Aggiorna offline</a>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova managment </h3>
+	    </div>
+	</div>
+	<!-- LogOut -->
+	<div data-role="page" id="logout">
+	    <div data-theme="" data-role="header">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h3>Log out</h3>
+		<img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    </div>
+	    <div data-role="content">
+		<div data-role="fieldcontain">
+		    <a id="btnLogOut" data-role="button" href="#">Log Out</a>
+		</div>
+	    </div>
+	    <div data-theme="a" data-role="footer" data-position="fixed">
+		<h3>Canova managment </h3>
+	    </div>
+	</div>
+	<!-- Info -->
+	<div data-dom-cache="false" data-role="page" id="about">
+	    <div data-role="header" data-theme="b">
+		<a data-role="button" data-rel="back" href="#homePage" data-icon="home" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h1>About</h1></div>
+	    <img width="100px" src="img/LogoCaNova.svg" class="ui-btn-right">
+	    <div data-role="content" id="aboutContent">
+		App per la memorizzazione delle pulizie.<br>
+		Per il primo funzionamento bisogna collegarsi online e caricare i dati.<br>
+		Successivamente si può inserire nella memoria del cellulare le pulizie, sia online che offline specificando l'addetto, l'autobus (in caso in manutenzione) e il tipo di pulizia. Per cancellare i dati bisogna tener premuto sull'elemento della lista.<br>
+		Se non vengono visualizzati i dati degli addetti, pulmann e pulizie entrare in log in e selezionare aggiorna offline.<br>
+		Una volta connessi si possono aggiornare i dati sul database del server.<br>
+		L'amministratore una volta connesso può loggarsi e consultare lo storico e modificare/aggiungere gli addetti, gli autobus e le pulizie.
+		<div id="connType"></div>
+	    </div> 
+	    <div data-role="footer" data-theme="b" data-position="fixed" >
+		<h4>exampleitalia.it</h4>
+	    </div>
+	</div>
+
+
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/scheda.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
+

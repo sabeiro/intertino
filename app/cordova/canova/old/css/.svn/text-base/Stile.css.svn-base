@@ -1,0 +1,348 @@
+@import url("Menu.css");
+@import url("Box.css");
+@import url("Intestazioni.css");
+/* basics */
+html{
+    color: #333333;
+    background-color: white;
+    background-image: url(../f/SfondoLeg.png);
+    #    background-repeat: no-repeat;
+    background-repeat: repeat-y;
+    background-attachment: scroll;
+    #    background-position: bottom right;
+    background-position: center;
+}
+body {
+    margin-left: 0px;	
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 18pt;
+    font-family: sans,verdana,arial,geneva;
+    color: #333333;
+    background-color: white;
+    background-image: url(../f/SfondoLeg.png);
+    background-repeat: no-repeat;
+    #    background-repeat: repeat-y;
+    background-attachment: fixed;
+    #    background-attachment: scroll;
+    #    background-position: bottom right;
+    background-position: center;
+    #background-position: 50px 50px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+/* div id*/
+div#centre_column {
+    /* float: center; */
+    height: 80px;
+/* position: relative; */
+}
+div#content_header {
+/* height: 80px; */
+/* z-index: 1; */
+}
+div#title_bar {
+/* height: 80px; */
+}
+div#page_name {
+/* position: absolute; */
+/* height: 80px; */
+}
+div#perl_version {
+    color: #bebebe;
+    font: .7em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    position: absolute;
+    left: 46px;
+    top: 33px;
+}
+div.page_links {
+    color: #7f7f7f;
+    font: .7em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    position: absolute;	
+}
+div#page_links_top {
+    top: 18px;
+    right: 179px;
+}
+div#page_links_bottom {
+    top: 33px;
+    right: 179px;
+}
+div#search_form {
+    position: relative;
+    top: 23px;
+    left: 588px;
+    width: 115px;
+}
+div#breadcrumbs a {
+    color: #5a5a5a;
+}
+div.BoxShadow {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #2A8050;
+    line-height: normal;
+    text-shadow: 3px 3px 8px #708090;
+    width:100%;
+    /* filter: blur; */
+    filter:shadow(color=000000,Direction=45) 
+    glow(color=000000,strength=0);
+    /* filter:dropshadow(color=FF0000,OffX=5, OffY=-3, Positive=1); */
+    /* filter:glow(color=000000,strength=0); */
+    background-color: #fff;
+    float:left;
+    -moz-box-shadow: inset 0 0 5px 5px #eee;
+    -webkit-box-shadow: inset 0 0 5px 5px#eee;
+    box-shadow: inset 0 0 5px 5px #eee;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+div.BoxShadowColors{
+    -moz-box-shadow: 0 0 10px 5px black, 40px -30px lime, 40px 30px 50px red, -40px 30px yellow, -40px -30px 50px blue;
+    -webkit-box-shadow: 0 0 10px 5px black, 40px -30px lime, 40px 30px 50px red, -40px 30px yellow, -40px -30px 50px blue;
+    box-shadow: 0 0 10px 5px black, 40px -30px lime, 40px 30px 50px red, -40px 30px yellow, -40px -30px 50px blue;
+}
+div.BoxFooter {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    color: ##8888cc;
+    line-height: normal;
+    text-shadow: 3px 3px 8px #708090;
+    text-align: center;
+    width:150;
+    /* filter: blur; */
+    filter:shadow(color=8888cc,Direction=45) 
+    glow(color=8888cc,strength=0);
+    /* filter:dropshadow(color=FF0000,OffX=5, OffY=-3, Positive=1); */
+    /* filter:glow(color=000000,strength=0); */
+    background-color: #ffff;
+    float:left;
+    -moz-box-shadow: inset 0 0 5px 5px #eee;
+    -webkit-box-shadow: inset 0 0 5px 5px#eee;
+    box-shadow: inset 0 0 5px 5px #eee;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+#COverlap{
+
+    position:relative;
+}
+#COverlap img{
+    position:absolute;
+    top:0;
+    left:100;
+}
+.hide:hover{
+    opacity:0;   
+}​
+/* text properties */
+a:link {
+    text-decoration: underline;
+    color: #009999;
+/* color: green; */
+}
+a:visited {
+    text-decoration: underline;
+    color: #CC0066;/*#FF2A10;*/
+}
+a:hover {
+    text-decoration: overline underline;
+    color: #0074BB;
+}
+p {
+    text-align: justify;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #003a6b;
+    background-color: transparent;
+    font: 100% 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding-top: 0.5em;
+}
+h1 {
+    font-size: 130%;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #fcb100;
+}
+h2 {
+    font-size: 120%;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #aaa;
+}
+h3 {
+    font-size: 110%;
+    margin-bottom: 0.5em;
+    text-decoration: underline;
+}
+h4 {
+    font-size: 100%;
+    font-weight: bold;
+}
+h5 {
+    font-size: 100%;
+    font-weight: bold;
+}
+h6 {
+    font-size: 80%;
+    font-weight: bold;
+}
+h1{
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    color: #6687FF;
+    line-height: normal;
+    align:center;
+}
+.testo {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #CC00A0;
+    line-height: normal;
+}
+.testo1 {
+    font-family: Verdana,Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color:#aabbff;
+    line-height: normal;
+}
+.testo2 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #7820a9;
+    line-height: normal;
+}
+.testo3 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #AA2145;
+    line-height: normal;
+}
+.testo3#a:over{
+    text-decoration: underline;
+    color: #009900;
+}
+.testo3#a:link {
+    text-decoration: underline;
+    color: #009900;
+/* color: green; */
+}
+.testo4 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    color: #FF8810;
+    line-height: normal;
+}
+.testo5 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #FF2A00;
+    line-height: normal;
+}
+.testof {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    color: #000000;
+    line-height: normal;
+}
+.testof#a:over{
+    text-decoration: underline;
+    color: #000000;
+}
+.testof#a:link {
+    text-decoration: underline;
+    color: #000000;
+}
+.ombreggiato {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #2A8050;
+    line-height: normal;
+    text-shadow: 3px 3px 8px #708090;
+    width:100%;
+    /* filter: blur; */
+    filter:shadow(color=000000,Direction=45) 
+    glow(color=000000,strength=0);
+/* filter:dropshadow(color=FF0000,OffX=5, OffY=-3, Positive=1); */
+/* filter:glow(color=000000,strength=0); */
+}
+.ombra {
+    color: #CCCCCC;
+    /* color: #2A8050; */
+    font: Bold 14px Arial;
+    position: relative;
+    left: 5px;
+    top: 5px;
+    z-index: -1;
+}
+.titolo {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #2A20FF;
+    line-height: normal;
+}
+.fonte {	 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #FF2A70;
+    line-height: normal;
+}
+.autore {	 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #339966;/*#2A9060;/*#2AAA70;*/
+    line-height: normal;
+}
+/* mobile specific */
+@media only screen and (max-width: 600px) {
+    body {
+        height           : 100%;
+        margin           : 0;
+        padding          : 0;
+        width            : 100%;
+    }
+    #map {
+        background : #7391ad;
+        width      : 100%;
+    }
+    #map {
+        border : 0;
+        height : 250px;
+    }
+    #title {
+        font-size   : 1.3em;
+        line-height : 2em;
+        text-indent : 1em;
+        margin      : 0;
+        padding     : 0;
+    }
+    #docs {
+        bottom     : 0;
+        padding    : 1em;
+    }
+    #shortdesc {
+        color      : #aaa;
+        font-size  : 0.8em;
+        padding    : 1em;
+        text-align : right;
+    }
+    #tags {
+        display : none;
+    }
+}
+@media only screen and (orientation: landscape) and (max-width: 600px) {
+    #shortdesc {
+       float: right;
+       width: 25%;
+    }
+    #map {
+        width: 70%;
+    }
+    #docs {
+        font-size: 12px;
+    }
+}
+body {
+    -webkit-text-size-adjust: none;
+}

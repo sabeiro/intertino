@@ -1,0 +1,37 @@
+# Set master image
+FROM php:8.1-fpm-alpine
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Install Additional dependencies
+RUN apk update
+RUN apk add --no-cache build-base shadow vim curl \ 
+    php81 php81-fpm php81-common php81-pdo php81-pdo_mysql \
+    php81-mysqli php81-mbstring php81-xml php81-openssl \
+    php81-json php81-phar php81-zip php81-gd php81-dom php81-session php81-zlib \
+    php81-apcu php81-intl php81-mbstring php81-xml php81-calendar 
+    # php81-pecl-mycrypt
+RUN apk add --no-cache --virtual .php-deps icu make 
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS zlib-dev icu-dev g++ 
+# Add and Enable PHP-PDO Extenstions
+RUN apk add --no-cache libpng libpng-dev
+RUN docker-php-ext-configure intl
+RUN docker-php-ext-install gd pdo pdo_mysql mysqli intl
+RUN docker-php-ext-enable pdo_mysql intl
+#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Remove Cache
+#RUN apk del libpng-dev icu-dev .build-deps 
+#RUN { find /usr/local/lib -type f -print0 | xargs -0r strip --strip-all -p 2>/dev/null || true; } 
+#RUN rm -rf /tmp/* /usr/local/lib/php/doc/* /var/cache/apk/*
+
+# Add UID '1000' to www-data
+RUN usermod -u 1000 www-data
+# Copy existing application directory permissions
+# COPY --chown=www-data:www-data . /var/www/html
+# Change current user to www
+USER www-data
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]

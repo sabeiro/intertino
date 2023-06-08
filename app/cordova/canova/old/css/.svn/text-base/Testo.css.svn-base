@@ -1,0 +1,122 @@
+a:link {
+    text-decoration: underline;
+    color: #009999;
+/* color: green; */
+}
+a:visited {
+    text-decoration: underline;
+    color: #CC0066;/*#FF2A10;*/
+}
+a:hover {
+    text-decoration: overline underline;
+    color: #0074BB;
+}
+p {
+    text-align: justify;
+}
+.testo {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #CC00A0;
+    line-height: normal;
+}
+.testo1 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #AA0066;/*#FF2A00;*/
+    line-height: normal;
+}
+.testo2 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #2A2A10;
+    line-height: normal;
+}
+.testo3 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #2145AA;
+    line-height: normal;
+}
+.testo3#a:over{
+    text-decoration: underline;
+    color: #009900;
+}
+.testo3#a:link {
+    text-decoration: underline;
+    color: #009900;
+/* color: green; */
+}
+.testo4 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #FF8810;
+    line-height: normal;
+}
+.testo5 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #FF2A00;
+    line-height: normal;
+}
+.testof {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    color: #000000;
+    line-height: normal;
+}
+.testof#a:over{
+    text-decoration: underline;
+    color: #000000;
+}
+.testof#a:link {
+    text-decoration: underline;
+    color: #000000;
+}
+.ombreggiato {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: #2A8050;
+    line-height: normal;
+    text-shadow: 3px 3px 8px #708090;
+    width:100%;
+    /* filter: blur; */
+    filter:shadow(color=000000,Direction=45) 
+    glow(color=000000,strength=0);
+/* filter:dropshadow(color=FF0000,OffX=5, OffY=-3, Positive=1); */
+/* filter:glow(color=000000,strength=0); */
+}
+.ombra {
+    color: #CCCCCC;
+    /* color: #2A8050; */
+    font: Bold 14px Arial;
+    position: relative;
+    left: 5px;
+    top: 5px;
+    z-index: -1;
+}
+.titolo {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #2A20FF;
+    line-height: normal;
+}
+.fonte {	 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #FF2A70;
+    line-height: normal;
+}
+.autore {	 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #339966;/*#2A9060;/*#2AAA70;*/
+    line-height: normal;
+}
+a:visited {
+    text-decoration: underline;
+    color: #CC0066;/*#FF2A10;*/
+}
+a:hover {
+    text-decoration: overline underline;
+    color: #0074BB;
+}

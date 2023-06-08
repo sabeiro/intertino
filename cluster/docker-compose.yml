@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+  prometheus:
+    image: bitnami/prometheus:latest
+    ports:
+      - 127.0.0.1:9090:9090
+    user: "1000:1000"
+    volumes:
+      - ./prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml:ro
+      - ./prometheus-data/:/opt/bitnami/prometheus/data:rw
+    labels:
+      traefik.http.services.prometheus.loadbalancer.server.port: 9090
+      traefik.http.routers.prometheus.rule: Host(`${MAILSERVER_MONITORING_HOST}`)
+      traefik.http.routers.prometheus.tls: true
+      traefik.http.routers.prometheus.tls.certresolver: letsencrypt
+      traefik.http.routers.prometheus.middlewares: prometheus-auth
+      traefik.http.middlewares.prometheus-auth.basicauth.users: lm:$$apr1$$UAQ/Go/q$$ivRDc4xbU.p9ny8moUid40
+
+  traefik:
+    image: traefik:v2.8.3
+    container_name: traefik
+    command: --configfile=traefik.yml
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - ./traefik.yml:/traefik.yml:ro
+      - ./traefik.d:/traefik.d:ro
+      - ./acme.json:/acme.json:rw
+      - ./logs/:/logs/:rw
+

@@ -1,0 +1,50 @@
+accessLog:
+  filePath: "/logs/traefik-access.log"
+  format: json
+  bufferingSize: 100
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+
+providers:
+  docker: {}
+  file:
+    directory: "/traefik.d"
+
+api:
+  dashboard: true
+  insecure: true
+  
+entryPoints:
+  metrics:
+    address: 172.17.0.1:6032
+  traefik:
+    address: 172.17.0.1:6033
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: :443
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      
+      # TODO: remove Let's Encrypt test server
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      
+      email: sysadmin@lightmeter.io
+      storage: acme.json
+      httpChallenge:
+        entryPoint: web
+
+# uncomment to enable traefik dashboard / accesslogs
+#api:
+#  insecure: true  # also forward port 8080:8080 in docker-compose config for traefik
+#accesslog: true
