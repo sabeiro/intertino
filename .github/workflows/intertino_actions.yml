@@ -1,6 +1,18 @@
-name: Demo GitHub Actions Workflow
+name: Intertino action list
 on: [push]
+defaults:
+  run:
+    shell: bash
+    working-directory: job
+
 jobs:
+  restart_webserver:
+    runs-on: ubuntu-latest
+    name: restart services
+    steps:
+     —run: echo "${{ github.event_name }} event automatically triggered this job."
+    
+  
   Discover-GitHub-Actions-Workflows:
     runs-on: ubuntu-latest
     steps:
@@ -15,3 +27,31 @@ jobs:
         run: |
           ls ${{ github.workspace }}
      —run: echo " This job has a ${{ job.status }} status."
+     
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Hello world action step
+        uses: ./ # Uses an action in the root directory
+        id: hello
+        with:
+          who-to-greet: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
+  testRunner:
+    runs-on: [self-hosted]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+    - uses: actions/checkout@v3.0.2
+    - name: Setup Terraform
+      run: choco install terraform -y
+    - name: Refresh Environment
+      run: refreshenv
+    - name: Display Terraform Version
+      run: terraform --version
+    - name: Display Azure-CLI Version
+      run: az --version
