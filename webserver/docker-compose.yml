@@ -40,7 +40,7 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www/html
     volumes:
-      - /var/www/html/:/var/www/html
+      - ${HOME}/lav/siti:/var/www/html/
       - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - webserver-net
