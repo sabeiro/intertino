@@ -1,0 +1,21 @@
+branch-defaults:
+  default:
+    environment: intertino
+    group_suffix: null
+  master:
+    environment: intertino
+    group_suffix: null
+global:
+  application_name: geocode
+  branch: null
+  default_ec2_keyname: mywebsitekey
+  default_platform: Node.js
+  default_region: eu-central-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: null
+  workspace_type: Application

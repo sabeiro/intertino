@@ -4,19 +4,24 @@
   "description": "geocoding service for anonymization",
   "main": "geocode.js",
   "dependencies": {
-    "csv-parse": "^4.9.0",
-    "csv-parser": "^2.3.2",
-    "csvtojson": "^2.0.10",
-    "express": "^4.17.1",
-    "opencage-api-client": "^0.7.1",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "csv-parse": "*",
+    "csv-parser": "*",
+    "csvtojson": "*",
+    "express": "*",
+    "opencage-api-client": "*",
+    "request": "*",
+    "request-promise": "*",
+    "multer": "*",
+	"xls-to-json-lc":"*"
+	,"xlsx-to-json-lc":"*"
+	,"helmet":"*"
   },
+  "start": "node geocode.js",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Giovanni Marelli",
   "license": "ISC"
 }

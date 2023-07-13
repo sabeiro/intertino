@@ -11,6 +11,7 @@ const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
 const express = require('express');
 const helmet = require("helmet");
+const $ = require( "jquery" );
 
 //-----------------------------https-and-credentials---------------------------
 const crypto = require('crypto');
@@ -258,6 +259,6 @@ httpsServer.listen(process.env.PORT_SSL
 		   ,function(){
 		       var host = httpsServer.address().address;
 		       var port = httpsServer.address().port;
-		       console.log("Exaple app listening at http://%s:%s", host, port);		   
+		       console.log("Geocode app listening at http://%s:%s", host, port);		   
 		   });
 

@@ -1,0 +1,26 @@
+{
+  "name": "text_corrector",
+  "version": "1.0.0",
+  "description": "app for correcting outreach sales emails using large language models",
+  "main": "text_corrector.js",
+  "type": "module",
+  "dependencies": {
+	  "ejs":"*",
+    "@editorjs/editorjs":"*",
+    "@editorjs/header":"*",
+    "@editorjs/inline-code":"*",
+    "nodemon":"*",
+    "express":"*",
+    "helmet":"*",
+    "jquery":"*",
+    "request":"*",
+    "http":"*"
+  },
+  "scripts": {
+	"start":"npm config set script-shell \"/bin/bash\"; source .env; nodemon text_corrector.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["large language models","email outreach"],
+  "author": "Giovanni Marelli",
+  "license": "ISC"
+}

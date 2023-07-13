@@ -1,0 +1,2 @@
+time_stroke_onset,time_call,time_hospitalization,address_stroke_unit,address_call,sex,age,thrombolisis,thrombectomy,nihss_admission,nihss_discharge,mrs_before,mrs_discharge,covid_status
+2020-03-14 19:15:00,2020-03-14 21:03:00,2020-03-14 21:43:00,"Brescia, piazzale spedali civili","Via Garibaldi 1, 25087 Salò, Italy",M,67,yes,no,22,15,0,4,positive
