@@ -13,8 +13,8 @@ const call_options = {
 const app = express();
 app.use(express.json());
 app.set('view engine', 'ejs');
-app.use(express.static('views')); //Serves resources from public folder
-app.use("/views", express.static('views'));
+// app.use(express.static('views')); //Serves resources from public folder
+app.use("/correct", express.static('views'));
 app.use(
   helmet({
     contentSecurityPolicy: false,
@@ -55,7 +55,7 @@ app.use(
 //   next();
 // });
 
-app.get('/', function(req, res) {
+app.get('/correct/', function(req, res) {
   var mascots = [
     { name: 'Headline', description: "Be clear"},
     { name: 'Style', description: "focus on the main topics"},
@@ -65,15 +65,15 @@ app.get('/', function(req, res) {
   res.render('index', {mascots: mascots, tagline: tagline});
 });
 
-app.get('/about', function(req, res) {
-  res.render('pages/about');
+app.get('/correct/about', function(req, res) {
+  res.render('about');
 });
 
-app.get('/editor', function(req, res) {
+app.get('/correct/editor', function(req, res) {
   res.render('pages/editor');
 });
 
-app.post('/call', function(req, res) {
+app.post('/correct/call', function(req, res) {
   call_options.body = req.body;
   request.post(call_options, (err, resp, body) => {
 	if (err) {return console.log(err)}

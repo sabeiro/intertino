@@ -116,10 +116,9 @@ var editor = new EditorJS({
 	});
   }
   ,onChange: (api, event) => {
-	console.log('email content changed', event)
 	editor.save().then((outData) => {
-	  console.log('Article data: ',outData);
 	  curr_email = outData;
+	  ask_improvement(20000,50);
 	});
   }
 });
@@ -139,7 +138,9 @@ var promptE = new EditorJS({
   }
   ,onChange: (api, event) => {
 	console.log('Now I know that prompt content changed!', event)
-	promptE.save().then((outData) => {console.log('Article data: ',outData)});
+	promptE.save().then((outData) => {
+	  curr_prompt = outData;
+	});
   }
 });
 
@@ -158,18 +159,20 @@ var styleE = new EditorJS({
   }
   ,onChange: (api, event) => {
 	console.log('Now I know that style content changed!', event)
-	styleE.save().then((outData) => {console.log('Article data: ',outData)});
+	styleE.save().then((outData) => {
+	  curr_style = outData;
+	});
   }
 });
 
-const saveButton = document.getElementById('save_button');
-const output = document.getElementById('output');
-saveButton.addEventListener('click', () => {
-  editor.save().then( savedData => {
-    output.innerHTML = JSON.stringify(savedData, null, 4);
-	console.log(savedData);
-  })
-})
+// const saveButton = document.getElementById('save_button');
+// const output = document.getElementById('output');
+// saveButton.addEventListener('click', () => {
+//   editor.save().then( savedData => {
+//     output.innerHTML = JSON.stringify(savedData, null, 4);
+// 	console.log(savedData);
+//   })
+// })
 function apply_event(){
   $('.apply_button').click(function(){
 	var changeD = $.parseJSON($(this).attr('data-button'));
@@ -189,20 +192,19 @@ function call_assistant(prompt,blockD,callbackF){
   let header = {"Authorization":"Bearer "}
   $.ajaxSetup({headers: header});
   $.ajax({
-	url: "call",headers: header
+	url: "/correct/call",headers: header
 	,contentType: "application/json; charset=utf-8",dataType: 'json'
 	,method: "POST",data: JSON.stringify(prompt)
 	,success: function(data){
-	  console.log('success: ',data);
 	  $(".inspiration").text('')
 	  try {
 		data.choices.forEach(b => {
-		  console.log(b['message']);
+		  // console.log(b['message']);
 		  callbackF(b['message']['content'],blockD);
 		});
 	  }
 	  catch(e) {
-		console.log(data['error']['message']);
+		// console.log(data['error']['message']);
 		callbackF('Error: ' + data['error']['message'],blockD);
 	  }
 	}
@@ -213,7 +215,8 @@ function call_assistant(prompt,blockD,callbackF){
 }
 function write_correction(text,blockD){
   let corrT = curr_email.blocks[blockD.block]['data']['text'];
-  let corrS = "<s>" + corrT + "</s> ---> " + text;
+  let textS = text.replace(/"/g,"");
+  let corrS = "<s>" + corrT + "</s> ---> " + textS;
   let cleanT = text.replace(/'/g, '^').replace(/"/g, '\\\"').replace(/\n/g,"");
   let changeD = '{"block":'+blockD.block+',"text":"'+ cleanT +'"}';
   let buttonS = '<button id="apply" class="apply_button" data-button=\''+changeD+'\'>apply</button>';
@@ -222,26 +225,26 @@ function write_correction(text,blockD){
 }
 function write_inspiration(text,blockD){$(".inspiration").text(text);}
 
-$(".improve_button").click(function(){
+function ask_improvement(time_thre,dist_thre){
   $(".corrections").html('<img src="img/loading.gif" />')
   let resp = block_distance(curr_email,prev_email);
-  console.log(resp.b,resp.text);
-  if(resp.text == ''){
+  console.log('distance',resp);
+  if(resp.text == '' || resp.time < time_thre || resp.dist < dist_thre){
 	$(".corrections").html('not enough edit for corrections')
-	return ;}
-  prev_email = curr_email;
+	return ;
+  }
+  // prev_email = curr_email;
   let promptS = curr_style.blocks[resp.b]['data']['text'] + ': "' + resp.text + '"';
   blockD.block = resp.b;
   promptS = promptS.replace("<br>","").replace(/&nbsp;/g,"");
   promptD['messages'][0]['content'] = promptS;
-  console.log(promptS);
-  //write_correction(promptS,blockD);
   call_assistant(promptD,blockD,write_correction);
-});
+}
+
+$(".improve_button").click(function(){ask_improvement(30,3);});
 $(".call_button").click(function(){
   $(".inspiration").html('<img src="img/loading1.gif" />')
   let promptS = mail2string(curr_prompt);
   promptD['messages'][0]['content'] = promptS;
-  console.log(promptS);
   call_assistant(promptD,blockD,write_inspiration);
 });

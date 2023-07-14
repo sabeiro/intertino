@@ -105,10 +105,7 @@ export function block_distance(curr_email,prev_email){
   var resp = new Object();
   resp.b = 0;
   resp.text = '';
-  let t = curr_email.time - prev_email.time;
-  if(t < 3){
-	return resp;
-  }
+  resp.time = curr_email.time - prev_email.time;
   for (let i = 0; i < curr_email.blocks.length; ++i) {
 	let h = levenshtein(curr_email.blocks[i].data['text']
 						,prev_email.blocks[i].data['text']);
@@ -116,6 +113,7 @@ export function block_distance(curr_email,prev_email){
 	  console.log('block ',curr_email.blocks[i]['id'],' changed by ',h,'position',i);
 	  resp.b = i;
 	  resp.text = curr_email.blocks[i].data['text'];
+	  resp.distance = h;
 	  return resp;
 	}
   }

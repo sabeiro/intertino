@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+  <header>
+	<%- include('../partials/header'); %>
+  </header>
+  <main>
+  <div class="jumbotron">
+<h1 id="text-corrector">text corrector</h1>
+<p>This app is an automated assistant to help writing outreach sales emails.</p>
+<p><img src="../img/cover_corrector.png" title="text corrector" alt="cover_corrector" /> <em>text corrector overview</em></p>
+<h2 id="usage">usage</h2>
+<p>The user starts editing the draft in the left box, the draft is composed in different sections:</p>
+<ul>
+<li>subject</li>
+<li>greeting</li>
+<li>presentation</li>
+<li>value proposition</li>
+<li>personalization</li>
+<li>goodbye</li>
+<li>signature</li>
+</ul>
+<p><img src="../img/block_editor.png" title="block editor" alt="block_editor" /> <em>the editor block composed in sections</em></p>
+<p>Every time a change is made an algo evaluates the distance from the previous version is computed. The current algo is a mixture of Levenshtein and time difference. If the change is consistent enough the current text is appended to a prompt for the language model which can be edited in this section:</p>
+<p><img src="../img/block_criteria.png" title="block criteria" alt="block_criteria" /> <em>the criteria block with editable prompts</em></p>
+<p>The resquest is sent to the backend that appends the authentification and sends the request to the language model. Within few seconds the response is formated and displayed in the correction block:</p>
+<p><img src="../img/block_correction.png" title="block correction" alt="block_correction" /> <em>the correction block with suggestions</em></p>
+<p>The correction block has an apply button that validates the correction and apply the change.</p>
+<p>Alternatively there is an instruction section with editable prompts</p>
+<p><img src="../img/block_instruction.png" title="block instruction" alt="block_instruction" /> <em>the instruction block with editable prompts</em></p>
+<p>That would send a request to the language model to generate the email following the instructions</p>
+<p><img src="../img/block_generated.png" title="block generated" alt="block_generated" /> <em>the generated block with suggestions</em></p>
+<h2 id="technical-implementation">technical implementation</h2>
+<p>The app is mainly written in <code>nodejs</code> using <code>express</code> and <code>ejs</code>. The main functions are written in <code>javascript</code> and executes on the frontend.</p>
+<p><img src="../img/front_back.svg" title="front back" alt="front_back" /> <em>front- and back- end implementation</em></p>
+<p>The implementation is as following</p>
+<p><img src="../img/node_call.svg" title="node calls" alt="node_calls" /> <em>structure of the calls</em></p>
+<h2 id="deployment">deployment</h2>
+<p>Create an <code>.env</code> file with:</p>
+<pre><code>export OPENAI_KEY=...</code></pre>
+<p>run</p>
+<pre><code>npm install
+npm start</code></pre>
+<p>or</p>
+<pre><code>cd build/
+docker-compose up -d</code></pre>
+<p>The app is then available at:</p>
+<pre><code>localhost:3000/correct</code></pre>
+  </div>		
+</main>
+	<footer>
+	  <%- include('../partials/footer'); %>
+	</footer>
+
+    </body>
+</html>
