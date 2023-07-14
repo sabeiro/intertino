@@ -17,7 +17,8 @@
     "http":"*"
   },
   "scripts": {
-	"start":"npm config set script-shell \"/bin/bash\"; source .env; nodemon text_corrector.js",
+	"start1":"npm config set script-shell \"/bin/sh\"; source .env; nodemon text_corrector.js",
+	"start":"nodemon text_corrector.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["large language models","email outreach"],
