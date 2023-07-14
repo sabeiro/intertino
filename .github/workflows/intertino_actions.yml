@@ -12,13 +12,12 @@ jobs:
     steps:
      —run: echo "${{ github.event_name }} event automatically triggered this job."
     
-  
   Discover-GitHub-Actions-Workflows:
     runs-on: ubuntu-latest
     steps:
       —run: echo "${{ github.event_name }} event automatically triggered this job."
       —run: echo " A ${{ runner.os }} server hosted by GitHub has this job running"
-      —run: echo "repo-name: ${{ github.repository }} branch ${{ github.ref }} repo ${{ github.repository }}."
+      —run: echo "repo: ${{ github.repository }} branch ${{ github.ref }}"
       —name: "Checking out the repository's code"
       —run: echo "The runner has cloned your ${{ github.repository }} repository."
       —run: echo "The workflow can now test your code with the runner."
