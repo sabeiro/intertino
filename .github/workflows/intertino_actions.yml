@@ -18,8 +18,8 @@ jobs:
     steps:
       —run: echo "${{ github.event_name }} event automatically triggered this job."
       —run: echo " A ${{ runner.os }} server hosted by GitHub has this job running"
-      —run: echo "Details of your repository: repo-name: ${{ github.repository }} and branch name is${{ github.ref }} and your repository is ${{ github.repository }}."
-      —name: Checking out the repository’s code
+      —run: echo "repo-name: ${{ github.repository }} branch ${{ github.ref }} repo ${{ github.repository }}."
+      —name: "Checking out the repository's code"
       —run: echo "The runner has cloned your ${{ github.repository }} repository."
       —run: echo "The workflow can now test your code with the runner."
      
