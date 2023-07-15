@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import $ from "jquery";
 import request from 'request';
 import http from 'http';
+import dotenv from 'dotenv';
 
 let header = {"Authorization":"Bearer " + process.env.OPENAI_KEY}
 const call_options = {
@@ -10,37 +11,32 @@ const call_options = {
   json: true, headers: header, body: {}
 }
 
+
 const app = express();
 app.use(express.json());
 app.set('view engine', 'ejs');
 // app.use(express.static('views')); //Serves resources from public folder
 app.use("/correct", express.static('views'));
+
+const scriptSources = ["'self'","'unsafe-inline'","'unsafe-eval'","https://cdnjs.cloudflare.com","https://cdn.jsdelivr.net"];
+const styleSources = ["'self'","'unsafe-inline'","https://cdn.jsdelivr.net"];
+const connectSources = ["'self'"];  
+
 app.use(
-  helmet({
-    contentSecurityPolicy: false,
-    xDownloadOptions: false,
+  helmet.contentSecurityPolicy({
+// 	useDefaults:false,"block-all-mixed-content":true,"upgrade-insecure-requests":true,
+	directives: {
+      "defaultSrc": ["'self'"],
+      "scriptSrc": scriptSources,
+      "scriptSrcElem": scriptSources,
+      "styleSrc": styleSources,
+      "connectSrc": connectSources
+	}
   })
 );
-
-// const configuration = new Configuration({
-//     organization: "org-puQCWFkDHwt5NN7uiGtwjXNw",
-//     apiKey: process.env.OPENAI_API_KEY,
-// });
-
-// app.use(
-//   helmet.contentSecurityPolicy({
-// 	useDefaults:false,"block-all-mixed-content":true,"upgrade-insecure-requests":true,
-// 	directives: {"default-src": ["'self'","'unsafe-inline'","https:"],
-// 				 "base-uri": "'self'",
-// 				 "font-src": ["'self'","https:","data:"],
-// 				 "frame-ancestors": ["'self'"],
-// 				 "img-src": ["'self'","data:"],
-// 				 "style-src": ["'self'","'unsafe-inline'","https://cdn.jsdelivr.net","nonce-12331"],
-// 				 "object-src": ["'none'"],
-// 				 "script-src": ["'self'","https://cdnjs.cloudflare.com","https://cdn.jsdelivr.net"],
-// 				 "script-src-attr":"'none'","style-src": ["'self'","https://cdnjs.cloudflare.com","https://cdn.jsdelivr.net"],
-// 				}
-//   }),
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 //   helmet.dnsPrefetchControl({allow: true}),
 //   helmet.frameguard({action: "deny"}),
 //   helmet.hidePoweredBy(),
@@ -48,7 +44,7 @@ app.use(
 //   helmet.ieNoOpen(),helmet.noSniff(),
 //   helmet.referrerPolicy({policy: [ "origin", "unsafe-url" ]}),
 //   helmet.xssFilter()
-// );
+
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

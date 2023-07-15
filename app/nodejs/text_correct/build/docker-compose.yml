@@ -11,10 +11,10 @@ services:
     #- '../:/app/'
     env_file:
       - ../.env
-    networks:
-      - webserver-net
+    # networks:
+    #   - webserver-net
 
-networks:
-  webserver-net:
-    external: true
+# networks:
+#   webserver-net:
+#     external: true
 
