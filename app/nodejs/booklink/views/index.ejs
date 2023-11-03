@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head><%- include('partials/head'); %></head>
+	<body class="container">
+		<header><%- include('partials/header'); %></header>
+		<main>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="jumbotron">
+						<h1>Text corrector</h1>
+						<p>Start composing an outreach sales email to see the proposed corrections</p>
+						<p><%= tagline %></p>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="jumbotron">
+						<div class="well">
+							<h3>Tips</h3>
+							<ul>
+								<% mascots.forEach(function(e) { %>
+									<li><strong><%= e.name %></strong>: <%= e.description %></li>
+								<% }); %>
+							</ul>
+						</div>
+					</div>
+					<button id="call_button" class="call_button">generate</button>
+					<button id="improve_button" class="improve_button">improve</button>
+					<!-- <button id="save_button" class="save_button">save</button>
+						 <button id="apply" data-button='{"block":3,"text":"I^m tired"}' class="apply_button">apply</button> -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="jumbotron">
+						<!-- <label for="title">Title</label>
+							 <input type="text" class="form-control" name="title" placeholder="Title" required> -->
+						<label for="content" title="email draft"><h1> Email draft:</h1></label>
+						<div type="text" id="editorjs" class="editable" name="content" placeholder="Content" required></div>
+						<pre id="output"></pre>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="wrap-collabsible">
+						<input id="collapse1" class="toggle1" type="checkbox" checked>
+						<label for="collapse1" class="lbl-toggle1">Corrections</label>
+						<div class="collapse-content1">
+							<div class="content-inner">
+								<div type="text" class="corrections" id="corrections" name="corrections" placeholder="corrections" required>... correction list ...</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrap-collabsible">
+						<input id="collapse0" class="toggle0" type="checkbox" >
+						<label for="collapse0" class="lbl-toggle0">correction criteria</label>
+						<div class="collapse-content0">
+							<div class="content-inner">
+								<div type="text" class="editable" id="criteria_block" name="criteria" placeholder="criteria" required></div>
+								criteria
+							</div>
+						</div>
+					</div>
+					<div class="wrap-collabsible">
+						<input id="collapse" class="toggle" type="checkbox" checked>
+						<label for="collapse" class="lbl-toggle">Instructions - prompt</label>
+						<div class="collapse-content">
+							<div class="content-inner">
+								<div type="text" class="editable" id="prompt_block" name="instructions" placeholder="instructions" required></div>
+							</div>
+						</div>
+					</div>
+					<div class="wrap-collabsible">
+						<input id="collapse2" class="toggle2" type="checkbox" checked>
+						<label for="collapse2" class="lbl-toggle2">Generated text</label>
+						<div class="collapse-content2">
+							<div class="content-inner">
+								<div class="inspiration" style="white-space: pre-line">
+									... generated text ...
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+		<script src="js/jquery.min.js" type="module"></script>
+		<script src="js/text_corrector.js" type="module"></script>
+		<script type="application/javascript">		</script>
+		<footer><%- include('partials/footer'); %></footer>
+	</body>
+</html>
+
+
